@@ -4,9 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>PHYSSi - Chatbot</title>
-    <link rel="icon" href="/client/static/images/logo-new.ico">
+    <link rel="icon" href="/static/images/logo-new.ico">
 
-    <link rel="stylesheet" href="/client/static/styles/chatbot.css">
+    <link rel="stylesheet" href="/static/styles/chatbot.css">
 
     <script src="https://kit.fontawesome.com/03b30ccae0.js" crossorigin="anonymous"></script>
 </head>
@@ -15,12 +15,11 @@
     <div class="sidebar">
         <div class="logo-icon"><img src="/static/images/logo.png" alt="logo-image"></div>
         <div class="sidebar-icon"><i class="fa-solid fa-pen-to-square"></i></div>
-        <!-- <div class="sidebar-icon"><i class="fa-solid fa-magnifying-glass"></i></div> -->
         <div class="sidebar-icon"><i class="fa-solid fa-clock-rotate-left"></i></div>
         <div class="sidebar-icon" style="position: relative;">
             <i class="fa-solid fa-dice"></i>
-            <span style="position: absolute; top: -4px; right: -4px; width: 8px; height: 8px; background: var(--primary-color); border-radius: 50%;"></span></div>
-        <!-- <div class="sidebar-icon upgrade-icon"><i class="fa-solid fa-bolt"></i></div> -->
+            <span style="position: absolute; top: -4px; right: -4px; width: 8px; height: 8px; background: var(--primary-color); border-radius: 50%;"></span>
+        </div>
         <div class="sidebar-icon"><i class="fa-solid fa-gear"></i></div>
         <div class="user-avatar"><i class="fa-solid fa-user"></i></div>
     </div>
@@ -36,7 +35,7 @@
                     Dark Mode
                 </button>
                 <button class="action-btn" id="shareBtn" style="display: none;">
-                    <span><i class="fa-solid fa-arrow-up-from-bracket"></i></i></span>
+                    <span><i class="fa-solid fa-arrow-up-from-bracket"></i></span>
                     Share
                 </button>
             </div>
@@ -47,15 +46,7 @@
             <!-- Initial State -->
             <div class="initial-state" id="initialState">
                 <div class="physsi-title">PHYSSi</div>
-                <div class="physsi-subtitle">Let's try to ask something about physicicology</div>
-                
-                <!-- <div class="more-tools">
-                    <div class="more-tools-title">More tools</div>
-                    <button class="quiz-generator-btn" id="quizBtn">
-                        <span><i class="fa-solid fa-file-pen"></i></span>
-                        AI Quiz Generator
-                    </button>
-                </div> -->
+                <div class="physsi-subtitle">Let's try to ask something about physiology</div>
             </div>
 
             <!-- Conversation State -->
@@ -76,6 +67,6 @@
         </div>
     </div>
 
-    <script src="/client/static/scripts/chatbot-page.js"></script>
+    <script src="/static/scripts/chatbot-page.js"></script>
 </body>
 </html>
