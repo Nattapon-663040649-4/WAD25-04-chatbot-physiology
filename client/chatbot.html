@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PHYSSi - Chatbot</title>
+    <link rel="icon" href="/client/static/images/logo-new.ico">
+
+    <link rel="stylesheet" href="/client/static/styles/chatbot.css">
+
+    <script src="https://kit.fontawesome.com/03b30ccae0.js" crossorigin="anonymous"></script>
+</head>
+<body>
+    <!-- Sidebar -->
+    <div class="sidebar">
+        <div class="logo-icon"><img src="/static/images/logo.png" alt="logo-image"></div>
+        <div class="sidebar-icon"><i class="fa-solid fa-pen-to-square"></i></div>
+        <!-- <div class="sidebar-icon"><i class="fa-solid fa-magnifying-glass"></i></div> -->
+        <div class="sidebar-icon"><i class="fa-solid fa-clock-rotate-left"></i></div>
+        <div class="sidebar-icon" style="position: relative;">
+            <i class="fa-solid fa-dice"></i>
+            <span style="position: absolute; top: -4px; right: -4px; width: 8px; height: 8px; background: var(--primary-color); border-radius: 50%;"></span></div>
+        <!-- <div class="sidebar-icon upgrade-icon"><i class="fa-solid fa-bolt"></i></div> -->
+        <div class="sidebar-icon"><i class="fa-solid fa-gear"></i></div>
+        <div class="user-avatar"><i class="fa-solid fa-user"></i></div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="main-content">
+        <!-- Header -->
+        <div class="main-header">
+            <div class="model-info">Gemini 2.0</div>
+            <div class="header-actions">
+                <button class="action-btn" id="darkModeBtn">
+                    <span><i class="fa-solid fa-moon"></i></span>
+                    Dark Mode
+                </button>
+                <button class="action-btn" id="shareBtn" style="display: none;">
+                    <span><i class="fa-solid fa-arrow-up-from-bracket"></i></i></span>
+                    Share
+                </button>
+            </div>
+        </div>
+
+        <!-- Chat Container -->
+        <div class="chat-container" id="chatContainer">
+            <!-- Initial State -->
+            <div class="initial-state" id="initialState">
+                <div class="physsi-title">PHYSSi</div>
+                <div class="physsi-subtitle">Let's try to ask something about physicicology</div>
+                
+                <!-- <div class="more-tools">
+                    <div class="more-tools-title">More tools</div>
+                    <button class="quiz-generator-btn" id="quizBtn">
+                        <span><i class="fa-solid fa-file-pen"></i></span>
+                        AI Quiz Generator
+                    </button>
+                </div> -->
+            </div>
+
+            <!-- Conversation State -->
+            <div class="conversation-state" id="conversationState">
+                <!-- Messages will be added here dynamically -->
+            </div>
+        </div>
+
+        <!-- Input Area -->
+        <div class="input-container">
+            <div class="input-wrapper">
+                <button class="input-btn add-btn"><i class="fa-solid fa-plus"></i></button>
+                <input type="text" class="chat-input" placeholder="Ask something..." id="chatInput">
+                <button class="input-btn voice-btn"><i class="fa-solid fa-microphone"></i></button>
+                <button class="input-btn send-btn" id="sendBtn"><i class="fa-solid fa-paper-plane"></i></button>
+            </div>
+            <div class="disclaimer" id="disclaimer">ChatGPT may contain errors. Please check the important information.</div>
+        </div>
+    </div>
+
+    <script src="/client/static/scripts/chatbot-page.js"></script>
+</body>
+</html>
