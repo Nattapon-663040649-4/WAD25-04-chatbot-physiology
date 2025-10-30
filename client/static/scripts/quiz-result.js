@@ -13,7 +13,7 @@ const confettiCanvas = document.getElementById('confetti');
 let quizResult = null;
 
 // ==================== Initialize ====================
-(function init() {
+(async function init() {
     // Load quiz result from sessionStorage
     const quizResultStr = sessionStorage.getItem('quizResult');
 
@@ -30,11 +30,66 @@ let quizResult = null;
     displayScore();
     displayAnswerReview();
 
+    // Save result to database
+    await saveResultToDatabase();
+
     // Celebrate if score is good
     if (quizResult.score >= 80) {
         celebrateWithConfetti();
     }
 })();
+
+// ==================== Save Result to Database ====================
+async function saveResultToDatabase() {
+    // Get user data
+    const userDataStr = localStorage.getItem('userData');
+    
+    if (!userDataStr) {
+        console.log('⚠️ No user logged in - result not saved');
+        return;
+    }
+    
+    try {
+        const userData = JSON.parse(userDataStr);
+        const userId = userData.userId;
+        
+        // Get quiz config
+        const quizConfigStr = sessionStorage.getItem('quizConfig');
+        const quizConfig = quizConfigStr ? JSON.parse(quizConfigStr) : {};
+        
+        // Prepare result data with questions
+        const resultData = {
+            userId: userId,
+            result: {
+                topic: quizConfig.topic || 'unknown',
+                difficulty: quizConfig.difficulty || 'medium',
+                score: quizResult.score,
+                totalQuestions: quizResult.totalQuestions,
+                questions: quizResult.answers || [] // ส่ง questions พร้อม subtopic
+            }
+        };
+        
+        console.log('💾 Saving quiz result:', resultData);
+        
+        const response = await fetch('/api/quiz/save-result', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(resultData)
+        });
+        
+        const data = await response.json();
+        
+        if (data.success) {
+            console.log('✅ Quiz result saved successfully');
+        } else {
+            console.error('❌ Failed to save quiz result:', data.message);
+        }
+    } catch (error) {
+        console.error('❌ Error saving quiz result:', error);
+    }
+}
 
 // ==================== Display Score ====================
 function displayScore() {
@@ -92,7 +147,7 @@ function animateValue(element, start, end, duration) {
 function displayAnswerReview() {
     questionsList.innerHTML = '';
 
-    quizResult.results.forEach((result, index) => {
+    quizResult.answers.forEach((result, index) => {
         const isCorrect = result.isCorrect;
         const userAnswerIndex = result.userAnswer;
         const correctAnswerIndex = result.correctAnswer;
