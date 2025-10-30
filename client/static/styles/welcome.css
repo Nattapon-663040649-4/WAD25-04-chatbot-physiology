@@ -286,6 +286,207 @@ body {
     background: var(--hover-color);
 }
 
+
+/* Articles / Knowledge Cards (match other sections sizing) */
+.articles-section {
+    padding: 80px 0;
+    background: #ffffff;
+    text-align: center;
+}
+
+.articles-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+.articles-section h2 {
+    font-size: 36px;
+    color: var(--primary-color);
+    margin-bottom: 50px;
+    font-weight: bold;
+}
+
+.articles-grid {
+    display: flex;
+    gap: 36px;
+    justify-content: center; 
+}
+
+.article-card {
+    background: white;
+    width: 300px;
+    padding: 10px;
+    box-sizing: border-box;
+    border-radius: 14px;
+    overflow: visible; 
+    box-shadow: 2 10px 24px rgba(0,0,0,0.06);
+    text-align: left;
+    display: flex;
+    flex-direction: column; 
+    gap: 0;
+    border: 4px solid var(--primary-color);
+    transition: width 0.42s cubic-bezier(.2,.8,.2,1); 
+}
+.article-card:hover{
+    color: white;
+    background: var(--hover-color);
+    border: white;
+    transition: 0.5ms;
+}
+
+.article-card.open {
+    flex-direction: row; 
+    gap: 10px; 
+    width: auto; 
+    max-width: 90vw; 
+    align-items: flex-start; 
+}
+
+.article-card h3 {
+    color: var(--primary-color);
+    margin: 0;
+    font-size: 20px;
+}
+
+.article-card {
+    cursor: pointer;
+}
+
+.article-image-wrap {
+    width: 100%; 
+    aspect-ratio: 4 / 3;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 8px;
+}
+
+.article-card.open .article-image-wrap {
+    width: 276px; 
+    flex-shrink: 0; 
+    aspect-ratio: 4 / 3; 
+}
+
+
+.article-image-wrap[role="button"] {
+    cursor: pointer;
+    outline: none;
+}
+
+.article-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+.article-svg {
+    width: 64px;
+    height: 64px;
+    display: block;
+    margin: 0 auto;
+    color: var(--primary-color);
+}
+
+.article-svg path {
+    fill: currentColor;
+}
+
+.article-svg-img {
+    width: 64px;
+    height: 64px;
+    display: block;
+    margin: 0 auto;
+    object-fit: contain;
+}
+
+.article-body {
+    color: #333;
+    line-height: 1.6;
+    font-size: 15px;
+}
+
+.article-card-svg {
+    width: 100px;
+    height: 100px;
+}
+.article-card-svg .st0 {
+    fill: var(--primary-color);
+}
+
+
+.article-actions {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+}
+
+.toggle-btn {
+    padding: 8px 12px;
+    border-radius: 8px;
+    border: 1px solid var(--primary-color);
+    background: white;
+    color: var(--primary-color);
+    cursor: pointer;
+    font-weight: 600;
+}
+
+.toggle-btn[aria-expanded="false"] {
+    opacity: 0.7;
+}
+
+.hidden {
+    display: none !important;
+}
+
+/* Modal for article full text */
+.modal-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.55);
+    display: none;
+    align-items: center;
+    justify-content: center;
+    z-index: 1200;
+    padding: 24px;
+}
+
+.modal-overlay.open {
+    display: flex;
+}
+
+.modal-card {
+    background: #fff;
+    max-width: 880px;
+    width: 100%;
+    border-radius: 12px;
+    box-shadow: 0 20px 60px rgba(2,6,23,0.4);
+    padding: 22px 26px;
+    color: #222;
+}
+
+.modal-card h3 {
+    margin-top: 0;
+    color: var(--primary-color);
+}
+
+.modal-close {
+    position: absolute;
+    right: 18px;
+    top: 18px;
+    background: transparent;
+    border: none;
+    font-size: 20px;
+    color: #333;
+    cursor: pointer;
+}
+
+@media (max-width: 600px) {
+    .modal-card { padding: 16px; }
+}
+
 /* Features Section */
 .features-section {
     padding: 80px 0;
@@ -384,26 +585,105 @@ body {
 }
 
 .faq-item {
-    background: var(--primary-color);
-    color: white;
-    padding: 20px 25px;
-    margin-bottom: 10px;
-    border-radius: 10px;
-    font-weight: 500;
-    font-size: 16px;
-    cursor: pointer;
-    transition: background 0.3s ease;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+    margin-bottom: 12px;
 }
 
-.faq-item:hover {
-    background: var(--hover-color);
-}
+
 
 .faq-arrow {
     font-size: 18px;
+}
+
+/* FAQ answer (collapsible card) */
+.faq-question {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    cursor: pointer;
+    padding: 16px 20px;
+    background: var(--primary-color);
+    color: white;
+    border-radius: 10px;
+    font-weight: 500;
+    font-size: 16px;
+    transition: background 0.2s ease;
+}
+
+.faq-question:hover {
+    background: var(--hover-color);
+}
+
+.faq-answer {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.42s cubic-bezier(.2,.8,.2,1), opacity 0.28s ease, padding 0.28s ease, transform 0.28s ease;
+    opacity: 0;
+    padding: 0 20px;
+    text-align: left;
+    color: var(--faq-answer-text, #222222);
+    background: var(--card-bg, #ffffff);
+    border: 2px solid var(--primary-color);
+    border-radius: 8px;
+    box-shadow: 0 6px 18px rgba(31,41,55,0.06);
+    margin-top: 8px;
+    transform-origin: top;
+    transform: translateY(-6px);
+    will-change: max-height, opacity, transform;
+}
+
+.faq-item + .faq-item {
+    margin-top: 10px;
+}
+
+.faq-item.open .faq-answer {
+    opacity: 1;
+    padding: 12px 20px 18px 20px;
+    transform: translateY(0);
+}
+
+/* Article answer (collapsible) */
+.article-answer {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.42s cubic-bezier(.2,.8,.2,1), opacity 0.28s ease, padding 0.28s ease, transform 0.28s ease;
+    opacity: 0;
+    padding: 0 16px;
+    text-align: left;
+    color: var(--card-text, #222222);
+    background: var(--card-bg, #ffffff);
+    border: 2px solid rgba(74,151,130,0.12);
+    border-radius: 8px;
+    box-shadow: 0 6px 18px rgba(31,41,55,0.04);
+    margin-top: 8px;
+    transform-origin: left;
+    transform: translateX(-6px);
+    
+    box-sizing: border-box;
+    flex-grow: 1; 
+    min-width: 300px; 
+}
+
+.article-card.open .article-answer {
+    opacity: 1;
+    padding: 12px 16px 18px 16px;
+    transform: translateX(0);
+    margin-top: 0; 
+}
+
+.faq-answer p {
+    margin: 0;
+    color: inherit; 
+    line-height: 1.6;
+    font-size: 15px;
+}
+
+.faq-item .faq-arrow i {
+    transition: transform 0.28s ease;
+}
+
+.faq-item.open .faq-arrow i {
+    transform: rotate(180deg);
 }
 
 /* Footer */
@@ -513,15 +793,41 @@ body {
 @media (max-width: 768px) {
     .nav-container {
         flex-direction: column;
-        gap: 20px;
+    }
+
+    .left-side-header{
+        flex-direction: column;
+        gap: 0;
+    }
+
+    .left-side-header .logo .logo-img{
+        width: 70px;
+        height: auto;
+    }
+
+    .nav-links{
+        visibility: hidden;
+    }
+
+    .auth-buttons .btn-login .btn-started{
+        font-size: 12px;
+    }
+
+    .left-side-header .logo .logo-text{
+        font-size: 50px;
     }
 
     .hero h1 {
-        font-size: 32px;
+        font-size: 52px;
     }
 
     .hero h2 {
         font-size: 24px;
+    }
+
+    .hero-description {
+        font-size: 16px;
+        min-width: 340px;
     }
 
     .search-container {
@@ -532,12 +838,53 @@ body {
         grid-template-columns: 1fr;
     }
 
+    .tool-card h3 {
+        font-size: 24px;
+    }
+
+    .tool-card .btn-try{
+        font-size: 18px;
+    }
+
     .features-grid {
         grid-template-columns: 1fr;
     }
 
-    .footer-content {
-        grid-template-columns: 1fr;
-        text-align: center;
+    .footer-container .footer-content{
+        flex-direction: column-reverse;
+        justify-content: center;
+        align-items: center;
+    }
+    .web-dtail{
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        width: auto;
+    }
+
+    /* --- RESPONSIVE CARD STYLES --- */
+    .article-card {
+        width: 100%; 
+    }
+
+    .article-card.open {
+        flex-direction: column; 
+        width: 100%; 
+        max-width: 100%; 
+        gap: 0; 
+    }
+
+    .article-card.open .article-image-wrap {
+        width: 100%; 
+        aspect-ratio: 4 / 3; 
+    }
+    
+    .article-answer {
+        min-width: 0; 
+    }
+
+    .article-card.open .article-answer {
+        margin-top: 8px; 
     }
 }
