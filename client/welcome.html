@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Welcome to PHYSSI</title>
+    <title>PHYSSi - Welcome</title>
     <link rel="icon" href="/static/images/logo-new.ico">
     <link rel="stylesheet" href="/static/styles/welcome.css">
     <script src="https://kit.fontawesome.com/03b30ccae0.js" crossorigin="anonymous"></script>
@@ -12,166 +12,217 @@
 
 <body>
     <!-- Header -->
-    <header class="header">
-        <nav class="nav-container">
+    <div class="header">
+        <div class="nav-container">
             <div class="left-side-header">
-                <a href="#header" style="text-decoration: none;">
-                    <div class="logo">
-                        <img class="logo-img" src="/static/images/logo.png" alt="logo-image">
-                        <span class="logo-text">PHYSSI</span>
+                <div class="logo">
+                    <div class="logo-img">
+                        <img src="/static/images/logo.png" alt="logo-image" style="width: 100%; height: 100%;">
                     </div>
-                </a>
+                    <div class="logo-text">PHYSSi</div>
+                </div>
                 <div class="nav-links">
-                    <a href="#tools">AI Solver Tools</a>
-                    <a href="#help">Help</a>
+                    <a href="/">Home</a>
+                    <a href="/chatbot.html">Chatbot</a>
+                    <a href="/quiz-select.html">Quiz</a>
                 </div>
             </div>
             <div class="auth-buttons">
                 <a href="/login.html" class="btn-login">Login</a>
-                <a href="/chatbot.html" class="btn-started">Get Started</a>
+                <a href="/register.html" class="btn-started">Get Started</a>
             </div>
-        </nav>
-    </header>
+        </div>
+    </div>
 
     <!-- Hero Section -->
-    <section class="hero">
+    <div class="hero">
         <div class="hero-container">
-            <h1>Physiology</h1>
-            <h2>AI Solver by PHYSSI</h2>
-            <p class="hero-description">
-                Learning physiology by AI-Powered with high-school knowledge, research, conclusion and generate
-                question.
-            </p>
+            <h1>Welcome to</h1>
+            <h2>PHYSSi</h2>
+            <div class="hero-description">
+                Your intelligent assistant for learning physiology. Ask questions, take quizzes, and master the concepts of heart and brain anatomy.
+            </div>
+            <div class="search-container">
+                <input type="text" class="search-input" placeholder="What would you like to learn today?">
+                <button class="btn-submit" onclick="window.location.href='/chatbot.html'">
+                    <i class="fa-solid fa-paper-plane"></i> Ask
+                </button>
+            </div>
+            <a href="#features" class="demo-link">Learn more about features ↓</a>
         </div>
-    </section>
+    </div>
 
     <!-- AI Solver Tools Section -->
-    <section class="tools-section" id="tools">
+    <div class="tools-section">
         <div class="tools-container">
-            <h2>AI Solver Tools</h2>
+            <h2>AI-Powered Learning Tools</h2>
             <div class="tools-grid">
                 <div class="tool-card">
-                    <div class="tool-icon"><i class="fa-solid fa-comments"></i></div>
-                    <h3>Physiology AI Chat bot</h3>
-                    <p>You can ask any question in physiology or prompts what you want to do.</p>
-                    <a href="/chatbot.html"><button class="btn-try">Let's try</button></a>
+                    <div class="tool-icon">
+                        <i class="fa-solid fa-comments"></i>
+                    </div>
+                    <h3>AI Chatbot</h3>
+                    <p>Ask questions about physiology and get instant, accurate answers powered by AI.</p>
+                    <button class="btn-try" onclick="window.location.href='/chatbot.html'">Try Now</button>
                 </div>
-
                 <div class="tool-card">
-                    <div class="tool-icon"><i class="fa-solid fa-pen"></i></div>
-                    <h3>AI Quiz Generator</h3>
-                    <p>Testing your knowledge to quiz generate by AI-Powered</p>
-                    <a href="/chatbot.html"><button class="btn-try">Let's try</button></a>
+                    <div class="tool-icon">
+                        <i class="fa-solid fa-brain"></i>
+                    </div>
+                    <h3>Interactive Quiz</h3>
+                    <p>Test your knowledge with AI-generated quizzes on heart and brain anatomy.</p>
+                    <button class="btn-try" id="openQuizModalBtn">Try Now</button>
                 </div>
             </div>
         </div>
-    </section>
+    </div>
 
     <!-- Features Section -->
-    <section class="features-section">
+    <div class="features-section" id="features">
         <div class="features-container">
-            <h2>Features</h2>
+            <h2>Why Choose PHYSSi?</h2>
             <div class="features-grid">
                 <div class="feature-card">
-                    <div class="feature-icon"><i class="fa-solid fa-book-open"></i></div>
-                    <p>Easy to learning with AI chat bot.</p>
+                    <div class="feature-icon">
+                        <i class="fa-solid fa-robot"></i>
+                    </div>
+                    <p>AI-powered responses using Google Gemini for accurate information</p>
                 </div>
-
                 <div class="feature-card">
-                    <div class="feature-icon"><i class="fa-solid fa-cubes"></i></div>
-                    <p>Choose your topic for generate your quiz.</p>
+                    <div class="feature-icon">
+                        <i class="fa-solid fa-graduation-cap"></i>
+                    </div>
+                    <p>Specialized content for heart and brain physiology</p>
                 </div>
-
                 <div class="feature-card">
-                    <div class="feature-icon"><i class="fa-solid fa-dice"></i></div>
-                    <p>High-Quality answer showing context step-by-step.</p>
+                    <div class="feature-icon">
+                        <i class="fa-solid fa-chart-line"></i>
+                    </div>
+                    <p>Track your learning progress with quiz results</p>
                 </div>
-
                 <div class="feature-card">
-                    <div class="feature-icon"><i class="fa-solid fa-scissors"></i></div>
-                    <p>A lot of customization, you can control quiz generate, custom AI Chatbot.</p>
-                </div>
-
-                <div class="feature-card">
-                    <div class="feature-icon"><i class="fa-solid fa-trophy"></i></div>
-                    <p>Challenge your experience before learning it with exam testing generate by AI.</p>
+                    <div class="feature-icon">
+                        <i class="fa-solid fa-book-open"></i>
+                    </div>
+                    <p>Comprehensive explanations for every quiz question</p>
                 </div>
             </div>
         </div>
-    </section>
+    </div>
 
     <!-- FAQ Section -->
-    <section class="faq-section">
+    <div class="faq-section">
         <div class="faq-container">
-            <div class="faq-icon"><i class="fa-solid fa-circle-question"></i></div>
+            <div class="faq-icon">
+                <i class="fa-solid fa-circle-question"></i>
+            </div>
             <h2>Frequently Asked Questions</h2>
-
             <div class="faq-item">
-                <span>How is difficult to use for learning?</span>
-                <span class="faq-arrow"><i class="fa-solid fa-chevron-up"></i></span>
+                <span>How does the AI chatbot work?</span>
+                <span class="faq-arrow">→</span>
             </div>
-
             <div class="faq-item">
-                <span>How is it different from Google Gemini?</span>
-                <span class="faq-arrow"><i class="fa-solid fa-chevron-up"></i></span>
+                <span>Can I save my quiz results?</span>
+                <span class="faq-arrow">→</span>
             </div>
-
             <div class="faq-item">
-                <span>How effective is quiz generate?</span>
-                <span class="faq-arrow"><i class="fa-solid fa-chevron-up"></i></span>
+                <span>Is PHYSSi free to use?</span>
+                <span class="faq-arrow">→</span>
             </div>
-
             <div class="faq-item">
-                <span>Can I use it anywhere?</span>
-                <span class="faq-arrow"><i class="fa-solid fa-chevron-up"></i></span>
+                <span>What topics are covered?</span>
+                <span class="faq-arrow">→</span>
             </div>
         </div>
-    </section>
+    </div>
 
     <!-- Footer -->
-    <footer class="footer">
+    <div class="footer">
         <div class="footer-container">
             <div class="footer-content">
-                <div>
-                    <div class="footer-logo">
-                        <div class="footer-logo-box">
-                            <img class="logo-img" src="/static/images/logo.png" alt="logo-image">
-                        </div>
-                        <span class="footer-logo-text">PHYSSi</span>
+                <div class="footer-logo">
+                    <div class="footer-logo-box">
+                        <img src="/static/images/logo.png" alt="logo" style="width: 100%; height: 100%;">
                     </div>
-                    <p style="color: #bdc3c7; font-size: 12px;">© 2025 PHYSSi. All rights reserved</p>
-                    <p style="color: #7f8c8d; font-size: 12px;">PHYSSi can make mistakes. Please cross-validate crucial
-                        steps.</p>
+                    <div class="footer-logo-text">PHYSSi</div>
                 </div>
                 <div class="footer-right-side">
                     <div class="footer-section">
-                        <h3>Tools</h3>
-                        <a href="/chatbot.html">AI Chatbot</a>
-                        <a href="/chatbot.html">Quiz generate</a>
+                        <h3>Product</h3>
+                        <a href="/chatbot.html">Chatbot</a>
+                        <a href="/quiz-select.html">Quiz</a>
+                        <a href="#features">Features</a>
                     </div>
-
                     <div class="footer-section">
-                        <h3>About</h3>
-                        <a href="#privacy">Privacy Policy</a>
-                        <a href="#terms">Terms of Service</a>
+                        <h3>Support</h3>
+                        <a href="#faq">FAQ</a>
+                        <a href="#">Help Center</a>
+                        <a href="#">Contact</a>
                     </div>
-
                     <div class="footer-section">
-                        <h3>Contact</h3>
-                        <a href="#contact">Contact us</a>
-                        <div class="social-links" style="margin-top: 15px;">
-                            <a href="#facebook" class="social-icon"><i class="fa-brands fa-facebook"></i></a>
-                            <a href="#instagram" class="social-icon"><i class="fa-brands fa-instagram"></i></a>
-                            <a href="#linkedin" class="social-icon"><i class="fa-brands fa-linkedin"></i></a>
-                            <a href="#twitter" class="social-icon"><i class="fa-brands fa-twitter"></i></a>
+                        <h3>Follow Us</h3>
+                        <div class="social-links">
+                            <a href="#" class="social-icon"><i class="fa-brands fa-facebook"></i></a>
+                            <a href="#" class="social-icon"><i class="fa-brands fa-twitter"></i></a>
+                            <a href="#" class="social-icon"><i class="fa-brands fa-instagram"></i></a>
                         </div>
                     </div>
                 </div>
             </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 PHYSSi. All rights reserved.</p>
+            </div>
         </div>
-    </footer>
+    </div>
+
+    <!-- 🎯 Quiz Modal -->
+    <div class="quiz-modal" id="quizModal">
+        <div class="quiz-modal-content">
+            <button class="quiz-modal-close" id="closeQuizModalBtn">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+            <div class="quiz-modal-icon">
+                <i class="fa-solid fa-dice"></i>
+            </div>
+            <h2>AI Quiz Generator</h2>
+            <p>Testing your knowledge to quiz generate by AI-Powered</p>
+            <button class="btn-lets-try" id="letsTryBtn">
+                <i class="fa-solid fa-play"></i> Let's try
+            </button>
+        </div>
+    </div>
 
     <script src="/static/scripts/welcome.js"></script>
+    
+    <!-- 🎯 Quiz Modal Scripts -->
+    <script>
+        const quizModal = document.getElementById('quizModal');
+        const openQuizModalBtn = document.getElementById('openQuizModalBtn');
+        const closeQuizModalBtn = document.getElementById('closeQuizModalBtn');
+        const letsTryBtn = document.getElementById('letsTryBtn');
+
+        // เปิด modal
+        openQuizModalBtn.addEventListener('click', () => {
+            quizModal.classList.add('show');
+        });
+
+        // ปิด modal
+        closeQuizModalBtn.addEventListener('click', () => {
+            quizModal.classList.remove('show');
+        });
+
+        // ปิด modal เมื่อคลิกนอก content
+        quizModal.addEventListener('click', (e) => {
+            if (e.target === quizModal) {
+                quizModal.classList.remove('show');
+            }
+        });
+
+        // ปุ่ม Let's try - ไปหน้า Quiz
+        letsTryBtn.addEventListener('click', () => {
+            window.location.href = '/quiz-select.html';
+        });
+    </script>
 </body>
 
 </html>
