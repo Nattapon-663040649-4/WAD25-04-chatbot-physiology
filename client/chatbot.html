@@ -18,7 +18,8 @@
         <div class="sidebar-icon" id="toggleHistoryBtn" title="Chat History">
             <i class="fa-solid fa-clock-rotate-left"></i>
         </div>
-        <div class="sidebar-icon" style="position: relative;">
+        <!-- 🎲 ปุ่มลูกเต้าไปหน้า Quiz -->
+        <div class="sidebar-icon" id="quizBtn" title="Take Quiz" style="position: relative; cursor: pointer;">
             <i class="fa-solid fa-dice"></i>
             <span style="position: absolute; top: -4px; right: -4px; width: 8px; height: 8px; background: var(--primary-color); border-radius: 50%;"></span>
         </div>
@@ -98,6 +99,14 @@
     </div>
 
     <script src="/static/scripts/chatbot-page.js"></script>
+    
+    <!-- 🎯 เพิ่ม Script สำหรับปุ่ม Quiz -->
+    <script>
+        // ปุ่มลูกเต้า - ไปหน้า Quiz
+        document.getElementById('quizBtn').addEventListener('click', () => {
+            window.location.href = '/quiz-select.html';
+        });
+    </script>
 </body>
 
 </html>
