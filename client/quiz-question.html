@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PHYSSi - Quiz</title>
+    <link rel="icon" href="/static/images/logo-new.ico">
+    <link rel="stylesheet" href="/static/styles/quiz-question.css">
+    <script src="https://kit.fontawesome.com/03b30ccae0.js" crossorigin="anonymous"></script>
+</head>
+
+<body>
+    <!-- Header -->
+    <div class="quiz-header">
+        <div class="header-content">
+            <div class="logo-section">
+                <img src="/static/images/logo.png" alt="PHYSSi Logo" class="header-logo">
+                <span class="header-title">PHYSSi Quiz</span>
+            </div>
+            <div class="quiz-info">
+                <div class="info-item">
+                    <i class="fa-solid fa-book"></i>
+                    <span id="topicDisplay">Loading...</span>
+                </div>
+                <div class="info-item">
+                    <i class="fa-solid fa-signal"></i>
+                    <span id="difficultyDisplay">Loading...</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Progress Bar -->
+    <div class="progress-container">
+        <div class="progress-bar" id="progressBar"></div>
+        <div class="progress-text">
+            <span>Question <span id="currentQuestion">1</span> of <span id="totalQuestions">10</span></span>
+            <span id="timer">Time: 00:00</span>
+        </div>
+    </div>
+
+    <!-- Quiz Container -->
+    <div class="quiz-container">
+        <div class="question-card" id="questionCard">
+            <!-- Question will be inserted here -->
+        </div>
+
+        <!-- Navigation Buttons -->
+        <div class="navigation-buttons">
+            <button class="btn-nav btn-prev" id="prevBtn" disabled>
+                <i class="fa-solid fa-chevron-left"></i>
+                Previous
+            </button>
+            <button class="btn-nav btn-next" id="nextBtn">
+                Next
+                <i class="fa-solid fa-chevron-right"></i>
+            </button>
+            <button class="btn-nav btn-submit" id="submitBtn" style="display: none;">
+                <i class="fa-solid fa-check"></i>
+                Submit Quiz
+            </button>
+        </div>
+    </div>
+
+    <!-- Question Navigator Sidebar -->
+    <div class="question-navigator">
+        <h3><i class="fa-solid fa-list"></i> Questions</h3>
+        <div class="navigator-grid" id="navigatorGrid">
+            <!-- Question numbers will be inserted here -->
+        </div>
+        <div class="navigator-legend">
+            <div class="legend-item">
+                <span class="legend-box answered"></span>
+                <small>Answered</small>
+            </div>
+            <div class="legend-item">
+                <span class="legend-box current"></span>
+                <small>Current</small>
+            </div>
+            <div class="legend-item">
+                <span class="legend-box unanswered"></span>
+                <small>Unanswered</small>
+            </div>
+        </div>
+    </div>
+
+    <!-- Exit Confirmation Modal -->
+    <div class="modal" id="exitModal">
+        <div class="modal-content">
+            <i class="fa-solid fa-triangle-exclamation"></i>
+            <h2>Exit Quiz?</h2>
+            <p>Your progress will be lost if you exit now.</p>
+            <div class="modal-buttons">
+                <button class="btn-cancel" id="cancelExitBtn">Cancel</button>
+                <button class="btn-confirm" id="confirmExitBtn">Exit</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="/static/scripts/quiz-question.js"></script>
+</body>
+
+</html>

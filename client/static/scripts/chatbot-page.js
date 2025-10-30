@@ -33,19 +33,11 @@ let currentChatId = null;
 // ==================== User Session Management ====================
 function loadUserSession() {
     const userData = localStorage.getItem('userData');
-    
-    console.log('🔍 Checking localStorage for userData...', userData);
-    
     if (userData) {
-        try {
-            currentUser = JSON.parse(userData);
-            console.log('✅ User logged in successfully:', currentUser);
-        } catch (error) {
-            console.error('❌ Error parsing userData from localStorage:', error);
-            localStorage.removeItem('userData'); // ลบข้อมูลที่เสีย
-        }
+        currentUser = JSON.parse(userData);
+        console.log('User logged in:', currentUser.username);
     } else {
-        console.log('⚠️ No userData found - Guest mode activated');
+        console.log('Guest mode');
     }
 }
 
@@ -57,7 +49,6 @@ function updateHistoryUserInfo() {
                 <span>Logged in as <strong>${currentUser.username}</strong></span>
             </div>
         `;
-        console.log('✅ History sidebar updated for user:', currentUser.username);
     } else {
         historyUserInfo.innerHTML = `
             <div class="user-status">
@@ -65,7 +56,6 @@ function updateHistoryUserInfo() {
                 <span>Guest Mode (History won't be saved)</span>
             </div>
         `;
-        console.log('⚠️ History sidebar shows Guest Mode');
     }
 }
 
@@ -84,20 +74,16 @@ async function loadChatHistory() {
     
     try {
         if (currentUser && currentUser.userId) {
-            console.log('🔄 Loading history from database for userId:', currentUser.userId);
             // Load from database (authenticated user)
             const response = await fetch(`/api/history/${currentUser.userId}`);
             const data = await response.json();
             
             if (data.success && data.history.length > 0) {
-                console.log('✅ History loaded:', data.history.length, 'items');
                 displayHistory(data.history);
             } else {
-                console.log('ℹ️ No history found in database');
                 showEmptyHistory();
             }
         } else {
-            console.log('⚠️ Guest mode - checking session history');
             // Load from session (guest user)
             if (sessionHistory.length > 0) {
                 displayHistory(sessionHistory);
@@ -106,7 +92,7 @@ async function loadChatHistory() {
             }
         }
     } catch (error) {
-        console.error('❌ Error loading history:', error);
+        console.error('Error loading history:', error);
         historyList.innerHTML = '<div style="text-align: center; padding: 20px; color: #ef4444;">Failed to load history</div>';
     }
 }
@@ -178,11 +164,11 @@ async function saveToHistory(prompt, response) {
     
     if (currentUser && currentUser.userId) {
         // Already saved by backend in /get endpoint
-        console.log('✅ History saved to database');
+        console.log('History saved to database');
     } else {
         // Save to session (guest)
         sessionHistory.unshift(historyItem);
-        console.log('⚠️ History saved to session (Guest mode)');
+        console.log('History saved to session');
     }
     
     await loadChatHistory();
@@ -302,9 +288,6 @@ async function getAIResponseFromServer(message) {
         
         if (currentUser && currentUser.userId) {
             formData.append('userId', currentUser.userId);
-            console.log('📤 Sending message with userId:', currentUser.userId);
-        } else {
-            console.log('📤 Sending message as guest');
         }
 
         const response = await fetch('/get', {
@@ -315,10 +298,9 @@ async function getAIResponseFromServer(message) {
         if (!response.ok) throw new Error('AI server error');
 
         const text = await response.text();
-        console.log('✅ AI response received');
         return text;
     } catch (err) {
-        console.error('❌ Error getting AI response:', err);
+        console.error(err);
         return "Sorry, something went wrong. Please try again.";
     }
 }
@@ -401,12 +383,7 @@ document.addEventListener('click', e => {
 // User Avatar Click (Go to Profile or Login)
 userAvatar.addEventListener('click', () => {
     if (currentUser) {
-        // แสดงข้อมูลผู้ใช้และเสนอตัวเลือก logout
-        const message = `Logged in as: ${currentUser.username}\n\nWould you like to logout?`;
-        if (confirm(message)) {
-            localStorage.removeItem('userData');
-            window.location.href = '/login.html';
-        }
+        alert(`Logged in as: ${currentUser.username}\n\nProfile page coming soon!`);
     } else {
         if (confirm('You are in guest mode. Would you like to login to save your chat history?')) {
             window.location.href = '/login.html';
@@ -416,9 +393,3 @@ userAvatar.addEventListener('click', () => {
 
 // Auto-focus Input
 chatInput.focus();
-
-// ==================== Debug Info (สามารถลบออกได้เมื่อเสร็จ) ====================
-console.log('='.repeat(50));
-console.log('🚀 PHYSSi Chatbot Initialized');
-console.log('User Status:', currentUser ? `Logged in as ${currentUser.username}` : 'Guest Mode');
-console.log('='.repeat(50));
