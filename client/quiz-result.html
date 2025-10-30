@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PHYSSi - Quiz Results</title>
+    <link rel="icon" href="/static/images/logo-new.ico">
+    <link rel="stylesheet" href="/static/styles/quiz-result.css">
+    <script src="https://kit.fontawesome.com/03b30ccae0.js" crossorigin="anonymous"></script>
+</head>
+
+<body>
+    <!-- Header -->
+    <div class="result-header">
+        <div class="header-content">
+            <div class="logo-section">
+                <img src="/static/images/logo.png" alt="PHYSSi Logo" class="header-logo">
+                <span class="header-title">PHYSSi Quiz Results</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Score Summary -->
+    <div class="score-container">
+        <div class="score-card">
+            <div class="score-icon" id="scoreIcon">
+                <i class="fa-solid fa-trophy"></i>
+            </div>
+            <h1 class="score-title">Your Score</h1>
+            <div class="score-display">
+                <span class="score-value" id="scoreValue">0</span>
+                <span class="score-total">/ 100</span>
+            </div>
+            <div class="score-details">
+                <div class="detail-item">
+                    <i class="fa-solid fa-check-circle"></i>
+                    <span><span id="correctCount">0</span> Correct</span>
+                </div>
+                <div class="detail-item">
+                    <i class="fa-solid fa-times-circle"></i>
+                    <span><span id="incorrectCount">0</span> Incorrect</span>
+                </div>
+                <div class="detail-item">
+                    <i class="fa-solid fa-clock"></i>
+                    <span id="timeSpent">0:00</span>
+                </div>
+            </div>
+            <div class="score-message" id="scoreMessage">Great job!</div>
+        </div>
+    </div>
+
+    <!-- Answers Review -->
+    <div class="review-container">
+        <div class="review-header">
+            <h2><i class="fa-solid fa-list-check"></i> Answer Review</h2>
+            <div class="filter-buttons">
+                <button class="filter-btn active" data-filter="all">
+                    All Questions
+                </button>
+                <button class="filter-btn" data-filter="correct">
+                    <i class="fa-solid fa-check"></i> Correct
+                </button>
+                <button class="filter-btn" data-filter="incorrect">
+                    <i class="fa-solid fa-times"></i> Incorrect
+                </button>
+            </div>
+        </div>
+
+        <div class="questions-list" id="questionsList">
+            <!-- Questions will be inserted here -->
+        </div>
+    </div>
+
+    <!-- Action Buttons -->
+    <div class="action-buttons">
+        <a href="/quiz-select.html" class="btn-action btn-retry">
+            <i class="fa-solid fa-rotate-right"></i>
+            Try Again
+        </a>
+        <a href="/" class="btn-action btn-home">
+            <i class="fa-solid fa-home"></i>
+            Back to Home
+        </a>
+        <a href="/profile.html" class="btn-action btn-profile">
+            <i class="fa-solid fa-chart-line"></i>
+            View Progress
+        </a>
+    </div>
+
+    <!-- Confetti Canvas (for celebration) -->
+    <canvas id="confetti"></canvas>
+
+    <script src="/static/scripts/quiz-result.js"></script>
+</body>
+
+</html>

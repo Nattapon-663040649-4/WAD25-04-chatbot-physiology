@@ -1,0 +1,532 @@
+:root {
+    --primary-color: #4A9782;
+    --secondary-color: #DCD0A8;
+    --hover-color: #004030;
+    --background: #f8f9fa;
+    --card-bg: white;
+    --text-primary: #2c3e50;
+    --text-secondary: #7f8c8d;
+    --border-color: #e0e0e0;
+    --success-color: #22c55e;
+    --warning-color: #f59e0b;
+    --danger-color: #ef4444;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: var(--background);
+    color: var(--text-primary);
+    min-height: 100vh;
+}
+
+/* ==================== Header ==================== */
+.header {
+    background: white;
+    padding: 15px 0;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+}
+
+.nav-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 20px;
+}
+
+.left-side-header {
+    display: flex;
+    align-items: center;
+    gap: 40px;
+}
+
+.logo {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    cursor: pointer;
+}
+
+.logo-img {
+    width: 40px;
+    height: 40px;
+}
+
+.logo-text {
+    font-size: 24px;
+    font-weight: bold;
+    background: linear-gradient(to right, var(--primary-color), var(--secondary-color));
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.nav-links {
+    display: flex;
+    gap: 30px;
+    align-items: center;
+}
+
+.nav-links a {
+    text-decoration: none;
+    color: #666;
+    font-weight: 500;
+    transition: color 0.3s;
+}
+
+.nav-links a:hover {
+    color: var(--primary-color);
+}
+
+.auth-buttons {
+    display: flex;
+    gap: 15px;
+}
+
+.btn-login {
+    padding: 10px 20px;
+    background: transparent;
+    border: 2px solid var(--primary-color);
+    color: var(--primary-color);
+    border-radius: 25px;
+    text-decoration: none;
+    font-weight: 500;
+    transition: all 0.3s;
+}
+
+.btn-login:hover {
+    background: var(--primary-color);
+    color: white;
+}
+
+.btn-started {
+    padding: 10px 20px;
+    background: var(--primary-color);
+    color: white;
+    border-radius: 25px;
+    text-decoration: none;
+    font-weight: 500;
+    transition: background 0.3s;
+}
+
+.btn-started:hover {
+    background: var(--hover-color);
+}
+
+/* ==================== Quiz Selection ==================== */
+.quiz-selection-container {
+    max-width: 800px;
+    margin: 50px auto;
+    padding: 20px;
+}
+
+.quiz-card {
+    background: var(--card-bg);
+    border-radius: 20px;
+    padding: 40px;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+    position: relative;
+}
+
+.quiz-header {
+    text-align: center;
+    margin-bottom: 40px;
+}
+
+.quiz-header i {
+    font-size: 60px;
+    color: var(--primary-color);
+    margin-bottom: 15px;
+}
+
+.quiz-header h1 {
+    font-size: 32px;
+    color: var(--text-primary);
+    margin-bottom: 10px;
+}
+
+.quiz-header p {
+    color: var(--text-secondary);
+    font-size: 16px;
+}
+
+/* ==================== Form Groups ==================== */
+.form-group {
+    margin-bottom: 35px;
+}
+
+.form-group > label {
+    display: block;
+    font-size: 18px;
+    font-weight: 600;
+    color: var(--text-primary);
+    margin-bottom: 15px;
+}
+
+.form-group > label i {
+    color: var(--primary-color);
+    margin-right: 8px;
+}
+
+/* ==================== Topic Selection ==================== */
+.topic-options {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+}
+
+.topic-card {
+    position: relative;
+    border: 3px solid var(--border-color);
+    border-radius: 15px;
+    overflow: hidden;
+    transition: all 0.3s;
+    cursor: pointer;
+}
+
+.topic-card:hover {
+    border-color: var(--primary-color);
+    transform: translateY(-5px);
+    box-shadow: 0 5px 20px rgba(74, 151, 130, 0.2);
+}
+
+.topic-card input[type="radio"] {
+    position: absolute;
+    opacity: 0;
+}
+
+.topic-card input[type="radio"]:checked + label {
+    background: var(--primary-color);
+    color: white;
+}
+
+.topic-card label {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 30px 20px;
+    cursor: pointer;
+    transition: all 0.3s;
+}
+
+.topic-card label i {
+    font-size: 50px;
+    margin-bottom: 15px;
+    color: var(--primary-color);
+}
+
+.topic-card input[type="radio"]:checked + label i {
+    color: white;
+}
+
+.topic-card label span {
+    font-size: 18px;
+    font-weight: 600;
+}
+
+/* ==================== Number Slider ==================== */
+.slider-container {
+    background: var(--background);
+    padding: 20px;
+    border-radius: 12px;
+}
+
+.slider-container input[type="range"] {
+    width: 100%;
+    height: 8px;
+    border-radius: 5px;
+    background: linear-gradient(to right, var(--primary-color), var(--secondary-color));
+    outline: none;
+    -webkit-appearance: none;
+    margin-bottom: 15px;
+}
+
+.slider-container input[type="range"]::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    background: white;
+    border: 3px solid var(--primary-color);
+    cursor: pointer;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+}
+
+.slider-container input[type="range"]::-moz-range-thumb {
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    background: white;
+    border: 3px solid var(--primary-color);
+    cursor: pointer;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+}
+
+.slider-value {
+    text-align: center;
+    font-size: 24px;
+    font-weight: 700;
+    color: var(--primary-color);
+}
+
+/* ==================== Difficulty Selection ==================== */
+.difficulty-options {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 15px;
+}
+
+.difficulty-card {
+    position: relative;
+    border: 3px solid var(--border-color);
+    border-radius: 12px;
+    overflow: hidden;
+    transition: all 0.3s;
+    cursor: pointer;
+}
+
+.difficulty-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+}
+
+.difficulty-card[data-difficulty="easy"]:hover {
+    border-color: var(--success-color);
+}
+
+.difficulty-card[data-difficulty="medium"]:hover {
+    border-color: var(--warning-color);
+}
+
+.difficulty-card[data-difficulty="hard"]:hover {
+    border-color: var(--danger-color);
+}
+
+.difficulty-card input[type="radio"] {
+    position: absolute;
+    opacity: 0;
+}
+
+.difficulty-card input[type="radio"]:checked + label {
+    color: white;
+}
+
+.difficulty-card[data-difficulty="easy"] input[type="radio"]:checked + label {
+    background: var(--success-color);
+}
+
+.difficulty-card[data-difficulty="medium"] input[type="radio"]:checked + label {
+    background: var(--warning-color);
+}
+
+.difficulty-card[data-difficulty="hard"] input[type="radio"]:checked + label {
+    background: var(--danger-color);
+}
+
+.difficulty-card label {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 25px 15px;
+    cursor: pointer;
+    transition: all 0.3s;
+    text-align: center;
+}
+
+.difficulty-card label i {
+    font-size: 35px;
+    margin-bottom: 10px;
+}
+
+.difficulty-card[data-difficulty="easy"] label i {
+    color: var(--success-color);
+}
+
+.difficulty-card[data-difficulty="medium"] label i {
+    color: var(--warning-color);
+}
+
+.difficulty-card[data-difficulty="hard"] label i {
+    color: var(--danger-color);
+}
+
+.difficulty-card input[type="radio"]:checked + label i {
+    color: white;
+}
+
+.difficulty-card label span {
+    font-size: 16px;
+    font-weight: 600;
+    margin-bottom: 5px;
+}
+
+.difficulty-card label small {
+    font-size: 12px;
+    color: var(--text-secondary);
+}
+
+.difficulty-card input[type="radio"]:checked + label small {
+    color: rgba(255, 255, 255, 0.8);
+}
+
+/* ==================== Language Selection ==================== */
+.language-options {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 15px;
+}
+
+.language-card {
+    position: relative;
+    border: 3px solid var(--border-color);
+    border-radius: 12px;
+    overflow: hidden;
+    transition: all 0.3s;
+    cursor: pointer;
+}
+
+.language-card:hover {
+    border-color: var(--primary-color);
+    transform: translateY(-3px);
+    box-shadow: 0 5px 15px rgba(74, 151, 130, 0.2);
+}
+
+.language-card input[type="radio"] {
+    position: absolute;
+    opacity: 0;
+}
+
+.language-card input[type="radio"]:checked + label {
+    background: var(--primary-color);
+    color: white;
+}
+
+.language-card label {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 25px 20px;
+    cursor: pointer;
+    transition: all 0.3s;
+    text-align: center;
+}
+
+.language-card label i {
+    font-size: 40px;
+    margin-bottom: 12px;
+    color: var(--primary-color);
+}
+
+.language-card input[type="radio"]:checked + label i {
+    color: white;
+}
+
+.language-card label span {
+    font-size: 16px;
+    font-weight: 600;
+}
+
+/* ==================== Start Button ==================== */
+.btn-start-quiz {
+    width: 100%;
+    padding: 18px;
+    background: linear-gradient(to right, var(--primary-color), var(--secondary-color));
+    color: white;
+    border: none;
+    border-radius: 50px;
+    font-size: 18px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    margin-top: 40px;
+}
+
+.btn-start-quiz:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 25px rgba(74, 151, 130, 0.3);
+}
+
+.btn-start-quiz:active {
+    transform: translateY(0);
+}
+
+/* ==================== Loading Overlay ==================== */
+.loading-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(255, 255, 255, 0.95);
+    display: none;
+    align-items: center;
+    justify-content: center;
+    border-radius: 20px;
+    z-index: 1000;
+}
+
+.loading-overlay.show {
+    display: flex;
+}
+
+.loading-content {
+    text-align: center;
+}
+
+.loading-content i {
+    font-size: 60px;
+    color: var(--primary-color);
+    margin-bottom: 20px;
+}
+
+.loading-content p {
+    font-size: 20px;
+    font-weight: 600;
+    color: var(--text-primary);
+    margin-bottom: 10px;
+}
+
+.loading-content small {
+    color: var(--text-secondary);
+}
+
+/* ==================== Responsive ==================== */
+@media (max-width: 768px) {
+    .quiz-card {
+        padding: 25px;
+    }
+
+    .topic-options {
+        grid-template-columns: 1fr;
+    }
+
+    .difficulty-options {
+        grid-template-columns: 1fr;
+    }
+
+    .quiz-header h1 {
+        font-size: 24px;
+    }
+
+    .nav-links {
+        display: none;
+    }
+}
