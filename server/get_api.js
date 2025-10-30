@@ -84,6 +84,14 @@ app.get("/quiz-select.html", (req, res) => {
     res.sendFile(path.join(__dirname, "../client/quiz-select.html"));
 });
 
+app.get("/quiz-question.html", (req, res) => {
+    res.sendFile(path.join(__dirname, "../client/quiz-question.html"));
+});
+
+app.get("/quiz-result.html", (req, res) => {
+    res.sendFile(path.join(__dirname, "../client/quiz-result.html"));
+});
+
 // ==================== API Authentication ====================
 app.post("/api/register", async (req, res) => {
     const { username, password, email } = req.body;
@@ -267,6 +275,204 @@ app.delete("/api/history/:userId/:historyId", async (req, res) => {
     } catch (error) {
         console.error("Delete single history error:", error);
         res.status(500).json({ success: false, message: "Server error deleting history item." });
+    }
+});
+
+// ==================== API Quiz Generation ====================
+app.post("/api/quiz/generate", async (req, res) => {
+    const { topic, numQuestions, difficulty, language } = req.body;
+    
+    if (!topic || !numQuestions || !difficulty || !language) {
+        return res.status(400).json({ success: false, message: "Missing required fields" });
+    }
+
+    try {
+        const model = genAI.getGenerativeModel({ model: "gemini-2.0-flash" });
+        
+        // Define topic content mapping
+        const topicContent = {
+            heart: {
+                en: "heart anatomy, cardiovascular system, cardiac cycle, blood circulation, heart valves, ECG, arrhythmias, cardiac disorders",
+                th: "กายวิภาคหัวใจ, ระบบหัวใจและหลอดเลือด, วัฏจักรหัวใจ, การไหลเวียนของเลือด, ลิ้นหัวใจ, คลื่นไฟฟ้าหัวใจ, ภาวะหัวใจเต้นผิดจังหวะ, โรคหัวใจ"
+            },
+            brain: {
+                en: "brain anatomy, nervous system, neurotransmitters, brain regions, cognitive functions, neurological disorders",
+                th: "กายวิภาคสมอง, ระบบประสาท, สารสื่อประสาท, ส่วนต่างๆของสมอง, การทำงานทางสติปัญญา, โรคทางระบบประสาท"
+            }
+        };
+
+        const difficultyInstructions = {
+            easy: {
+                en: "basic concepts and definitions, suitable for beginners",
+                th: "แนวคิดและคำจำกัดความพื้นฐาน เหมาะสำหรับผู้เริ่มต้น"
+            },
+            medium: {
+                en: "intermediate level with some detailed concepts",
+                th: "ระดับกลาง มีแนวคิดที่มีรายละเอียดบางอย่าง"
+            },
+            hard: {
+                en: "advanced topics with in-depth understanding required",
+                th: "หัวข้อขั้นสูง ต้องการความเข้าใจเชิงลึก"
+            }
+        };
+
+        const languageInstruction = language === 'th' 
+            ? "Generate questions in THAI language (ภาษาไทย). All questions, options, explanations, and subtopics must be in Thai."
+            : "Generate questions in ENGLISH language. All questions, options, explanations, and subtopics must be in English.";
+
+        const prompt = `${languageInstruction}
+
+Generate exactly ${numQuestions} multiple-choice questions about ${topicContent[topic][language]}.
+
+**Difficulty Level:** ${difficultyInstructions[difficulty][language]}
+
+**Requirements:**
+1. Each question must have exactly 4 answer options
+2. Only ONE option should be correct
+3. For each question in "${topic}" topic, identify which SUBTOPIC it belongs to
+   - For heart: "Cardiac Cycle", "Blood Vessels", "Heart Valves", "ECG", etc. (or Thai equivalents)
+   - For brain: "Brain Anatomy", "Neurotransmitters", "Brain Functions", etc. (or Thai equivalents)
+4. Provide a brief explanation for the correct answer
+5. Mix questions across different subtopics within ${topic}
+
+**Output Format (JSON):**
+{
+  "questions": [
+    {
+      "question": "Question text here in ${language === 'th' ? 'Thai' : 'English'}",
+      "subtopic": "Specific subtopic name in ${language === 'th' ? 'Thai' : 'English'}",
+      "options": ["Option A", "Option B", "Option C", "Option D"],
+      "correctAnswer": 0,
+      "explanation": "Brief explanation in ${language === 'th' ? 'Thai' : 'English'}"
+    }
+  ]
+}
+
+**Important:**
+- correctAnswer is the INDEX (0-3) of the correct option
+- Questions should be clear and unambiguous
+- ALL text must be in ${language === 'th' ? 'THAI (ภาษาไทย)' : 'ENGLISH'} language
+- Return ONLY valid JSON, no additional text
+
+Generate ${numQuestions} questions now.`;
+
+        console.log(`🧪 Generating ${numQuestions} ${difficulty} questions about ${topic} in ${language}...`);
+
+        const result = await model.generateContent(prompt);
+        const responseText = result.response.text();
+        
+        // Extract JSON from response
+        let quizData;
+        try {
+            // Try to parse directly
+            quizData = JSON.parse(responseText);
+        } catch (e) {
+            // Try to extract JSON from markdown code blocks
+            const jsonMatch = responseText.match(/```json\s*([\s\S]*?)\s*```/) || 
+                             responseText.match(/```\s*([\s\S]*?)\s*```/);
+            if (jsonMatch) {
+                quizData = JSON.parse(jsonMatch[1]);
+            } else {
+                throw new Error("Could not parse quiz data from AI response");
+            }
+        }
+
+        // Validate quiz data
+        if (!quizData.questions || quizData.questions.length === 0) {
+            throw new Error("No questions generated");
+        }
+
+        // Ensure we have exactly the requested number of questions
+        quizData.questions = quizData.questions.slice(0, numQuestions);
+
+        console.log(`✅ Generated ${quizData.questions.length} questions successfully`);
+
+        res.json({
+            success: true,
+            quiz: quizData,
+            message: "Quiz generated successfully"
+        });
+
+    } catch (error) {
+        console.error("❌ Error generating quiz:", error);
+        res.status(500).json({
+            success: false,
+            message: "Failed to generate quiz. Please try again."
+        });
+    }
+});
+
+// ==================== API Save Quiz Result ====================
+app.post("/api/quiz/save-result", async (req, res) => {
+    const { userId, result } = req.body;
+
+    if (!userId || !result) {
+        return res.status(400).json({ success: false, message: "Missing userId or result" });
+    }
+
+    if (!mongoose.Types.ObjectId.isValid(userId)) {
+        return res.status(400).json({ success: false, message: "Invalid User ID" });
+    }
+
+    try {
+        const user = await User.findById(userId);
+        if (!user) {
+            return res.status(404).json({ success: false, message: "User not found" });
+        }
+
+        // Add result to user's quiz results
+        user.quizResults.push({
+            topic: result.topic,
+            score: result.score,
+            totalQuestions: result.totalQuestions,
+            difficulty: result.difficulty,
+            date: new Date()
+        });
+
+        await user.save();
+
+        console.log(`✅ Quiz result saved for user: ${user.username}`);
+
+        res.json({
+            success: true,
+            message: "Quiz result saved successfully"
+        });
+
+    } catch (error) {
+        console.error("❌ Error saving quiz result:", error);
+        res.status(500).json({
+            success: false,
+            message: "Failed to save quiz result"
+        });
+    }
+});
+
+// ==================== API Get User Quiz Results ====================
+app.get("/api/quiz/results/:userId", async (req, res) => {
+    const { userId } = req.params;
+
+    if (!mongoose.Types.ObjectId.isValid(userId)) {
+        return res.status(400).json({ success: false, message: "Invalid User ID" });
+    }
+
+    try {
+        const user = await User.findById(userId).select('quizResults username');
+        if (!user) {
+            return res.status(404).json({ success: false, message: "User not found" });
+        }
+
+        res.json({
+            success: true,
+            results: user.quizResults.reverse(), // Most recent first
+            username: user.username
+        });
+
+    } catch (error) {
+        console.error("❌ Error fetching quiz results:", error);
+        res.status(500).json({
+            success: false,
+            message: "Failed to fetch quiz results"
+        });
     }
 });
 

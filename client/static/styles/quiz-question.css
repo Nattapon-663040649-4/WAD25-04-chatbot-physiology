@@ -1,0 +1,507 @@
+:root {
+    --primary-color: #4A9782;
+    --secondary-color: #DCD0A8;
+    --hover-color: #004030;
+    --background: #f8f9fa;
+    --card-bg: white;
+    --text-primary: #2c3e50;
+    --text-secondary: #7f8c8d;
+    --border-color: #e0e0e0;
+    --success-color: #22c55e;
+    --warning-color: #f59e0b;
+    --danger-color: #ef4444;
+    --info-color: #3b82f6;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: var(--background);
+    color: var(--text-primary);
+    min-height: 100vh;
+}
+
+/* ==================== Header ==================== */
+.quiz-header {
+    background: white;
+    border-bottom: 2px solid var(--border-color);
+    padding: 20px 0;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+}
+
+.header-content {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.logo-section {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.header-logo {
+    width: 45px;
+    height: 45px;
+}
+
+.header-title {
+    font-size: 24px;
+    font-weight: 700;
+    background: linear-gradient(to right, var(--primary-color), var(--secondary-color));
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.quiz-info {
+    display: flex;
+    gap: 30px;
+}
+
+.info-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-weight: 500;
+    color: var(--text-secondary);
+}
+
+.info-item i {
+    color: var(--primary-color);
+}
+
+/* ==================== Progress Bar ==================== */
+.progress-container {
+    background: white;
+    padding: 15px 20px;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.progress-bar {
+    height: 8px;
+    background: linear-gradient(to right, var(--primary-color), var(--secondary-color));
+    border-radius: 10px;
+    transition: width 0.3s ease;
+    margin-bottom: 10px;
+}
+
+.progress-text {
+    display: flex;
+    justify-content: space-between;
+    font-size: 14px;
+    color: var(--text-secondary);
+    font-weight: 500;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+#timer {
+    color: var(--primary-color);
+    font-weight: 600;
+}
+
+/* ==================== Quiz Container ==================== */
+.quiz-container {
+    max-width: 900px;
+    margin: 40px auto;
+    padding: 0 20px;
+}
+
+.question-card {
+    background: var(--card-bg);
+    border-radius: 20px;
+    padding: 40px;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.08);
+    margin-bottom: 30px;
+    min-height: 400px;
+}
+
+.question-header {
+    display: flex;
+    align-items: flex-start;
+    gap: 15px;
+    margin-bottom: 30px;
+    padding-bottom: 20px;
+    border-bottom: 2px solid var(--background);
+}
+
+.question-number {
+    background: var(--primary-color);
+    color: white;
+    width: 45px;
+    height: 45px;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    font-size: 18px;
+    flex-shrink: 0;
+}
+
+.question-text {
+    flex: 1;
+}
+
+.question-text h2 {
+    font-size: 22px;
+    line-height: 1.6;
+    color: var(--text-primary);
+    font-weight: 600;
+}
+
+.question-subtopic {
+    margin-top: 10px;
+    padding: 8px 15px;
+    background: var(--background);
+    border-radius: 8px;
+    font-size: 13px;
+    color: var(--text-secondary);
+    display: inline-block;
+}
+
+.question-subtopic i {
+    color: var(--primary-color);
+    margin-right: 5px;
+}
+
+/* ==================== Answer Options ==================== */
+.answer-options {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.answer-option {
+    position: relative;
+    border: 3px solid var(--border-color);
+    border-radius: 15px;
+    padding: 20px 25px;
+    cursor: pointer;
+    transition: all 0.3s;
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.answer-option:hover {
+    border-color: var(--primary-color);
+    background: rgba(74, 151, 130, 0.05);
+    transform: translateX(5px);
+}
+
+.answer-option.selected {
+    border-color: var(--primary-color);
+    background: rgba(74, 151, 130, 0.1);
+}
+
+.option-letter {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: var(--background);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    color: var(--text-secondary);
+    flex-shrink: 0;
+    transition: all 0.3s;
+}
+
+.answer-option.selected .option-letter {
+    background: var(--primary-color);
+    color: white;
+}
+
+.option-text {
+    flex: 1;
+    font-size: 16px;
+    line-height: 1.5;
+    color: var(--text-primary);
+}
+
+/* ==================== Navigation Buttons ==================== */
+.navigation-buttons {
+    display: flex;
+    gap: 15px;
+    justify-content: space-between;
+}
+
+.btn-nav {
+    padding: 15px 30px;
+    border: none;
+    border-radius: 12px;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.btn-prev {
+    background: var(--background);
+    color: var(--text-primary);
+}
+
+.btn-prev:hover:not(:disabled) {
+    background: var(--border-color);
+}
+
+.btn-prev:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+.btn-next {
+    background: var(--primary-color);
+    color: white;
+    margin-left: auto;
+}
+
+.btn-next:hover {
+    background: var(--hover-color);
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(74, 151, 130, 0.3);
+}
+
+.btn-submit {
+    background: linear-gradient(to right, var(--primary-color), var(--secondary-color));
+    color: white;
+    margin-left: auto;
+}
+
+.btn-submit:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 20px rgba(74, 151, 130, 0.4);
+}
+
+/* ==================== Question Navigator Sidebar ==================== */
+.question-navigator {
+    position: fixed;
+    right: 30px; /* เปลี่ยนกลับเป็น right */
+    top: 180px;
+    width: 240px; /* เพิ่มจาก 200px เป็น 240px */
+    background: white;
+    border-radius: 15px;
+    padding: 20px;
+    box-shadow: 0 5px 25px rgba(0, 0, 0, 0.1);
+    z-index: 100;
+}
+
+.question-navigator h3 {
+    font-size: 16px;
+    margin-bottom: 15px;
+    color: var(--text-primary);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.question-navigator h3 i {
+    color: var(--primary-color);
+}
+
+.navigator-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 6px; /* ลดจาก 8px เป็น 6px */
+    margin-bottom: 20px;
+}
+
+.nav-question-btn {
+    width: 42px; /* เพิ่มจาก 40px เป็น 42px */
+    height: 42px;
+    border: 2px solid var(--border-color);
+    border-radius: 8px;
+    background: white;
+    cursor: pointer;
+    font-weight: 600;
+    font-size: 14px;
+    transition: all 0.3s;
+    color: var(--text-secondary);
+}
+
+.nav-question-btn:hover {
+    transform: scale(1.1);
+}
+
+.nav-question-btn.answered {
+    background: var(--success-color);
+    color: white;
+    border-color: var(--success-color);
+}
+
+.nav-question-btn.current {
+    background: var(--primary-color);
+    color: white;
+    border-color: var(--primary-color);
+    transform: scale(1.15);
+}
+
+/* ==================== Navigator Legend ==================== */
+.navigator-legend {
+    border-top: 1px solid var(--border-color);
+    padding-top: 15px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.legend-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 12px;
+    color: var(--text-secondary);
+}
+
+.legend-box {
+    width: 20px;
+    height: 20px;
+    border-radius: 4px;
+    border: 2px solid var(--border-color);
+}
+
+.legend-box.answered {
+    background: var(--success-color);
+    border-color: var(--success-color);
+}
+
+.legend-box.current {
+    background: var(--primary-color);
+    border-color: var(--primary-color);
+}
+
+.legend-box.unanswered {
+    background: white;
+}
+
+/* ==================== Modal ==================== */
+.modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 1000;
+    align-items: center;
+    justify-content: center;
+}
+
+.modal.show {
+    display: flex;
+}
+
+.modal-content {
+    background: white;
+    border-radius: 20px;
+    padding: 40px;
+    max-width: 400px;
+    text-align: center;
+}
+
+.modal-content i {
+    font-size: 60px;
+    color: var(--warning-color);
+    margin-bottom: 20px;
+}
+
+.modal-content h2 {
+    font-size: 24px;
+    margin-bottom: 15px;
+    color: var(--text-primary);
+}
+
+.modal-content p {
+    color: var(--text-secondary);
+    margin-bottom: 30px;
+    line-height: 1.6;
+}
+
+.modal-buttons {
+    display: flex;
+    gap: 15px;
+}
+
+.modal-buttons button {
+    flex: 1;
+    padding: 12px;
+    border: none;
+    border-radius: 10px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s;
+}
+
+.btn-cancel {
+    background: var(--background);
+    color: var(--text-primary);
+}
+
+.btn-cancel:hover {
+    background: var(--border-color);
+}
+
+.btn-confirm {
+    background: var(--danger-color);
+    color: white;
+}
+
+.btn-confirm:hover {
+    background: #dc2626;
+}
+
+/* ==================== Responsive ==================== */
+@media (max-width: 1024px) {
+    .question-navigator {
+        display: none;
+    }
+
+    .quiz-container {
+        max-width: 100%;
+        margin-left: auto; /* กลับมาตรงกลางเมื่อ navigator หาย */
+    }
+}
+
+@media (max-width: 768px) {
+    .quiz-info {
+        flex-direction: column;
+        gap: 10px;
+        align-items: flex-end;
+    }
+
+    .question-card {
+        padding: 25px;
+    }
+
+    .question-text h2 {
+        font-size: 18px;
+    }
+
+    .navigation-buttons {
+        flex-direction: column;
+    }
+
+    .btn-next,
+    .btn-submit {
+        margin-left: 0;
+    }
+}
