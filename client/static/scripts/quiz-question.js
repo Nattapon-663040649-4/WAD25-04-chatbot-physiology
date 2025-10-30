@@ -246,7 +246,7 @@ async function submitQuiz() {
         correctAnswers: correctAnswers,
         score: score,
         timeSpent: timeSpent,
-        results: results
+        answers: results // เปลี่ยนจาก results เป็น answers
     };
 
     console.log('📊 Quiz Result:', quizResult);

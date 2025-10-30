@@ -1,0 +1,400 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PHYSSi - My Profile</title>
+    <link rel="icon" href="/static/images/logo-new.ico">
+    <link rel="stylesheet" href="/static/styles/profile.css">
+    <script src="https://kit.fontawesome.com/03b30ccae0.js" crossorigin="anonymous"></script>
+    
+    <!-- Mobile Navigation Styles -->
+    <style>
+        /* Mobile Menu Button */
+        .mobile-menu-btn {
+            display: none;
+            background: var(--primary, #4A9782);
+            color: white;
+            border: none;
+            padding: 8px 12px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: all 0.3s;
+        }
+
+        .mobile-menu-btn:hover {
+            background: #004030;
+        }
+
+        .mobile-menu-btn.active {
+            background: #004030;
+        }
+
+        /* Mobile Dropdown Menu */
+        .mobile-nav-menu {
+            display: none;
+            position: absolute;
+            top: 100%;
+            left: 0;
+            right: 0;
+            background: white;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+            border-top: 2px solid var(--border, #e0e6ed);
+            z-index: 99;
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease;
+        }
+
+        .mobile-nav-menu.active {
+            max-height: 400px;
+        }
+
+        .mobile-nav-menu a {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 15px 30px;
+            color: #666;
+            text-decoration: none;
+            font-weight: 500;
+            border-bottom: 1px solid var(--border, #e0e6ed);
+            transition: all 0.3s;
+        }
+
+        .mobile-nav-menu a:hover {
+            background: #f5f7fa;
+            color: #4A9782;
+            padding-left: 40px;
+        }
+
+        .mobile-nav-menu a.active {
+            background: #4A9782;
+            color: white;
+            font-weight: 600;
+        }
+
+        .mobile-nav-menu a i {
+            font-size: 18px;
+            width: 20px;
+            text-align: center;
+        }
+
+        .mobile-nav-menu a:last-child {
+            border-bottom: none;
+        }
+
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none !important;
+            }
+            
+            .mobile-menu-btn {
+                display: block;
+            }
+            
+            .mobile-nav-menu {
+                display: block;
+            }
+            
+            .header {
+                position: relative;
+            }
+            
+            /* ลดขนาดปุ่ม Logout บนมือถือ */
+            .logout-button {
+                padding: 6px 12px !important;
+                font-size: 13px !important;
+                border-radius: 6px !important;
+            }
+            
+            .logout-button i {
+                font-size: 12px !important;
+            }
+            
+            /* ลดขนาด Logo บนมือถือ */
+            .logo-img {
+                width: 32px !important;
+                height: 32px !important;
+            }
+            
+            .logo-text {
+                font-size: 20px !important;
+            }
+            
+            /* ลด padding ของ header */
+            .nav-container {
+                padding: 0 15px !important;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <div class="header">
+        <div class="nav-container">
+            <div class="left-side-header">
+                <div class="logo">
+                    <div class="logo-img">
+                        <img src="/static/images/logo.png" alt="PHYSSi Logo">
+                    </div>
+                    <div class="logo-text">PHYSSi</div>
+                </div>
+                <div class="nav-links">
+                    <a href="/">Home</a>
+                    <a href="/chatbot.html">Chatbot</a>
+                    <a href="/quiz-select.html">Quiz</a>
+                    <a href="/learning.html">Learning</a>
+                    <a href="/profile.html" class="active">Profile</a>
+                </div>
+            </div>
+
+            <div class="right-side-header">
+                <button class="logout-button" onclick="logout()">
+                    <i class="fa-solid fa-right-from-bracket"></i>
+                    Logout
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="container">
+        <!-- User Info Card -->
+        <div class="profile-card">
+            <div class="profile-left">
+                <div class="avatar">
+                    <i class="fa-solid fa-user"></i>
+                </div>
+            </div>
+            <div class="profile-right">
+                <h1 id="username">Loading...</h1>
+                <p id="email">Loading...</p>
+                <div class="stats-row">
+                    <div class="stat">
+                        <div class="stat-value" id="totalQuizzes">0</div>
+                        <div class="stat-label">Total Quizzes</div>
+                    </div>
+                    <div class="stat">
+                        <div class="stat-value" id="avgScore">0%</div>
+                        <div class="stat-label">Average Score</div>
+                    </div>
+                    <div class="stat">
+                        <div class="stat-value" id="bestScore">0%</div>
+                        <div class="stat-label">Best Score</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Performance Summary -->
+        <div class="section-card">
+            <h2 class="section-title">
+                <i class="fa-solid fa-chart-line"></i>
+                Performance Overview
+            </h2>
+            
+            <!-- Topic Stats -->
+            <div class="topic-stats">
+                <!-- Heart Stats -->
+                <div class="topic-stat-card">
+                    <div class="topic-header">
+                        <i class="fa-solid fa-heart-pulse"></i>
+                        <h3>Heart</h3>
+                    </div>
+                    <div class="topic-info">
+                        <div class="info-item">
+                            <span class="label">Quizzes Taken:</span>
+                            <span class="value" id="heartQuizzes">0</span>
+                        </div>
+                        <div class="info-item">
+                            <span class="label">Average Score:</span>
+                            <span class="value score-value" id="heartScore">0%</span>
+                        </div>
+                        <div class="info-item">
+                            <span class="label">Best Score:</span>
+                            <span class="value" id="heartBest">0%</span>
+                        </div>
+                    </div>
+                    <div class="progress-bar-wrapper">
+                        <div class="progress-bar" id="heartProgress" style="width: 0%"></div>
+                    </div>
+                </div>
+
+                <!-- Brain Stats -->
+                <div class="topic-stat-card">
+                    <div class="topic-header">
+                        <i class="fa-solid fa-brain"></i>
+                        <h3>Brain</h3>
+                    </div>
+                    <div class="topic-info">
+                        <div class="info-item">
+                            <span class="label">Quizzes Taken:</span>
+                            <span class="value" id="brainQuizzes">0</span>
+                        </div>
+                        <div class="info-item">
+                            <span class="label">Average Score:</span>
+                            <span class="value score-value" id="brainScore">0%</span>
+                        </div>
+                        <div class="info-item">
+                            <span class="label">Best Score:</span>
+                            <span class="value" id="brainBest">0%</span>
+                        </div>
+                    </div>
+                    <div class="progress-bar-wrapper">
+                        <div class="progress-bar" id="brainProgress" style="width: 0%"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Detailed Performance by Subtopic -->
+        <div class="section-card">
+            <h2 class="section-title">
+                <i class="fa-solid fa-list-check"></i>
+                Performance by Subtopic
+            </h2>
+
+            <!-- Tabs -->
+            <div class="tabs">
+                <button class="tab active" data-tab="heart-details">
+                    <i class="fa-solid fa-heart-pulse"></i>
+                    Heart
+                </button>
+                <button class="tab" data-tab="brain-details">
+                    <i class="fa-solid fa-brain"></i>
+                    Brain
+                </button>
+            </div>
+
+            <!-- Heart Details -->
+            <div class="tab-content active" id="heart-details">
+                <div class="subtopic-list" id="heartSubtopics">
+                    <div class="empty-state">
+                        <i class="fa-solid fa-clipboard-question"></i>
+                        <p>No data yet. Take a Heart quiz to see your performance!</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Brain Details -->
+            <div class="tab-content" id="brain-details">
+                <div class="subtopic-list" id="brainSubtopics">
+                    <div class="empty-state">
+                        <i class="fa-solid fa-clipboard-question"></i>
+                        <p>No data yet. Take a Brain quiz to see your performance!</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- Mobile Navigation Script -->
+    <script>
+        (function initMobileNav() {
+            console.log('🔧 Setting up mobile navigation...');
+            
+            const navContainer = document.querySelector('.nav-container');
+            const leftHeader = document.querySelector('.left-side-header');
+            
+            if (!navContainer || !leftHeader) {
+                console.log('⚠️ Nav container not found');
+                return;
+            }
+            
+            // Create mobile menu button
+            let mobileBtn = document.querySelector('.mobile-menu-btn');
+            if (!mobileBtn) {
+                mobileBtn = document.createElement('button');
+                mobileBtn.className = 'mobile-menu-btn';
+                mobileBtn.innerHTML = '<i class="fa-solid fa-bars"></i>';
+                mobileBtn.setAttribute('aria-label', 'Toggle menu');
+                
+                const logo = leftHeader.querySelector('.logo');
+                if (logo) {
+                    logo.insertAdjacentElement('afterend', mobileBtn);
+                }
+            }
+            
+            // Create mobile menu
+            let mobileMenu = document.querySelector('.mobile-nav-menu');
+            if (!mobileMenu) {
+                mobileMenu = document.createElement('div');
+                mobileMenu.className = 'mobile-nav-menu';
+                
+                const currentPath = window.location.pathname;
+                const menuItems = [
+                    { href: '/', icon: 'fa-house', text: 'Home', path: '/' },
+                    { href: '/chatbot.html', icon: 'fa-comments', text: 'Chatbot', path: '/chatbot.html' },
+                    { href: '/quiz-select.html', icon: 'fa-clipboard-question', text: 'Quiz', path: '/quiz-select.html' },
+                    { href: '/learning.html', icon: 'fa-book', text: 'Learning', path: '/learning.html' },
+                    { href: '/profile.html', icon: 'fa-user', text: 'Profile', path: '/profile.html' }
+                ];
+                
+                menuItems.forEach(item => {
+                    const link = document.createElement('a');
+                    link.href = item.href;
+                    link.innerHTML = `<i class="fa-solid ${item.icon}"></i> ${item.text}`;
+                    
+                    if (currentPath === item.path || 
+                        (currentPath === '/index.html' && item.path === '/') ||
+                        (currentPath.includes('profile') && item.path === '/profile.html')) {
+                        link.classList.add('active');
+                    }
+                    
+                    mobileMenu.appendChild(link);
+                });
+                
+                const header = document.querySelector('.header');
+                if (header) {
+                    header.appendChild(mobileMenu);
+                }
+            }
+            
+            // Toggle menu
+            mobileBtn.addEventListener('click', function(e) {
+                e.stopPropagation();
+                this.classList.toggle('active');
+                mobileMenu.classList.toggle('active');
+                
+                const icon = this.querySelector('i');
+                if (mobileMenu.classList.contains('active')) {
+                    icon.className = 'fa-solid fa-xmark';
+                } else {
+                    icon.className = 'fa-solid fa-bars';
+                }
+            });
+            
+            // Close on outside click
+            document.addEventListener('click', function(e) {
+                if (!mobileMenu.contains(e.target) && !mobileBtn.contains(e.target)) {
+                    mobileMenu.classList.remove('active');
+                    mobileBtn.classList.remove('active');
+                    const icon = mobileBtn.querySelector('i');
+                    if (icon) {
+                        icon.className = 'fa-solid fa-bars';
+                    }
+                }
+            });
+            
+            // Close on link click
+            mobileMenu.querySelectorAll('a').forEach(link => {
+                link.addEventListener('click', function() {
+                    mobileMenu.classList.remove('active');
+                    mobileBtn.classList.remove('active');
+                    const icon = mobileBtn.querySelector('i');
+                    if (icon) {
+                        icon.className = 'fa-solid fa-bars';
+                    }
+                });
+            });
+            
+            console.log('✅ Mobile navigation ready');
+        })();
+    </script>
+    
+    <script src="/static/scripts/profile.js"></script>
+</body>
+</html>
