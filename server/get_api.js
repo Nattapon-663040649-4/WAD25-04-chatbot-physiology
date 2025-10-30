@@ -41,6 +41,14 @@ const UserSchema = new mongoose.Schema({
         score: Number,
         totalQuestions: Number,
         difficulty: String,
+        questions: [{
+            question: String,
+            subtopic: String,
+            options: [String],
+            correctAnswer: Number,
+            userAnswer: Number,
+            explanation: String
+        }],
         date: { type: Date, default: Date.now }
     }]
 });
@@ -90,6 +98,10 @@ app.get("/quiz-question.html", (req, res) => {
 
 app.get("/quiz-result.html", (req, res) => {
     res.sendFile(path.join(__dirname, "../client/quiz-result.html"));
+});
+
+app.get("/profile.html", (req, res) => {
+    res.sendFile(path.join(__dirname, "../client/profile.html"));
 });
 
 // ==================== API Authentication ====================
@@ -426,6 +438,7 @@ app.post("/api/quiz/save-result", async (req, res) => {
             score: result.score,
             totalQuestions: result.totalQuestions,
             difficulty: result.difficulty,
+            questions: result.questions || [], // เพิ่ม questions array
             date: new Date()
         });
 
@@ -473,6 +486,83 @@ app.get("/api/quiz/results/:userId", async (req, res) => {
             success: false,
             message: "Failed to fetch quiz results"
         });
+    }
+});
+
+// ==================== API Get Quiz Results with Details ====================
+app.get("/api/quiz/results/:userId", async (req, res) => {
+    const { userId } = req.params;
+    
+    if (!mongoose.Types.ObjectId.isValid(userId)) {
+        return res.status(400).json({ success: false, message: "Invalid User ID" });
+    }
+    
+    try {
+        const user = await User.findById(userId);
+        if (!user) {
+            return res.status(404).json({ success: false, message: "User not found" });
+        }
+        
+        // Get detailed quiz results with questions
+        const quizResults = user.quizResults.map(result => ({
+            topic: result.topic,
+            difficulty: result.difficulty,
+            score: result.score,
+            totalQuestions: result.totalQuestions,
+            timestamp: result.date,
+            questions: result.questions || [] // If questions are stored
+        }));
+        
+        console.log(`📊 Retrieved ${quizResults.length} quiz results for user ${user.username}`);
+        
+        res.json({ success: true, results: quizResults });
+    } catch (error) {
+        console.error("❌ Error retrieving quiz results:", error);
+        res.status(500).json({ success: false, message: "Server error" });
+    }
+});
+
+// ==================== API Update Username ====================
+app.post("/api/user/update-username", async (req, res) => {
+    const { userId, newUsername } = req.body;
+    
+    if (!userId || !newUsername) {
+        return res.status(400).json({ success: false, message: "Missing required fields" });
+    }
+    
+    if (!mongoose.Types.ObjectId.isValid(userId)) {
+        return res.status(400).json({ success: false, message: "Invalid User ID" });
+    }
+
+    try {
+        // Check if username already exists
+        const existingUser = await User.findOne({ username: newUsername });
+        if (existingUser && existingUser._id.toString() !== userId) {
+            return res.json({ success: false, message: "Username already taken" });
+        }
+
+        const user = await User.findByIdAndUpdate(
+            userId,
+            { username: newUsername },
+            { new: true }
+        );
+
+        if (!user) {
+            return res.json({ success: false, message: "User not found" });
+        }
+
+        console.log(`✅ Username updated for user ${userId}: ${newUsername}`);
+        res.json({ 
+            success: true, 
+            user: { 
+                userId: user._id, 
+                username: user.username, 
+                email: user.email 
+            } 
+        });
+    } catch (err) {
+        console.error("❌ Error updating username:", err);
+        res.status(500).json({ success: false, message: "Server error" });
     }
 });
 

@@ -1,0 +1,115 @@
+/* ==================== Mobile Navigation Styles ==================== */
+
+/* Hamburger Menu Button (แสดงเฉพาะบน Mobile) */
+.mobile-menu-btn {
+    display: none;
+    background: var(--primary, #4A9782);
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 20px;
+    transition: all 0.3s;
+}
+
+.mobile-menu-btn:hover {
+    background: #004030;
+}
+
+.mobile-menu-btn.active {
+    background: #004030;
+}
+
+/* Mobile Dropdown Menu */
+.mobile-nav-menu {
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    background: white;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+    border-top: 2px solid var(--border, #e0e6ed);
+    z-index: 99;
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.3s ease;
+}
+
+.mobile-nav-menu.active {
+    max-height: 400px;
+}
+
+.mobile-nav-menu a {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 15px 30px;
+    color: #666;
+    text-decoration: none;
+    font-weight: 500;
+    border-bottom: 1px solid var(--border, #e0e6ed);
+    transition: all 0.3s;
+}
+
+.mobile-nav-menu a:hover {
+    background: var(--bg, #f5f7fa);
+    color: var(--primary, #4A9782);
+    padding-left: 40px;
+}
+
+.mobile-nav-menu a.active {
+    background: var(--primary, #4A9782);
+    color: white;
+    font-weight: 600;
+}
+
+.mobile-nav-menu a i {
+    font-size: 18px;
+    width: 20px;
+    text-align: center;
+}
+
+.mobile-nav-menu a:last-child {
+    border-bottom: none;
+}
+
+/* Show mobile menu button on small screens */
+@media (max-width: 768px) {
+    /* Hide desktop nav links */
+    .nav-links {
+        display: none !important;
+    }
+    
+    /* Show mobile menu button */
+    .mobile-menu-btn {
+        display: block;
+    }
+    
+    /* Show mobile dropdown when active */
+    .mobile-nav-menu {
+        display: block;
+    }
+    
+    /* Adjust header for mobile */
+    .header {
+        position: relative;
+    }
+}
+
+/* Animation */
+@keyframes slideDown {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.mobile-nav-menu.active {
+    animation: slideDown 0.3s ease;
+}
