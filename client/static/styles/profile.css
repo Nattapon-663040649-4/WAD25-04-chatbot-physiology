@@ -1,0 +1,468 @@
+/* ==================== Variables ==================== */
+:root {
+    --primary: #4A9782;
+    --secondary: #DCD0A8;
+    --success: #22c55e;
+    --warning: #f59e0b;
+    --danger: #ef4444;
+    --bg: #f5f7fa;
+    --surface: #ffffff;
+    --text: #2c3e50;
+    --text-light: #7f8c8d;
+    --border: #e0e6ed;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.6;
+}
+
+/* ==================== Header ==================== */
+.header {
+    background: white;
+    border-bottom: 2px solid var(--border);
+    padding: 15px 0;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+}
+
+.nav-container {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 0 30px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.left-side-header {
+    display: flex;
+    align-items: center;
+    gap: 40px;
+}
+
+.logo {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    cursor: pointer;
+}
+
+.logo-img {
+    width: 40px;
+    height: 40px;
+}
+
+.logo-img img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+}
+
+.logo-text {
+    font-size: 24px;
+    font-weight: bold;
+    background: linear-gradient(to right, var(--primary), var(--secondary));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.nav-links {
+    display: flex;
+    gap: 30px;
+}
+
+.nav-links a {
+    text-decoration: none;
+    color: #666;
+    font-weight: 500;
+    transition: color 0.3s;
+    padding: 8px 0;
+    position: relative;
+}
+
+.nav-links a:hover {
+    color: var(--primary);
+}
+
+.nav-links a.active {
+    color: var(--primary);
+    font-weight: 600;
+}
+
+.nav-links a.active::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background: var(--primary);
+    border-radius: 3px 3px 0 0;
+}
+
+.logout-button {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 20px;
+    background: var(--primary);
+    color: white;
+    border: none;
+    border-radius: 25px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.3s;
+}
+
+.logout-button:hover {
+    background: #004030;
+    transform: translateY(-2px);
+}
+
+/* ==================== Container ==================== */
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 40px 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+}
+
+/* ==================== Profile Card ==================== */
+.profile-card {
+    background: white;
+    border-radius: 20px;
+    padding: 40px;
+    display: flex;
+    gap: 40px;
+    align-items: center;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+}
+
+.profile-left {
+    flex-shrink: 0;
+}
+
+.avatar {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--primary), var(--secondary));
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-size: 48px;
+}
+
+.profile-right {
+    flex: 1;
+}
+
+.profile-right h1 {
+    font-size: 32px;
+    margin-bottom: 5px;
+    color: var(--text);
+}
+
+.profile-right p {
+    color: var(--text-light);
+    margin-bottom: 25px;
+}
+
+.stats-row {
+    display: flex;
+    gap: 40px;
+}
+
+.stat {
+    text-align: center;
+}
+
+.stat-value {
+    font-size: 32px;
+    font-weight: 700;
+    color: var(--primary);
+    margin-bottom: 5px;
+}
+
+.stat-label {
+    font-size: 14px;
+    color: var(--text-light);
+}
+
+/* ==================== Section Card ==================== */
+.section-card {
+    background: white;
+    border-radius: 20px;
+    padding: 30px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+}
+
+.section-title {
+    font-size: 24px;
+    margin-bottom: 25px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    color: var(--text);
+}
+
+.section-title i {
+    color: var(--primary);
+}
+
+/* ==================== Topic Stats ==================== */
+.topic-stats {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 20px;
+}
+
+.topic-stat-card {
+    background: var(--bg);
+    border-radius: 15px;
+    padding: 25px;
+    border-left: 5px solid var(--primary);
+}
+
+.topic-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 20px;
+}
+
+.topic-header i {
+    font-size: 28px;
+    color: var(--primary);
+}
+
+.topic-header h3 {
+    font-size: 20px;
+    color: var(--text);
+}
+
+.topic-info {
+    margin-bottom: 20px;
+}
+
+.info-item {
+    display: flex;
+    justify-content: space-between;
+    padding: 8px 0;
+    border-bottom: 1px solid var(--border);
+}
+
+.info-item:last-child {
+    border-bottom: none;
+}
+
+.info-item .label {
+    color: var(--text-light);
+    font-size: 14px;
+}
+
+.info-item .value {
+    font-weight: 600;
+    color: var(--text);
+}
+
+.score-value {
+    color: var(--primary);
+    font-size: 18px;
+}
+
+.progress-bar-wrapper {
+    width: 100%;
+    height: 12px;
+    background: var(--border);
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+.progress-bar {
+    height: 100%;
+    background: linear-gradient(to right, var(--primary), var(--secondary));
+    transition: width 1s ease;
+    border-radius: 10px;
+}
+
+/* ==================== Tabs ==================== */
+.tabs {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 25px;
+    border-bottom: 2px solid var(--border);
+}
+
+.tab {
+    padding: 12px 24px;
+    background: none;
+    border: none;
+    border-bottom: 3px solid transparent;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: 500;
+    color: var(--text-light);
+    transition: all 0.3s;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: -2px;
+}
+
+.tab:hover {
+    color: var(--primary);
+}
+
+.tab.active {
+    color: var(--primary);
+    border-bottom-color: var(--primary);
+}
+
+.tab-content {
+    display: none;
+}
+
+.tab-content.active {
+    display: block;
+}
+
+/* ==================== Subtopic List ==================== */
+.subtopic-list {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.subtopic-item {
+    background: var(--bg);
+    padding: 20px;
+    border-radius: 12px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    transition: transform 0.3s;
+}
+
+.subtopic-item:hover {
+    transform: translateX(5px);
+}
+
+.subtopic-name {
+    font-weight: 600;
+    color: var(--text);
+    font-size: 16px;
+    margin-bottom: 8px;
+}
+
+.subtopic-stats {
+    font-size: 14px;
+    color: var(--text-light);
+}
+
+.subtopic-score {
+    text-align: right;
+}
+
+.score-percent {
+    font-size: 28px;
+    font-weight: 700;
+    margin-bottom: 5px;
+}
+
+.score-percent.excellent {
+    color: var(--success);
+}
+
+.score-percent.good {
+    color: var(--warning);
+}
+
+.score-percent.poor {
+    color: var(--danger);
+}
+
+.score-details {
+    font-size: 13px;
+    color: var(--text-light);
+}
+
+/* ==================== Empty State ==================== */
+.empty-state {
+    text-align: center;
+    padding: 60px 20px;
+    color: var(--text-light);
+}
+
+.empty-state i {
+    font-size: 64px;
+    margin-bottom: 20px;
+    opacity: 0.3;
+}
+
+.empty-state p {
+    font-size: 16px;
+    margin-bottom: 20px;
+}
+
+.btn-primary {
+    display: inline-block;
+    padding: 12px 30px;
+    background: var(--primary);
+    color: white;
+    text-decoration: none;
+    border-radius: 25px;
+    font-weight: 600;
+    transition: all 0.3s;
+}
+
+.btn-primary:hover {
+    background: #004030;
+    transform: translateY(-2px);
+}
+
+/* ==================== Responsive ==================== */
+@media (max-width: 768px) {
+    .nav-links {
+        display: none !important;
+    }
+
+    .profile-card {
+        flex-direction: column;
+        text-align: center;
+        gap: 20px;
+    }
+
+    .stats-row {
+        flex-direction: column;
+        gap: 20px;
+    }
+
+    .topic-stats {
+        grid-template-columns: 1fr;
+    }
+
+    .tabs {
+        overflow-x: auto;
+    }
+
+    .history-item {
+        flex-direction: column;
+        gap: 15px;
+        text-align: center;
+    }
+}
