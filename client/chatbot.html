@@ -1,34 +1,60 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>PHYSSi - Chatbot</title>
     <link rel="icon" href="/static/images/logo-new.ico">
-
     <link rel="stylesheet" href="/static/styles/chatbot.css">
-
     <script src="https://kit.fontawesome.com/03b30ccae0.js" crossorigin="anonymous"></script>
 </head>
+
 <body>
-    <!-- Sidebar -->
+    <!-- Left Sidebar (Icons) -->
     <div class="sidebar">
         <div class="logo-icon"><img src="/static/images/logo.png" alt="logo-image"></div>
-        <div class="sidebar-icon"><i class="fa-solid fa-pen-to-square"></i></div>
-        <div class="sidebar-icon"><i class="fa-solid fa-clock-rotate-left"></i></div>
+        <div class="sidebar-icon" id="newChatBtn" title="New Chat"><i class="fa-solid fa-pen-to-square"></i></div>
+        <div class="sidebar-icon" id="toggleHistoryBtn" title="Chat History">
+            <i class="fa-solid fa-clock-rotate-left"></i>
+        </div>
         <div class="sidebar-icon" style="position: relative;">
             <i class="fa-solid fa-dice"></i>
             <span style="position: absolute; top: -4px; right: -4px; width: 8px; height: 8px; background: var(--primary-color); border-radius: 50%;"></span>
         </div>
         <div class="sidebar-icon"><i class="fa-solid fa-gear"></i></div>
-        <div class="user-avatar"><i class="fa-solid fa-user"></i></div>
+        <div class="user-avatar" id="userAvatar"><i class="fa-solid fa-user"></i></div>
+    </div>
+
+    <!-- History Sidebar (Collapsible) -->
+    <div class="history-sidebar" id="historySidebar">
+        <div class="history-header">
+            <h3><i class="fa-solid fa-clock-rotate-left"></i> Chat History</h3>
+            <button class="close-history-btn" id="closeHistoryBtn">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+        </div>
+        
+        <div class="history-user-info" id="historyUserInfo">
+            <!-- Will show user info or guest status -->
+        </div>
+
+        <div class="history-list" id="historyList">
+            <!-- History items will be inserted here -->
+        </div>
+
+        <div class="history-footer">
+            <button class="clear-history-btn" id="clearHistoryBtn">
+                <i class="fa-solid fa-trash"></i> Clear All History
+            </button>
+        </div>
     </div>
 
     <!-- Main Content -->
     <div class="main-content">
         <!-- Header -->
         <div class="main-header">
-            <div class="model-info">Gemini 2.0</div>
+            <div class="model-info">PHYSSi</div>
             <div class="header-actions">
                 <button class="action-btn" id="darkModeBtn">
                     <span><i class="fa-solid fa-moon"></i></span>
@@ -58,15 +84,20 @@
         <!-- Input Area -->
         <div class="input-container">
             <div class="input-wrapper">
-                <button class="input-btn add-btn"><i class="fa-solid fa-plus"></i></button>
+                <!-- Attach File -->
+                <button class="input-btn add-btn" id="attachBtn"><i class="fa-solid fa-paperclip"></i></button>
+                <input type="file" id="fileInput" style="display:none;">
+
                 <input type="text" class="chat-input" placeholder="Ask something..." id="chatInput">
+               
                 <button class="input-btn voice-btn"><i class="fa-solid fa-microphone"></i></button>
                 <button class="input-btn send-btn" id="sendBtn"><i class="fa-solid fa-paper-plane"></i></button>
             </div>
-            <div class="disclaimer" id="disclaimer">ChatGPT may contain errors. Please check the important information.</div>
+            <div class="disclaimer" id="disclaimer">PHYSSi may contain errors. Please check the important information.</div>
         </div>
     </div>
 
     <script src="/static/scripts/chatbot-page.js"></script>
 </body>
+
 </html>

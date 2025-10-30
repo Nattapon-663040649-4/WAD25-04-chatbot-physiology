@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login | PHYSSi</title>
+    <link rel="icon" href="/static/images/logo-new.ico">
+    <link rel="stylesheet" href="/static/styles/auth.css?v=1.0.1">
+    <script src="https://kit.fontawesome.com/03b30ccae0.js" crossorigin="anonymous"></script>
+</head>
+<body>
+    <div class="auth-container">
+        <div class="auth-card">
+            <div class="logo-area">
+                <img src="/static/images/logo.png" alt="PHYSSi Logo">
+                <h2>Welcome Back to PHYSSi</h2>
+            </div>
+
+            <form id="loginForm" class="auth-form">
+                <div class="input-group">
+                    <label for="login-username">Username</label>
+                    <input type="text" id="login-username" name="username" placeholder="Enter your username" required>
+                </div>
+                <div class="input-group">
+                    <label for="login-password">Password</label>
+                    <input type="password" id="login-password" name="password" placeholder="Enter your password" required>
+                </div>
+                
+                <p id="login-message" class="error-message"></p>
+
+                <button type="submit" class="btn-primary" id="loginBtn">
+                    <i class="fa-solid fa-right-to-bracket"></i> Login
+                </button>
+            </form>
+
+            <div class="auth-footer">
+    <p>Don't have an account? <a href="/register.html">Register Here</a></p>
+</div>
+        </div>
+    </div>
+
+    <script src="/static/scripts/auth.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            initializeAuthForm('loginForm', 'login-message', '/api/login', 'login-username');
+        });
+    </script>
+</body>
+</html>
