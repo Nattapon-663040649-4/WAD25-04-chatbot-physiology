@@ -20,12 +20,37 @@ const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
 
 // ==================== 1. Database Setup ====================
 const MONGODB_URI = process.env.MONGODB_URI || "mongodb://localhost:27017/physsi_db"; 
-mongoose.connect(MONGODB_URI)
-    .then(() => console.log("MongoDB Connected!"))
+
+// MongoDB connection options (รองรับทั้ง local และ Atlas)
+const mongoOptions = {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+    serverSelectionTimeoutMS: 10000, // Timeout 10 วินาที
+    socketTimeoutMS: 45000, // Socket timeout
+};
+
+mongoose.connect(MONGODB_URI, mongoOptions)
+    .then(() => {
+        console.log("✅ MongoDB Connected!");
+        console.log(`📍 Database: ${mongoose.connection.name}`);
+    })
     .catch(err => {
-        console.error("MongoDB connection error:", err);
+        console.error("❌ MongoDB connection error:", err.message);
+        console.error("💡 Please check:");
+        console.error("   1. MONGODB_URI in environment variables");
+        console.error("   2. MongoDB Atlas Network Access (IP Whitelist)");
+        console.error("   3. Database user credentials");
         process.exit(1);
     });
+
+// เพิ่ม connection event handlers
+mongoose.connection.on('disconnected', () => {
+    console.log('⚠️ MongoDB disconnected');
+});
+
+mongoose.connection.on('error', (err) => {
+    console.error('❌ MongoDB connection error:', err.message);
+});
 
 const UserSchema = new mongoose.Schema({
     username: { type: String, required: true, unique: true },
@@ -521,39 +546,6 @@ app.get("/api/quiz/results/:userId", async (req, res) => {
             success: false,
             message: "Failed to fetch quiz results"
         });
-    }
-});
-
-// ==================== API Get Quiz Results with Details ====================
-app.get("/api/quiz/results/:userId", async (req, res) => {
-    const { userId } = req.params;
-    
-    if (!mongoose.Types.ObjectId.isValid(userId)) {
-        return res.status(400).json({ success: false, message: "Invalid User ID" });
-    }
-    
-    try {
-        const user = await User.findById(userId);
-        if (!user) {
-            return res.status(404).json({ success: false, message: "User not found" });
-        }
-        
-        // Get detailed quiz results with questions
-        const quizResults = user.quizResults.map(result => ({
-            topic: result.topic,
-            difficulty: result.difficulty,
-            score: result.score,
-            totalQuestions: result.totalQuestions,
-            timestamp: result.date,
-            questions: result.questions || [] // If questions are stored
-        }));
-        
-        console.log(`📊 Retrieved ${quizResults.length} quiz results for user ${user.username}`);
-        
-        res.json({ success: true, results: quizResults });
-    } catch (error) {
-        console.error("❌ Error retrieving quiz results:", error);
-        res.status(500).json({ success: false, message: "Server error" });
     }
 });
 
