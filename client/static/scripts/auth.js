@@ -54,7 +54,7 @@ function initializeAuthForm(formId, messageId, apiUrl) {
             if (response.ok && result.success) {
                 displayMessage(result.message, true);
                 
-                // หาก Login สำเร็จ ให้บันทึกข้อมูลและเปลี่ยนหน้าไปที่ Chatbot
+                // หาก Login สำเร็จ ให้บันทึกข้อมูลและเปลี่ยนหน้าไปที่ Welcome (/)
                 if (apiUrl.includes('/api/login')) {
                     // **[สำคัญ]** เก็บ userId และ username ไว้ใน Local Storage เป็น JSON object
                     const userData = {
@@ -65,9 +65,9 @@ function initializeAuthForm(formId, messageId, apiUrl) {
                     
                     console.log('✅ User data saved:', userData); // Debug log
                     
-                    // หน่วงเวลาเล็กน้อยแล้วเปลี่ยนหน้า
+                    // หน่วงเวลาเล็กน้อยแล้วเปลี่ยนหน้าไปที่ Welcome
                     setTimeout(() => {
-                        window.location.href = '/chatbot.html';
+                        window.location.href = '/';  // เปลี่ยนจาก /chatbot.html → /
                     }, 500); 
                 } 
                 // หาก Register สำเร็จ ให้เปลี่ยนหน้าไป Login

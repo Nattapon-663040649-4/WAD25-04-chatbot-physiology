@@ -1,13 +1,13 @@
+/* ==================== Base Styles ==================== */
 :root {
-    /* ใช้สีหลักจาก chatbot.css/welcome.css ของคุณ */
-    --primary-color: #4A9782; 
+    --primary-color: #4A9782;
     --secondary-color: #DCD0A8;
     --hover-color: #004030;
-    --background-color: #f8f9fa;
-    --card-background: white;
-    --text-color: #333;
-    --error-color: #ef4444;
-    --success-color: #22c55e;
+    --text-primary: #2c3e50;
+    --text-secondary: #7f8c8d;
+    --border-color: #e0e0e0;
+    --error-color: #e74c3c;
+    --success-color: #27ae60;
 }
 
 * {
@@ -17,49 +17,77 @@
 }
 
 body {
-    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-    background: var(--background-color);
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
     min-height: 100vh;
     display: flex;
-    justify-content: center;
     align-items: center;
+    justify-content: center;
     padding: 20px;
-    color: var(--text-color);
 }
 
+/* ==================== Home Link ==================== */
+.home-link {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 20px;
+    background: var(--primary-color);
+    color: white;
+    text-decoration: none;
+    border-radius: 25px;
+    font-weight: 500;
+    font-size: 14px;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+
+.home-link:hover {
+    background: var(--hover-color);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+}
+
+.home-link i {
+    font-size: 14px;
+}
+
+/* ==================== Auth Container ==================== */
 .auth-container {
     width: 100%;
     max-width: 450px;
 }
 
 .auth-card {
-    background: var(--card-background);
+    background: white;
+    border-radius: 20px;
     padding: 40px;
-    border-radius: 12px;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
-    border-top: 5px solid var(--primary-color); /* เพิ่มสีสันด้านบน */
-    transition: all 0.3s ease;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+    position: relative;
 }
 
-/* Logo and Title */
+/* ==================== Logo Area ==================== */
 .logo-area {
     text-align: center;
     margin-bottom: 30px;
 }
 
 .logo-area img {
-    width: 60px;
-    height: 60px;
-    margin-bottom: 10px;
+    width: 80px;
+    height: 80px;
+    margin-bottom: 15px;
 }
 
 .logo-area h2 {
     font-size: 24px;
-    color: var(--primary-color);
-    font-weight: 600;
+    color: var(--text-primary);
+    margin-bottom: 10px;
 }
 
-/* Form Styling */
+/* ==================== Form Styles ==================== */
 .auth-form {
     display: flex;
     flex-direction: column;
@@ -75,102 +103,117 @@ body {
 .input-group label {
     font-size: 14px;
     font-weight: 500;
-    color: #6b7280;
+    color: var(--text-primary);
 }
 
 .input-group input {
-    padding: 12px;
-    border: 2px solid #e5e7eb;
-    border-radius: 8px;
-    font-size: 16px;
+    padding: 12px 15px;
+    border: 2px solid var(--border-color);
+    border-radius: 10px;
+    font-size: 14px;
+    transition: all 0.3s;
     outline: none;
-    transition: border-color 0.3s ease, box-shadow 0.3s ease;
 }
 
 .input-group input:focus {
     border-color: var(--primary-color);
-    box-shadow: 0 0 0 3px rgba(74, 151, 130, 0.2);
+    box-shadow: 0 0 0 3px rgba(74, 151, 130, 0.1);
 }
 
-/* Buttons */
-.btn-primary {
-    background: var(--primary-color);
-    color: white;
-    padding: 12px 20px;
-    border: none;
-    border-radius: 25px;
-    font-size: 16px;
-    font-weight: 500;
-    cursor: pointer;
-    transition: background 0.3s ease, transform 0.2s ease;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 10px;
-    margin-top: 10px;
-}
-
-.btn-primary:hover {
-    background: var(--hover-color);
-    transform: translateY(-1px);
-}
-
-.btn-primary:disabled {
-    background: #ccc;
-    cursor: not-allowed;
-    transform: none;
-}
-
-/* Footer */
-.auth-footer {
-    text-align: center;
-    margin-top: 25px;
-    font-size: 14px;
-    color: #6b7280;
-}
-
-.auth-footer a {
-    color: var(--primary-color);
-    text-decoration: none;
-    font-weight: 500;
-    transition: color 0.3s ease;
-}
-
-.auth-footer a:hover {
-    color: var(--hover-color);
-    text-decoration: underline;
-}
-
-/* Messages */
-.error-message, .success-message {
-    text-align: center;
-    padding: 10px;
+/* ==================== Messages ==================== */
+.error-message,
+.success-message {
+    padding: 12px 15px;
     border-radius: 8px;
     font-size: 14px;
-    margin-top: -10px;
+    text-align: center;
     display: none;
 }
 
 .error-message {
-    background: #fee2e2;
+    background: #fee;
     color: var(--error-color);
     border: 1px solid var(--error-color);
 }
 
 .success-message {
-    background: #d1fae5;
+    background: #efe;
     color: var(--success-color);
     border: 1px solid var(--success-color);
 }
 
-/* Responsive adjustments for smaller screens (Mobile) */
-@media (max-width: 600px) {
-    .auth-card {
-        padding: 25px;
-        margin: 0 10px;
-    }
+/* ==================== Button ==================== */
+.btn-primary {
+    padding: 14px 20px;
+    background: var(--primary-color);
+    color: white;
+    border: none;
+    border-radius: 10px;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+}
 
+.btn-primary:hover {
+    background: var(--hover-color);
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(74, 151, 130, 0.3);
+}
+
+.btn-primary:disabled {
+    background: var(--text-secondary);
+    cursor: not-allowed;
+    transform: none;
+}
+
+/* ==================== Footer ==================== */
+.auth-footer {
+    text-align: center;
+    margin-top: 25px;
+    padding-top: 25px;
+    border-top: 1px solid var(--border-color);
+}
+
+.auth-footer p {
+    font-size: 14px;
+    color: var(--text-secondary);
+}
+
+.auth-footer a {
+    color: var(--primary-color);
+    font-weight: 600;
+    text-decoration: none;
+    transition: color 0.3s;
+}
+
+.auth-footer a:hover {
+    color: var(--hover-color);
+}
+
+/* ==================== Responsive ==================== */
+@media (max-width: 768px) {
+    .auth-card {
+        padding: 30px 20px;
+    }
+    
+    .logo-area img {
+        width: 60px;
+        height: 60px;
+    }
+    
     .logo-area h2 {
         font-size: 20px;
+    }
+    
+    .home-link {
+        top: 10px;
+        left: 10px;
+        padding: 8px 16px;
+        font-size: 13px;
     }
 }
