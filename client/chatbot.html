@@ -11,102 +11,301 @@
 </head>
 
 <body>
-    <!-- Left Sidebar (Icons) -->
-    <div class="sidebar">
-        <div class="logo-icon"><img src="/static/images/logo.png" alt="logo-image"></div>
-        <div class="sidebar-icon" id="newChatBtn" title="New Chat"><i class="fa-solid fa-pen-to-square"></i></div>
-        <div class="sidebar-icon" id="toggleHistoryBtn" title="Chat History">
-            <i class="fa-solid fa-clock-rotate-left"></i>
+    <!-- Top Navigation Header -->
+    <div class="top-header">
+        <div class="top-nav-container">
+            <div class="left-side">
+                <div class="logo">
+                    <div class="logo-img">
+                        <img src="/static/images/logo.png" alt="PHYSSi Logo">
+                    </div>
+                    <div class="logo-text">PHYSSi</div>
+                </div>
+                
+                <div class="nav-links">
+                    <a href="/">Home</a>
+                    <a href="/chatbot.html" class="active">Chatbot</a>
+                    <a href="/quiz-select.html">Quiz</a>
+                    <a href="/learning.html">Learning</a>
+                    <a href="/profile.html">Profile</a>
+                </div>
+            </div>
+            
+            <div class="right-side">
+                <button class="logout-button" id="authButton" onclick="handleAuth()">
+                    <i class="fa-solid fa-right-from-bracket"></i>
+                    <span id="authText">Logout</span>
+                </button>
+            </div>
         </div>
-        <!-- 🎲 ปุ่มลูกเต้าไปหน้า Quiz -->
-        <div class="sidebar-icon" id="quizBtn" title="Take Quiz" style="position: relative; cursor: pointer;">
-            <i class="fa-solid fa-dice"></i>
-            <span style="position: absolute; top: -4px; right: -4px; width: 8px; height: 8px; background: var(--primary-color); border-radius: 50%;"></span>
-        </div>
-        <div class="sidebar-icon"><i class="fa-solid fa-gear"></i></div>
-        <div class="user-avatar" id="userAvatar"><i class="fa-solid fa-user"></i></div>
     </div>
 
-    <!-- History Sidebar (Collapsible) -->
-    <div class="history-sidebar" id="historySidebar">
-        <div class="history-header">
-            <h3><i class="fa-solid fa-clock-rotate-left"></i> Chat History</h3>
-            <button class="close-history-btn" id="closeHistoryBtn">
-                <i class="fa-solid fa-xmark"></i>
-            </button>
+    <div class="page-wrapper">
+        <!-- Left Sidebar (Icons Only) - เหลือแค่ 2 ปุ่ม -->
+        <div class="sidebar">
+            <div class="logo-icon"><img src="/static/images/logo.png" alt="logo-image"></div>
+            <div class="sidebar-icon" id="newChatBtn" title="New Chat"><i class="fa-solid fa-pen-to-square"></i></div>
+            <div class="sidebar-icon" id="toggleHistoryBtn" title="Chat History">
+                <i class="fa-solid fa-clock-rotate-left"></i>
+            </div>
         </div>
+
+        <!-- History Sidebar (Collapsible) -->
+        <div class="history-sidebar" id="historySidebar">
+            <div class="history-header">
+                <h3><i class="fa-solid fa-clock-rotate-left"></i> Chat History</h3>
+                <button class="close-history-btn" id="closeHistoryBtn">
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
+            </div>
+            
+            <div class="history-user-info" id="historyUserInfo">
+                <!-- Will show user info or guest status -->
+            </div>
+
+            <div class="history-list" id="historyList">
+                <!-- History items will be inserted here -->
+            </div>
+
+            <div class="history-footer">
+                <button class="clear-history-btn" id="clearHistoryBtn">
+                    <i class="fa-solid fa-trash"></i> Clear All History
+                </button>
+            </div>
+        </div>
+
+        <!-- Main Content -->
+        <div class="main-content">
+            <!-- Header -->
+            <div class="main-header">
+                <div class="model-info"></div>
+                <div class="header-actions">
+                    <button class="action-btn" id="shareBtn" style="display: none;">
+                        <span><i class="fa-solid fa-arrow-up-from-bracket"></i></span>
+                        Share
+                    </button>
+                </div>
+            </div>
+
+            <!-- Chat Container -->
+            <div class="chat-container" id="chatContainer">
+                <!-- Initial State -->
+                <div class="initial-state" id="initialState">
+                    <div class="physsi-title">PHYSSi</div>
+                    <div class="physsi-subtitle">Let's try to ask something about physiology</div>
+                </div>
+
+                <!-- Conversation State -->
+                <div class="conversation-state" id="conversationState">
+                    <!-- Messages will be added here dynamically -->
+                </div>
+            </div>
+
+            <!-- Input Area -->
+            <div class="input-container">
+                <div class="input-wrapper">
+                    <!-- Attach File -->
+                    <button class="input-btn add-btn" id="attachBtn"><i class="fa-solid fa-paperclip"></i></button>
+                    <input type="file" id="fileInput" style="display:none;">
+
+                    <input type="text" class="chat-input" placeholder="Ask something..." id="chatInput">
+                   
+                    <button class="input-btn voice-btn"><i class="fa-solid fa-microphone"></i></button>
+                    <button class="input-btn send-btn" id="sendBtn"><i class="fa-solid fa-paper-plane"></i></button>
+                </div>
+                <div class="disclaimer" id="disclaimer">PHYSSi may contain errors. Please check the important information.</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Mobile Navigation Styles -->
+    <style>
+        .mobile-menu-btn {
+            display: none;
+            background: #4A9782;
+            color: white;
+            border: none;
+            padding: 8px 12px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: all 0.3s;
+        }
+
+        .mobile-menu-btn:hover,
+        .mobile-menu-btn.active {
+            background: #004030;
+        }
+
+        .mobile-nav-menu {
+            display: none;
+            position: fixed;
+            top: 70px;
+            left: 0;
+            right: 0;
+            background: white;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+            border-top: 2px solid #e0e6ed;
+            z-index: 999;
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease;
+        }
+
+        .mobile-nav-menu.active {
+            max-height: 400px;
+        }
+
+        .mobile-nav-menu a {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 15px 30px;
+            color: #666;
+            text-decoration: none;
+            font-weight: 500;
+            border-bottom: 1px solid #e0e6ed;
+            transition: all 0.3s;
+        }
+
+        .mobile-nav-menu a:hover {
+            background: #f5f7fa;
+            color: #4A9782;
+            padding-left: 40px;
+        }
+
+        .mobile-nav-menu a.active {
+            background: #4A9782;
+            color: white;
+            font-weight: 600;
+        }
+
+        .mobile-nav-menu a i {
+            font-size: 18px;
+            width: 20px;
+            text-align: center;
+        }
+
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none !important;
+            }
+            .mobile-menu-btn {
+                display: block;
+            }
+            .mobile-nav-menu {
+                display: block;
+            }
+            .logout-button {
+                padding: 5px 12px !important;
+                font-size: 12px !important;
+                border-radius: 16px !important;
+                gap: 4px !important;
+            }
+            .logout-button i {
+                font-size: 11px !important;
+            }
+            .logo-img {
+                width: 32px !important;
+                height: 32px !important;
+            }
+            .logo-text {
+                font-size: 20px !important;
+            }
+            .top-nav-container {
+                padding: 0 15px !important;
+            }
+        }
+    </style>
+
+    <!-- Scripts -->
+    <script>
+        // Mobile Navigation
+        (function() {
+            const navContainer = document.querySelector('.top-nav-container');
+            const leftSide = document.querySelector('.left-side');
+            if (!navContainer || !leftSide) return;
+            
+            let mobileBtn = document.createElement('button');
+            mobileBtn.className = 'mobile-menu-btn';
+            mobileBtn.innerHTML = '<i class="fa-solid fa-bars"></i>';
+            const logo = leftSide.querySelector('.logo');
+            if (logo) logo.insertAdjacentElement('afterend', mobileBtn);
+            
+            let mobileMenu = document.createElement('div');
+            mobileMenu.className = 'mobile-nav-menu';
+            
+            [
+                { href: '/', icon: 'fa-house', text: 'Home' },
+                { href: '/chatbot.html', icon: 'fa-comments', text: 'Chatbot' },
+                { href: '/quiz-select.html', icon: 'fa-clipboard-question', text: 'Quiz' },
+                { href: '/learning.html', icon: 'fa-book', text: 'Learning' },
+                { href: '/profile.html', icon: 'fa-user', text: 'Profile' }
+            ].forEach(item => {
+                const link = document.createElement('a');
+                link.href = item.href;
+                link.innerHTML = `<i class="fa-solid ${item.icon}"></i> ${item.text}`;
+                if (window.location.pathname.includes('chatbot') && item.href === '/chatbot.html') {
+                    link.classList.add('active');
+                }
+                mobileMenu.appendChild(link);
+            });
+            
+            document.body.appendChild(mobileMenu);
+            
+            mobileBtn.addEventListener('click', function(e) {
+                e.stopPropagation();
+                this.classList.toggle('active');
+                mobileMenu.classList.toggle('active');
+                this.querySelector('i').className = mobileMenu.classList.contains('active') ? 'fa-solid fa-xmark' : 'fa-solid fa-bars';
+            });
+            
+            document.addEventListener('click', function(e) {
+                if (!mobileMenu.contains(e.target) && !mobileBtn.contains(e.target)) {
+                    mobileMenu.classList.remove('active');
+                    mobileBtn.classList.remove('active');
+                    const btn = document.querySelector('.mobile-menu-btn');
+                    if (btn) btn.querySelector('i').className = 'fa-solid fa-bars';
+                }
+            });
+        })();
         
-        <div class="history-user-info" id="historyUserInfo">
-            <!-- Will show user info or guest status -->
-        </div>
-
-        <div class="history-list" id="historyList">
-            <!-- History items will be inserted here -->
-        </div>
-
-        <div class="history-footer">
-            <button class="clear-history-btn" id="clearHistoryBtn">
-                <i class="fa-solid fa-trash"></i> Clear All History
-            </button>
-        </div>
-    </div>
-
-    <!-- Main Content -->
-    <div class="main-content">
-        <!-- Header -->
-        <div class="main-header">
-            <div class="model-info">PHYSSi</div>
-            <div class="header-actions">
-                <button class="action-btn" id="darkModeBtn">
-                    <span><i class="fa-solid fa-moon"></i></span>
-                    Dark Mode
-                </button>
-                <button class="action-btn" id="shareBtn" style="display: none;">
-                    <span><i class="fa-solid fa-arrow-up-from-bracket"></i></span>
-                    Share
-                </button>
-            </div>
-        </div>
-
-        <!-- Chat Container -->
-        <div class="chat-container" id="chatContainer">
-            <!-- Initial State -->
-            <div class="initial-state" id="initialState">
-                <div class="physsi-title">PHYSSi</div>
-                <div class="physsi-subtitle">Let's try to ask something about physiology</div>
-            </div>
-
-            <!-- Conversation State -->
-            <div class="conversation-state" id="conversationState">
-                <!-- Messages will be added here dynamically -->
-            </div>
-        </div>
-
-        <!-- Input Area -->
-        <div class="input-container">
-            <div class="input-wrapper">
-                <!-- Attach File -->
-                <button class="input-btn add-btn" id="attachBtn"><i class="fa-solid fa-paperclip"></i></button>
-                <input type="file" id="fileInput" style="display:none;">
-
-                <input type="text" class="chat-input" placeholder="Ask something..." id="chatInput">
-               
-                <button class="input-btn voice-btn"><i class="fa-solid fa-microphone"></i></button>
-                <button class="input-btn send-btn" id="sendBtn"><i class="fa-solid fa-paper-plane"></i></button>
-            </div>
-            <div class="disclaimer" id="disclaimer">PHYSSi may contain errors. Please check the important information.</div>
-        </div>
-    </div>
+        // Auth functions
+        function updateAuthButton() {
+            const userData = localStorage.getItem('userData');
+            const authButton = document.getElementById('authButton');
+            const authText = document.getElementById('authText');
+            const authIcon = authButton.querySelector('i');
+            
+            if (userData) {
+                authText.textContent = 'Logout';
+                authIcon.className = 'fa-solid fa-right-from-bracket';
+            } else {
+                authText.textContent = 'Login';
+                authIcon.className = 'fa-solid fa-right-to-bracket';
+            }
+        }
+        
+        function handleAuth() {
+            const userData = localStorage.getItem('userData');
+            if (userData) {
+                logout();
+            } else {
+                window.location.href = '/login.html';
+            }
+        }
+        
+        function logout() {
+            if (confirm('Are you sure you want to logout?')) {
+                localStorage.removeItem('userData');
+                window.location.href = '/';
+            }
+        }
+        
+        updateAuthButton();
+    </script>
 
     <script src="/static/scripts/chatbot-page.js"></script>
-    
-    <!-- 🎯 เพิ่ม Script สำหรับปุ่ม Quiz -->
-    <script>
-        // ปุ่มลูกเต้า - ไปหน้า Quiz
-        document.getElementById('quizBtn').addEventListener('click', () => {
-            window.location.href = '/quiz-select.html';
-        });
-    </script>
 </body>
 
 </html>

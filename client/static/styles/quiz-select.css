@@ -1,15 +1,14 @@
+/* ==================== Variables ==================== */
 :root {
-    --primary-color: #4A9782;
-    --secondary-color: #DCD0A8;
-    --hover-color: #004030;
-    --background: #f8f9fa;
-    --card-bg: white;
-    --text-primary: #2c3e50;
-    --text-secondary: #7f8c8d;
-    --border-color: #e0e0e0;
-    --success-color: #22c55e;
-    --warning-color: #f59e0b;
-    --danger-color: #ef4444;
+    --primary: #4A9782;
+    --secondary: #DCD0A8;
+    --heart-color: #ef4444;
+    --brain-color: #8b5cf6;
+    --bg: #f5f7fa;
+    --surface: #ffffff;
+    --text: #2c3e50;
+    --text-light: #7f8c8d;
+    --border: #e0e6ed;
 }
 
 * {
@@ -20,28 +19,29 @@
 
 body {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    background: var(--background);
-    color: var(--text-primary);
-    min-height: 100vh;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.6;
 }
 
-/* ==================== Header ==================== */
+/* ==================== Header / Navigation ==================== */
 .header {
     background: white;
+    border-bottom: 2px solid var(--border);
     padding: 15px 0;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
     position: sticky;
     top: 0;
     z-index: 100;
 }
 
 .nav-container {
-    max-width: 1200px;
+    max-width: 1400px;
     margin: 0 auto;
+    padding: 0 30px;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 0 20px;
 }
 
 .left-side-header {
@@ -62,11 +62,16 @@ body {
     height: 40px;
 }
 
+.logo-img img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+}
+
 .logo-text {
     font-size: 24px;
     font-weight: bold;
-    background: linear-gradient(to right, var(--primary-color), var(--secondary-color));
-    background-clip: text;
+    background: linear-gradient(to right, var(--primary), var(--secondary));
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
 }
@@ -74,7 +79,6 @@ body {
 .nav-links {
     display: flex;
     gap: 30px;
-    align-items: center;
 }
 
 .nav-links a {
@@ -82,22 +86,73 @@ body {
     color: #666;
     font-weight: 500;
     transition: color 0.3s;
+    padding: 8px 0;
+    position: relative;
 }
 
 .nav-links a:hover {
-    color: var(--primary-color);
+    color: var(--primary);
 }
 
+.nav-links a.active {
+    color: var(--primary);
+    font-weight: 600;
+}
+
+.nav-links a.active::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background: var(--primary);
+    border-radius: 3px 3px 0 0;
+}
+
+/* Right Side - Logout Button */
+.right-side-header {
+    display: flex;
+    gap: 15px;
+    align-items: center;
+}
+
+.logout-button {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 6px 16px;
+    background: var(--primary);
+    color: white;
+    border: none;
+    border-radius: 20px;
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.3s;
+}
+
+.logout-button:hover {
+    background: #004030;
+    transform: translateY(-2px);
+}
+
+.logout-button i {
+    font-size: 13px;
+}
+
+/* Old Auth Buttons (kept for backward compatibility) */
 .auth-buttons {
     display: flex;
     gap: 15px;
+    align-items: center;
 }
 
 .btn-login {
-    padding: 10px 20px;
+    padding: 8px 20px;
     background: transparent;
-    border: 2px solid var(--primary-color);
-    color: var(--primary-color);
+    color: var(--primary);
+    border: 2px solid var(--primary);
     border-radius: 25px;
     text-decoration: none;
     font-weight: 500;
@@ -105,36 +160,58 @@ body {
 }
 
 .btn-login:hover {
-    background: var(--primary-color);
+    background: var(--primary);
     color: white;
 }
 
 .btn-started {
-    padding: 10px 20px;
-    background: var(--primary-color);
+    padding: 8px 20px;
+    background: var(--primary);
     color: white;
+    border: none;
     border-radius: 25px;
     text-decoration: none;
     font-weight: 500;
-    transition: background 0.3s;
+    transition: all 0.3s;
 }
 
 .btn-started:hover {
-    background: var(--hover-color);
+    background: #004030;
+    transform: translateY(-2px);
 }
 
-/* ==================== Quiz Selection ==================== */
+/* Logout Button (if logged in) */
+.logout-button {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 20px;
+    background: var(--primary);
+    color: white;
+    border: none;
+    border-radius: 25px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.3s;
+}
+
+.logout-button:hover {
+    background: #004030;
+    transform: translateY(-2px);
+}
+
+/* ==================== Quiz Selection Container ==================== */
 .quiz-selection-container {
-    max-width: 800px;
-    margin: 50px auto;
-    padding: 20px;
+    max-width: 600px;
+    margin: 60px auto;
+    padding: 0 20px;
 }
 
 .quiz-card {
-    background: var(--card-bg);
+    background: white;
     border-radius: 20px;
     padding: 40px;
-    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 4px 20px rgba(0,0,0,0.1);
     position: relative;
 }
 
@@ -145,59 +222,53 @@ body {
 
 .quiz-header i {
     font-size: 60px;
-    color: var(--primary-color);
-    margin-bottom: 15px;
+    color: var(--primary);
+    margin-bottom: 20px;
 }
 
 .quiz-header h1 {
     font-size: 32px;
-    color: var(--text-primary);
+    color: var(--text);
     margin-bottom: 10px;
 }
 
 .quiz-header p {
-    color: var(--text-secondary);
+    color: var(--text-light);
     font-size: 16px;
 }
 
 /* ==================== Form Groups ==================== */
 .form-group {
-    margin-bottom: 35px;
+    margin-bottom: 30px;
 }
 
-.form-group > label {
+.form-group label {
     display: block;
-    font-size: 18px;
+    font-size: 16px;
     font-weight: 600;
-    color: var(--text-primary);
+    color: var(--text);
     margin-bottom: 15px;
 }
 
-.form-group > label i {
-    color: var(--primary-color);
+.form-group label i {
     margin-right: 8px;
+    color: var(--primary);
 }
 
-/* ==================== Topic Selection ==================== */
+/* ==================== Topic Options ==================== */
 .topic-options {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
-    gap: 20px;
+    gap: 15px;
 }
 
 .topic-card {
     position: relative;
-    border: 3px solid var(--border-color);
-    border-radius: 15px;
-    overflow: hidden;
-    transition: all 0.3s;
+    border: 2px solid var(--border);
+    border-radius: 12px;
+    padding: 20px;
     cursor: pointer;
-}
-
-.topic-card:hover {
-    border-color: var(--primary-color);
-    transform: translateY(-5px);
-    box-shadow: 0 5px 20px rgba(74, 151, 130, 0.2);
+    transition: all 0.3s;
 }
 
 .topic-card input[type="radio"] {
@@ -205,83 +276,87 @@ body {
     opacity: 0;
 }
 
-.topic-card input[type="radio"]:checked + label {
-    background: var(--primary-color);
-    color: white;
-}
-
 .topic-card label {
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: center;
-    padding: 30px 20px;
+    gap: 10px;
     cursor: pointer;
-    transition: all 0.3s;
+    margin: 0;
 }
 
 .topic-card label i {
-    font-size: 50px;
-    margin-bottom: 15px;
-    color: var(--primary-color);
+    font-size: 40px;
 }
 
-.topic-card input[type="radio"]:checked + label i {
-    color: white;
+.topic-card[data-topic="heart"] label i {
+    color: var(--heart-color);
 }
 
-.topic-card label span {
-    font-size: 18px;
+.topic-card[data-topic="brain"] label i {
+    color: var(--brain-color);
+}
+
+.topic-card:hover {
+    border-color: var(--primary);
+    background: rgba(74, 151, 130, 0.05);
+}
+
+.topic-card input[type="radio"]:checked + label {
     font-weight: 600;
 }
 
-/* ==================== Number Slider ==================== */
+.topic-card input[type="radio"]:checked ~ * {
+    border-color: var(--primary);
+}
+
+.topic-card:has(input[type="radio"]:checked) {
+    border-color: var(--primary);
+    background: rgba(74, 151, 130, 0.1);
+}
+
+/* ==================== Slider ==================== */
 .slider-container {
-    background: var(--background);
-    padding: 20px;
-    border-radius: 12px;
+    padding: 10px 0;
 }
 
 .slider-container input[type="range"] {
     width: 100%;
     height: 8px;
     border-radius: 5px;
-    background: linear-gradient(to right, var(--primary-color), var(--secondary-color));
+    background: var(--border);
     outline: none;
     -webkit-appearance: none;
-    margin-bottom: 15px;
 }
 
 .slider-container input[type="range"]::-webkit-slider-thumb {
     -webkit-appearance: none;
     appearance: none;
-    width: 24px;
-    height: 24px;
+    width: 20px;
+    height: 20px;
     border-radius: 50%;
-    background: white;
-    border: 3px solid var(--primary-color);
+    background: var(--primary);
     cursor: pointer;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
 }
 
 .slider-container input[type="range"]::-moz-range-thumb {
-    width: 24px;
-    height: 24px;
+    width: 20px;
+    height: 20px;
     border-radius: 50%;
-    background: white;
-    border: 3px solid var(--primary-color);
+    background: var(--primary);
     cursor: pointer;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+    border: none;
 }
 
 .slider-value {
     text-align: center;
-    font-size: 24px;
-    font-weight: 700;
-    color: var(--primary-color);
+    margin-top: 15px;
+    font-size: 18px;
+    font-weight: 600;
+    color: var(--primary);
 }
 
-/* ==================== Difficulty Selection ==================== */
+/* ==================== Difficulty Options ==================== */
 .difficulty-options {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
@@ -290,28 +365,12 @@ body {
 
 .difficulty-card {
     position: relative;
-    border: 3px solid var(--border-color);
+    border: 2px solid var(--border);
     border-radius: 12px;
-    overflow: hidden;
-    transition: all 0.3s;
+    padding: 15px;
     cursor: pointer;
-}
-
-.difficulty-card:hover {
-    transform: translateY(-3px);
-    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
-}
-
-.difficulty-card[data-difficulty="easy"]:hover {
-    border-color: var(--success-color);
-}
-
-.difficulty-card[data-difficulty="medium"]:hover {
-    border-color: var(--warning-color);
-}
-
-.difficulty-card[data-difficulty="hard"]:hover {
-    border-color: var(--danger-color);
+    transition: all 0.3s;
+    text-align: center;
 }
 
 .difficulty-card input[type="radio"] {
@@ -319,70 +378,47 @@ body {
     opacity: 0;
 }
 
-.difficulty-card input[type="radio"]:checked + label {
-    color: white;
-}
-
-.difficulty-card[data-difficulty="easy"] input[type="radio"]:checked + label {
-    background: var(--success-color);
-}
-
-.difficulty-card[data-difficulty="medium"] input[type="radio"]:checked + label {
-    background: var(--warning-color);
-}
-
-.difficulty-card[data-difficulty="hard"] input[type="radio"]:checked + label {
-    background: var(--danger-color);
-}
-
 .difficulty-card label {
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: center;
-    padding: 25px 15px;
+    gap: 8px;
     cursor: pointer;
-    transition: all 0.3s;
-    text-align: center;
+    margin: 0;
 }
 
 .difficulty-card label i {
-    font-size: 35px;
-    margin-bottom: 10px;
+    font-size: 30px;
 }
 
 .difficulty-card[data-difficulty="easy"] label i {
-    color: var(--success-color);
+    color: #10b981;
 }
 
 .difficulty-card[data-difficulty="medium"] label i {
-    color: var(--warning-color);
+    color: #f59e0b;
 }
 
 .difficulty-card[data-difficulty="hard"] label i {
-    color: var(--danger-color);
-}
-
-.difficulty-card input[type="radio"]:checked + label i {
-    color: white;
-}
-
-.difficulty-card label span {
-    font-size: 16px;
-    font-weight: 600;
-    margin-bottom: 5px;
+    color: #ef4444;
 }
 
 .difficulty-card label small {
     font-size: 12px;
-    color: var(--text-secondary);
+    color: var(--text-light);
 }
 
-.difficulty-card input[type="radio"]:checked + label small {
-    color: rgba(255, 255, 255, 0.8);
+.difficulty-card:hover {
+    border-color: var(--primary);
+    background: rgba(74, 151, 130, 0.05);
 }
 
-/* ==================== Language Selection ==================== */
+.difficulty-card:has(input[type="radio"]:checked) {
+    border-color: var(--primary);
+    background: rgba(74, 151, 130, 0.1);
+}
+
+/* ==================== Language Options ==================== */
 .language-options {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
@@ -391,17 +427,11 @@ body {
 
 .language-card {
     position: relative;
-    border: 3px solid var(--border-color);
+    border: 2px solid var(--border);
     border-radius: 12px;
-    overflow: hidden;
-    transition: all 0.3s;
+    padding: 20px;
     cursor: pointer;
-}
-
-.language-card:hover {
-    border-color: var(--primary-color);
-    transform: translateY(-3px);
-    box-shadow: 0 5px 15px rgba(74, 151, 130, 0.2);
+    transition: all 0.3s;
 }
 
 .language-card input[type="radio"] {
@@ -409,82 +439,75 @@ body {
     opacity: 0;
 }
 
-.language-card input[type="radio"]:checked + label {
-    background: var(--primary-color);
-    color: white;
-}
-
 .language-card label {
     display: flex;
-    flex-direction: column;
     align-items: center;
-    justify-content: center;
-    padding: 25px 20px;
+    gap: 10px;
     cursor: pointer;
-    transition: all 0.3s;
-    text-align: center;
+    margin: 0;
+    justify-content: center;
 }
 
 .language-card label i {
-    font-size: 40px;
-    margin-bottom: 12px;
-    color: var(--primary-color);
+    font-size: 24px;
+    color: var(--primary);
 }
 
-.language-card input[type="radio"]:checked + label i {
-    color: white;
+.language-card:hover {
+    border-color: var(--primary);
+    background: rgba(74, 151, 130, 0.05);
 }
 
-.language-card label span {
-    font-size: 16px;
-    font-weight: 600;
+.language-card:has(input[type="radio"]:checked) {
+    border-color: var(--primary);
+    background: rgba(74, 151, 130, 0.1);
 }
 
-/* ==================== Start Button ==================== */
+/* ==================== Start Quiz Button ==================== */
 .btn-start-quiz {
     width: 100%;
-    padding: 18px;
-    background: linear-gradient(to right, var(--primary-color), var(--secondary-color));
+    padding: 15px;
+    background: linear-gradient(135deg, var(--primary), var(--secondary));
     color: white;
     border: none;
-    border-radius: 50px;
+    border-radius: 12px;
     font-size: 18px;
     font-weight: 600;
     cursor: pointer;
-    transition: all 0.3s;
     display: flex;
     align-items: center;
     justify-content: center;
     gap: 10px;
-    margin-top: 40px;
+    transition: all 0.3s;
+    margin-top: 30px;
 }
 
 .btn-start-quiz:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 10px 25px rgba(74, 151, 130, 0.3);
+    transform: scale(1.02);
+    box-shadow: 0 5px 20px rgba(74, 151, 130, 0.4);
 }
 
 .btn-start-quiz:active {
-    transform: translateY(0);
+    transform: scale(0.98);
 }
 
 /* ==================== Loading Overlay ==================== */
 .loading-overlay {
+    display: none;
     position: absolute;
     top: 0;
     left: 0;
     right: 0;
     bottom: 0;
     background: rgba(255, 255, 255, 0.95);
-    display: none;
-    align-items: center;
-    justify-content: center;
     border-radius: 20px;
-    z-index: 1000;
+    z-index: 10;
 }
 
-.loading-overlay.show {
+.loading-overlay.active {
     display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .loading-content {
@@ -492,26 +515,44 @@ body {
 }
 
 .loading-content i {
-    font-size: 60px;
-    color: var(--primary-color);
+    font-size: 50px;
+    color: var(--primary);
     margin-bottom: 20px;
 }
 
 .loading-content p {
-    font-size: 20px;
+    font-size: 18px;
     font-weight: 600;
-    color: var(--text-primary);
+    color: var(--text);
     margin-bottom: 10px;
 }
 
 .loading-content small {
-    color: var(--text-secondary);
+    font-size: 14px;
+    color: var(--text-light);
 }
 
 /* ==================== Responsive ==================== */
 @media (max-width: 768px) {
+    .nav-links {
+        display: none !important;
+    }
+
+    .quiz-selection-container {
+        margin: 30px auto;
+        padding: 0 15px;
+    }
+
     .quiz-card {
-        padding: 25px;
+        padding: 30px 20px;
+    }
+
+    .quiz-header h1 {
+        font-size: 26px;
+    }
+
+    .quiz-header i {
+        font-size: 50px;
     }
 
     .topic-options {
@@ -522,11 +563,7 @@ body {
         grid-template-columns: 1fr;
     }
 
-    .quiz-header h1 {
-        font-size: 24px;
-    }
-
-    .nav-links {
-        display: none;
+    .language-options {
+        grid-template-columns: 1fr;
     }
 }
