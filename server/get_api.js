@@ -146,29 +146,64 @@ app.post("/api/login", async (req, res) => {
 
 // ==================== API Chatbot ====================
 function formatAIResponse(text) {
-    const lines = text.split("\n");
+    // ล้าง \r และแบ่งบรรทัด
+    const lines = text.replace(/\r/g, "").split("\n");
     let html = "";
     let inList = false;
+    let inNumberList = false;
+
     lines.forEach((line) => {
         line = line.trim();
-        if (!line) return;
-        if (line.startsWith("* ")) {
+        if (!line) return; // ข้ามบรรทัดว่าง
+
+        //จัดการหัวข้อแบบ "**หัวข้อ:** ..."
+        if (/^\*\*(.*?)\:\*\*/.test(line)) {
+            const title = line.replace(/^\*\*(.*?)\:\*\*/, "$1");
+            html += `<h3>${title}</h3>`;
+            return;
+        }
+
+        //ลิสต์แบบ bullet (*, -, •)
+        if (/^[-*•]\s+/.test(line)) {
             if (!inList) {
                 html += "<ul>";
                 inList = true;
             }
-            html += `<li>${line.substring(2)}</li>`;
-        } else {
-            if (inList) {
-                html += "</ul>";
-                inList = false;
-            }
-            line = line.replace(/\*\*(.*?)\*\*/g, "<strong>$1</strong>");
-            line = line.replace(/\*(.*?)\*/g, "<em>$1</em>");
-            html += `<p>${line}</p>`;
+            html += `<li>${line.replace(/^[-*•]\s+/, "")}</li>`;
+            return;
         }
+
+        //ลิสต์แบบมีตัวเลข (1., 2., ...)
+        if (/^\d+\.\s+/.test(line)) {
+            if (!inNumberList) {
+                html += "<ol>";
+                inNumberList = true;
+            }
+            html += `<li>${line.replace(/^\d+\.\s+/, "")}</li>`;
+            return;
+        }
+
+        // ปิดลิสต์ถ้ามีอยู่
+        if (inList) {
+            html += "</ul>";
+            inList = false;
+        }
+        if (inNumberList) {
+            html += "</ol>";
+            inNumberList = false;
+        }
+
+        // ลบ ** และ * ทั้งหมด
+        line = line.replace(/\*\*(.*?)\*\*/g, "$1");
+        line = line.replace(/\*(.*?)\*/g, "$1");
+
+        html += `<p>${line}</p>`;
     });
+
+    // ปิดแท็กที่ยังไม่ปิด
     if (inList) html += "</ul>";
+    if (inNumberList) html += "</ol>";
+
     return html;
 }
 
