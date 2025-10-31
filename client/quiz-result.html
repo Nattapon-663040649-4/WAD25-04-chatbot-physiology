@@ -8,15 +8,135 @@
     <link rel="icon" href="/static/images/logo-new.ico">
     <link rel="stylesheet" href="/static/styles/quiz-result.css">
     <script src="https://kit.fontawesome.com/03b30ccae0.js" crossorigin="anonymous"></script>
+    
+    <!-- Mobile Navigation Styles -->
+    <style>
+        .mobile-menu-btn {
+            display: none;
+            background: #4A9782;
+            color: white;
+            border: none;
+            padding: 8px 12px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: all 0.3s;
+        }
+
+        .mobile-menu-btn:hover,
+        .mobile-menu-btn.active {
+            background: #004030;
+        }
+
+        .mobile-nav-menu {
+            display: none;
+            position: absolute;
+            top: 100%;
+            left: 0;
+            right: 0;
+            background: white;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+            border-top: 2px solid #e0e6ed;
+            z-index: 99;
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease;
+        }
+
+        .mobile-nav-menu.active {
+            max-height: 400px;
+        }
+
+        .mobile-nav-menu a {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 15px 30px;
+            color: #666;
+            text-decoration: none;
+            font-weight: 500;
+            border-bottom: 1px solid #e0e6ed;
+            transition: all 0.3s;
+        }
+
+        .mobile-nav-menu a:hover {
+            background: #f5f7fa;
+            color: #4A9782;
+            padding-left: 40px;
+        }
+
+        .mobile-nav-menu a.active {
+            background: #4A9782;
+            color: white;
+            font-weight: 600;
+        }
+
+        .mobile-nav-menu a i {
+            font-size: 18px;
+            width: 20px;
+            text-align: center;
+        }
+
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none !important;
+            }
+            .mobile-menu-btn {
+                display: block;
+            }
+            .mobile-nav-menu {
+                display: block;
+            }
+            .page-header {
+                position: relative;
+            }
+            .logout-button {
+                padding: 6px 12px !important;
+                font-size: 13px !important;
+                border-radius: 6px !important;
+            }
+            .logout-button i {
+                font-size: 12px !important;
+            }
+            .logo-img {
+                width: 32px !important;
+                height: 32px !important;
+            }
+            .logo-text {
+                font-size: 20px !important;
+            }
+            .nav-container {
+                padding: 0 15px !important;
+            }
+        }
+    </style>
 </head>
 
 <body>
-    <!-- Header -->
-    <div class="result-header">
-        <div class="header-content">
-            <div class="logo-section">
-                <img src="/static/images/logo.png" alt="PHYSSi Logo" class="header-logo">
-                <span class="header-title">PHYSSi Quiz Results</span>
+    <!-- Header Navigation -->
+    <div class="page-header">
+        <div class="nav-container">
+            <div class="left-side-header">
+                <div class="logo">
+                    <div class="logo-img">
+                        <img src="/static/images/logo.png" alt="PHYSSi Logo">
+                    </div>
+                    <div class="logo-text">PHYSSi</div>
+                </div>
+                <div class="nav-links">
+                    <a href="/">Home</a>
+                    <a href="/chatbot.html">Chatbot</a>
+                    <a href="/quiz-select.html" class="active">Quiz</a>
+                    <a href="/learning.html">Learning</a>
+                    <a href="/profile.html">Profile</a>
+                </div>
+            </div>
+
+            <div class="right-side-header">
+                <button class="logout-button" onclick="logout()">
+                    <i class="fa-solid fa-right-from-bracket"></i>
+                    Logout
+                </button>
             </div>
         </div>
     </div>
@@ -68,7 +188,7 @@
         </div>
 
         <div class="questions-list" id="questionsList">
-            <!-- Questions will be inserted here -->
+            <!-- Questions will be inserted here by JavaScript -->
         </div>
     </div>
 
@@ -78,18 +198,68 @@
             <i class="fa-solid fa-rotate-right"></i>
             Try Again
         </a>
-        <a href="/" class="btn-action btn-home">
-            <i class="fa-solid fa-home"></i>
-            Back to Home
-        </a>
-        <a href="/profile.html" class="btn-action btn-profile">
-            <i class="fa-solid fa-chart-line"></i>
-            View Progress
-        </a>
     </div>
 
     <!-- Confetti Canvas (for celebration) -->
     <canvas id="confetti"></canvas>
+
+    <!-- Mobile Navigation Script -->
+    <script>
+        (function() {
+            const navContainer = document.querySelector('.nav-container');
+            const leftHeader = document.querySelector('.left-side-header');
+            if (!navContainer || !leftHeader) return;
+            
+            let mobileBtn = document.createElement('button');
+            mobileBtn.className = 'mobile-menu-btn';
+            mobileBtn.innerHTML = '<i class="fa-solid fa-bars"></i>';
+            const logo = leftHeader.querySelector('.logo');
+            if (logo) logo.insertAdjacentElement('afterend', mobileBtn);
+            
+            let mobileMenu = document.createElement('div');
+            mobileMenu.className = 'mobile-nav-menu';
+            
+            [
+                { href: '/', icon: 'fa-house', text: 'Home' },
+                { href: '/chatbot.html', icon: 'fa-comments', text: 'Chatbot' },
+                { href: '/quiz-select.html', icon: 'fa-clipboard-question', text: 'Quiz' },
+                { href: '/learning.html', icon: 'fa-book', text: 'Learning' },
+                { href: '/profile.html', icon: 'fa-user', text: 'Profile' }
+            ].forEach(item => {
+                const link = document.createElement('a');
+                link.href = item.href;
+                link.innerHTML = `<i class="fa-solid ${item.icon}"></i> ${item.text}`;
+                if (window.location.pathname.includes('quiz') && item.href === '/quiz-select.html') {
+                    link.classList.add('active');
+                }
+                mobileMenu.appendChild(link);
+            });
+            
+            document.querySelector('.page-header').appendChild(mobileMenu);
+            
+            mobileBtn.addEventListener('click', function(e) {
+                e.stopPropagation();
+                this.classList.toggle('active');
+                mobileMenu.classList.toggle('active');
+                this.querySelector('i').className = mobileMenu.classList.contains('active') ? 'fa-solid fa-xmark' : 'fa-solid fa-bars';
+            });
+            
+            document.addEventListener('click', function(e) {
+                if (!mobileMenu.contains(e.target) && !mobileBtn.contains(e.target)) {
+                    mobileMenu.classList.remove('active');
+                    mobileBtn.classList.remove('active');
+                    mobileBtn.querySelector('i').className = 'fa-solid fa-bars';
+                }
+            });
+        })();
+        
+        function logout() {
+            if (confirm('Are you sure you want to logout?')) {
+                localStorage.removeItem('userData');
+                window.location.href = '/';
+            }
+        }
+    </script>
 
     <script src="/static/scripts/quiz-result.js"></script>
 </body>
