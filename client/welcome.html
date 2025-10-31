@@ -8,6 +8,109 @@
     <link rel="icon" href="/static/images/logo-new.ico">
     <link rel="stylesheet" href="/static/styles/welcome.css">
     <script src="https://kit.fontawesome.com/03b30ccae0.js" crossorigin="anonymous"></script>
+    
+    <!-- Mobile Navigation Styles -->
+    <style>
+        .mobile-menu-btn {
+            display: none;
+            background: #4A9782;
+            color: white;
+            border: none;
+            padding: 8px 12px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: all 0.3s;
+        }
+
+        .mobile-menu-btn:hover,
+        .mobile-menu-btn.active {
+            background: #004030;
+        }
+
+        .mobile-nav-menu {
+            display: none;
+            position: absolute;
+            top: 100%;
+            left: 0;
+            right: 0;
+            background: white;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+            border-top: 2px solid #e0e6ed;
+            z-index: 99;
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease;
+        }
+
+        .mobile-nav-menu.active {
+            max-height: 400px;
+        }
+
+        .mobile-nav-menu a {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 15px 30px;
+            color: #666;
+            text-decoration: none;
+            font-weight: 500;
+            border-bottom: 1px solid #e0e6ed;
+            transition: all 0.3s;
+        }
+
+        .mobile-nav-menu a:hover {
+            background: #f5f7fa;
+            color: #4A9782;
+            padding-left: 40px;
+        }
+
+        .mobile-nav-menu a.active {
+            background: #4A9782;
+            color: white;
+            font-weight: 600;
+        }
+
+        .mobile-nav-menu a i {
+            font-size: 18px;
+            width: 20px;
+            text-align: center;
+        }
+
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none !important;
+            }
+            .mobile-menu-btn {
+                display: block;
+            }
+            .mobile-nav-menu {
+                display: block;
+            }
+            .header {
+                position: relative;
+            }
+            .logout-button {
+                padding: 5px 12px !important;
+                font-size: 12px !important;
+                border-radius: 16px !important;
+                gap: 4px !important;
+            }
+            .logout-button i {
+                font-size: 11px !important;
+            }
+            .logo-img {
+                width: 32px !important;
+                height: 32px !important;
+            }
+            .logo-text {
+                font-size: 20px !important;
+            }
+            .nav-container {
+                padding: 0 15px !important;
+            }
+        }
+    </style>
 </head>
 
 <body>
@@ -22,14 +125,18 @@
                     <div class="logo-text">PHYSSi</div>
                 </div>
                 <div class="nav-links">
-                    <a href="/">Home</a>
+                    <a href="/" class="active">Home</a>
                     <a href="/chatbot.html">Chatbot</a>
                     <a href="/quiz-select.html">Quiz</a>
+                    <a href="/learning.html">Learning</a>
+                    <a href="/profile.html">Profile</a>
                 </div>
             </div>
-            <div class="auth-buttons">
-                <a href="/login.html" class="btn-login">Login</a>
-                <a href="/register.html" class="btn-started">Get Started</a>
+            <div class="right-side-header">
+                <button class="logout-button" id="authButton" onclick="handleAuth()">
+                    <i class="fa-solid fa-right-from-bracket"></i>
+                    <span id="authText">Logout</span>
+                </button>
             </div>
         </div>
     </div>
@@ -110,7 +217,7 @@
         </div>
     </div>
 
-    <!-- 🎯 Quiz Modal -->
+    <!-- Quiz Modal -->
     <div class="quiz-modal" id="quizModal">
         <div class="quiz-modal-content">
             <button class="quiz-modal-close" id="closeQuizModalBtn">
@@ -127,33 +234,114 @@
         </div>
     </div>
 
+    <!-- Mobile Navigation Script -->
+    <script>
+        (function() {
+            const navContainer = document.querySelector('.nav-container');
+            const leftHeader = document.querySelector('.left-side-header');
+            if (!navContainer || !leftHeader) return;
+            
+            let mobileBtn = document.createElement('button');
+            mobileBtn.className = 'mobile-menu-btn';
+            mobileBtn.innerHTML = '<i class="fa-solid fa-bars"></i>';
+            const logo = leftHeader.querySelector('.logo');
+            if (logo) logo.insertAdjacentElement('afterend', mobileBtn);
+            
+            let mobileMenu = document.createElement('div');
+            mobileMenu.className = 'mobile-nav-menu';
+            
+            [
+                { href: '/', icon: 'fa-house', text: 'Home' },
+                { href: '/chatbot.html', icon: 'fa-comments', text: 'Chatbot' },
+                { href: '/quiz-select.html', icon: 'fa-clipboard-question', text: 'Quiz' },
+                { href: '/learning.html', icon: 'fa-book', text: 'Learning' },
+                { href: '/profile.html', icon: 'fa-user', text: 'Profile' }
+            ].forEach(item => {
+                const link = document.createElement('a');
+                link.href = item.href;
+                link.innerHTML = `<i class="fa-solid ${item.icon}"></i> ${item.text}`;
+                if (window.location.pathname === '/' && item.href === '/') {
+                    link.classList.add('active');
+                }
+                mobileMenu.appendChild(link);
+            });
+            
+            document.querySelector('.header').appendChild(mobileMenu);
+            
+            mobileBtn.addEventListener('click', function(e) {
+                e.stopPropagation();
+                this.classList.toggle('active');
+                mobileMenu.classList.toggle('active');
+                this.querySelector('i').className = mobileMenu.classList.contains('active') ? 'fa-solid fa-xmark' : 'fa-solid fa-bars';
+            });
+            
+            document.addEventListener('click', function(e) {
+                if (!mobileMenu.contains(e.target) && !mobileBtn.contains(e.target)) {
+                    mobileMenu.classList.remove('active');
+                    mobileBtn.classList.remove('active');
+                    mobileBtn.querySelector('i').className = 'fa-solid fa-bars';
+                }
+            });
+        })();
+        
+        // Check if user is logged in and update button
+        function updateAuthButton() {
+            const userData = localStorage.getItem('userData');
+            const authButton = document.getElementById('authButton');
+            const authText = document.getElementById('authText');
+            const authIcon = authButton.querySelector('i');
+            
+            if (userData) {
+                authText.textContent = 'Logout';
+                authIcon.className = 'fa-solid fa-right-from-bracket';
+            } else {
+                authText.textContent = 'Login';
+                authIcon.className = 'fa-solid fa-right-to-bracket';
+            }
+        }
+        
+        function handleAuth() {
+            const userData = localStorage.getItem('userData');
+            if (userData) {
+                logout();
+            } else {
+                window.location.href = '/login.html';
+            }
+        }
+        
+        function logout() {
+            if (confirm('Are you sure you want to logout?')) {
+                localStorage.removeItem('userData');
+                window.location.href = '/';
+            }
+        }
+        
+        updateAuthButton();
+    </script>
+
     <script src="/static/scripts/welcome.js"></script>
     
-    <!-- 🎯 Quiz Modal Scripts -->
+    <!-- Quiz Modal Scripts -->
     <script>
         const quizModal = document.getElementById('quizModal');
         const openQuizModalBtn = document.getElementById('openQuizModalBtn');
         const closeQuizModalBtn = document.getElementById('closeQuizModalBtn');
         const letsTryBtn = document.getElementById('letsTryBtn');
 
-        // เปิด modal
         openQuizModalBtn.addEventListener('click', () => {
             quizModal.classList.add('show');
         });
 
-        // ปิด modal
         closeQuizModalBtn.addEventListener('click', () => {
             quizModal.classList.remove('show');
         });
 
-        // ปิด modal เมื่อคลิกนอก content
         quizModal.addEventListener('click', (e) => {
             if (e.target === quizModal) {
                 quizModal.classList.remove('show');
             }
         });
 
-        // ปุ่ม Let's try - ไปหน้า Quiz
         letsTryBtn.addEventListener('click', () => {
             window.location.href = '/quiz-select.html';
         });
