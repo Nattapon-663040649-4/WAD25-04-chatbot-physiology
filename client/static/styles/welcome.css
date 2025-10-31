@@ -11,7 +11,7 @@
 }
 
 body {
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-family: sans-serif;
     line-height: 1.6;
     color: #333;
 }
@@ -301,6 +301,99 @@ body {
     background: #f8f9fa;
 }
 
+/* ==================== Recommended Topics Section ==================== */
+.topics-section {
+    padding: 80px 0;
+    background: white;
+}
+
+.topics-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+    text-align: center;
+}
+
+.topics-section h2 {
+    font-size: 36px;
+    color: var(--primary-color);
+    margin-bottom: 50px;
+    font-weight: bold;
+}
+
+.topics-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(450px, 1fr));
+    gap: 40px;
+    max-width: 1000px;
+    margin: 0 auto;
+}
+
+.topic-card {
+    background: white;
+    border: 2px solid var(--primary-color);
+    border-radius: 20px;
+    overflow: hidden;
+    transition: all 0.3s ease;
+    cursor: pointer;
+}
+
+.topic-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 15px 40px rgba(74, 151, 130, 0.2);
+}
+
+.topic-image-wrap {
+    background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+    padding: 60px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 200px;
+}
+
+.topic-icon {
+    font-size: 120px;
+    color: white;
+    transition: transform 0.3s ease;
+}
+
+.topic-card:hover .topic-icon {
+    transform: scale(1.1);
+}
+
+.topic-svg {
+    display: none;
+}
+
+.topic-svg .st0 {
+    fill: white;
+}
+
+.topic-content {
+    padding: 30px;
+    text-align: left;
+}
+
+.topic-content h3 {
+    font-size: 24px;
+    color: var(--primary-color);
+    margin-bottom: 15px;
+    font-weight: bold;
+}
+
+.topic-content p {
+    color: #666;
+    line-height: 1.8;
+    font-size: 15px;
+}
+
+/* Features Section */
+.features-section {
+    padding: 80px 0;
+    background: #f8f9fa;
+}
+
 .features-container {
     max-width: 1200px;
     margin: 0 auto;
@@ -504,6 +597,37 @@ body {
 
     .tools-grid {
         grid-template-columns: 1fr;
+    }
+    
+    .topics-grid {
+        grid-template-columns: 1fr;
+        gap: 30px;
+    }
+    
+    .topic-image-wrap {
+        padding: 40px;
+        min-height: 150px;
+    }
+    
+    .topic-icon {
+        font-size: 80px;
+    }
+    
+    .topic-svg {
+        width: 100px;
+        height: 100px;
+    }
+    
+    .topic-content {
+        padding: 20px;
+    }
+    
+    .topic-content h3 {
+        font-size: 20px;
+    }
+    
+    .topic-content p {
+        font-size: 14px;
     }
 
     .features-grid {
