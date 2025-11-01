@@ -14,22 +14,25 @@ const uploads = multer({ dest: "uploads/" });
 const cors = require('cors');
 
 // Allow Frontend to access Backend
-const allowedOrigins = [
-    'https://chatbot-physiology-bwi9xu7t1-bossnattapons-projects.vercel.app',
-    'https://chatbot-physiology.vercel.app', // กรณีมี custom domain หรือ production URL
-    'http://localhost:3000', // สำหรับ local development
-];
-
 app.use(cors({
     origin: function (origin, callback) {
         // Allow requests with no origin (like mobile apps or curl)
         if (!origin) return callback(null, true);
         
-        if (allowedOrigins.indexOf(origin) === -1) {
-            const msg = 'CORS policy: Origin not allowed';
-            return callback(new Error(msg), false);
+        // Allow all Vercel preview URLs + production + localhost
+        const allowedPatterns = [
+            /^https:\/\/chatbot-physiology.*\.vercel\.app$/,  // ทุก Vercel URL
+            /^http:\/\/localhost:\d+$/,  // localhost ทุก port
+        ];
+        
+        const isAllowed = allowedPatterns.some(pattern => pattern.test(origin));
+        
+        if (isAllowed) {
+            callback(null, true);
+        } else {
+            console.log('❌ CORS blocked origin:', origin);
+            callback(new Error('CORS policy: Origin not allowed'), false);
         }
-        return callback(null, true);
     },
     credentials: true
 }));
