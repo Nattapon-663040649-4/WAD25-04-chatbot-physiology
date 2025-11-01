@@ -16,6 +16,7 @@ const cors = require('cors');
 // Allow Frontend to access Backend
 const allowedOrigins = [
     'https://wad25-04-chatbot-physiology-1.onrender.com',
+    'https://chatbot-physiology-bwi9xu7t1-bossnattapons-projects.vercel.app/',
     'http://localhost:3000', // สำหรับ local development
 ];
 
