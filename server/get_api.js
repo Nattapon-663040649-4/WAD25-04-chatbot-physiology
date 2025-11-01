@@ -19,10 +19,11 @@ app.use(cors({
         // Allow requests with no origin (like mobile apps or curl)
         if (!origin) return callback(null, true);
         
-        // Allow all Vercel preview URLs + production + localhost
+        // Allow Vercel, Render, and localhost
         const allowedPatterns = [
-            /^https:\/\/chatbot-physiology.*\.vercel\.app$/,  // ทุก Vercel URL
-            /^http:\/\/localhost:\d+$/,  // localhost ทุก port
+            /^https:\/\/chatbot-physiology.*\.vercel\.app$/,  // Vercel URLs
+            /^https:\/\/wad25-04-chatbot-physiology.*\.onrender\.com$/,  // Render Frontend URLs
+            /^http:\/\/localhost:\d+$/,  // localhost
         ];
         
         const isAllowed = allowedPatterns.some(pattern => pattern.test(origin));
