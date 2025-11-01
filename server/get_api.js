@@ -15,8 +15,8 @@ const cors = require('cors');
 
 // Allow Frontend to access Backend
 const allowedOrigins = [
-    'https://wad25-04-chatbot-physiology-1.onrender.com',
     'https://chatbot-physiology-bwi9xu7t1-bossnattapons-projects.vercel.app',
+    'https://chatbot-physiology.vercel.app', // กรณีมี custom domain หรือ production URL
     'http://localhost:3000', // สำหรับ local development
 ];
 
@@ -44,13 +44,13 @@ const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
 
 // ==================== 1. Database Setup ====================
 const MONGODB_URI = process.env.MONGODB_URI || "mongodb://localhost:27017/physsi_db";
-    console.log('🔍 DEBUG: MONGODB_URI from .env:', process.env.MONGODB_URI ? 'FOUND ✅' : 'NOT FOUND ❌');
-    console.log('🔍 DEBUG: MONGODB_URI value starts with:', MONGODB_URI.substring(0, 20));
+console.log('🔍 DEBUG: MONGODB_URI from .env:', process.env.MONGODB_URI ? 'FOUND ✅' : 'NOT FOUND ❌');
+console.log('🔍 DEBUG: MONGODB_URI value starts with:', MONGODB_URI.substring(0, 20));
 
-// MongoDB connection options (รองรับทั้ง local และ Atlas)
+// MongoDB connection options
 const mongoOptions = {
-    serverSelectionTimeoutMS: 10000, // Timeout 10 วินาที
-    socketTimeoutMS: 45000, // Socket timeout
+    serverSelectionTimeoutMS: 10000,
+    socketTimeoutMS: 45000,
 };
 
 mongoose.connect(MONGODB_URI, mongoOptions)
@@ -58,10 +58,8 @@ mongoose.connect(MONGODB_URI, mongoOptions)
         console.log("✅ MongoDB Connected!");
         console.log(`📍 Database: ${mongoose.connection.name}`);
         
-        // แสดงว่าเชื่อมกับ Atlas หรือ Local
         if (MONGODB_URI.includes('mongodb+srv://')) {
             console.log(`🌐 Connection Type: MongoDB Atlas (Cloud)`);
-            // แสดงแค่ส่วนหน้าของ URI เพื่อความปลอดภัย
             const uriPreview = MONGODB_URI.substring(0, 30) + '...';
             console.log(`🔗 URI Preview: ${uriPreview}`);
         } else if (MONGODB_URI.includes('localhost')) {
@@ -80,7 +78,6 @@ mongoose.connect(MONGODB_URI, mongoOptions)
         process.exit(1);
     });
 
-// เพิ่ม connection event handlers
 mongoose.connection.on('disconnected', () => {
     console.log('⚠️ MongoDB disconnected');
 });
@@ -208,7 +205,6 @@ app.post("/api/login", async (req, res) => {
 
 // ==================== API Chatbot ====================
 function formatAIResponse(text) {
-    // ล้าง \r และแบ่งบรรทัด
     const lines = text.replace(/\r/g, "").split("\n");
     let html = "";
     let inList = false;
@@ -216,16 +212,14 @@ function formatAIResponse(text) {
 
     lines.forEach((line) => {
         line = line.trim();
-        if (!line) return; // ข้ามบรรทัดว่าง
+        if (!line) return;
 
-        //จัดการหัวข้อแบบ "**หัวข้อ:** ..."
         if (/^\*\*(.*?)\:\*\*/.test(line)) {
             const title = line.replace(/^\*\*(.*?)\:\*\*/, "$1");
             html += `<h3>${title}</h3>`;
             return;
         }
 
-        //ลิสต์แบบ bullet (*, -, •)
         if (/^[-*•]\s+/.test(line)) {
             if (!inList) {
                 html += "<ul>";
@@ -235,7 +229,6 @@ function formatAIResponse(text) {
             return;
         }
 
-        //ลิสต์แบบมีตัวเลข (1., 2., ...)
         if (/^\d+\.\s+/.test(line)) {
             if (!inNumberList) {
                 html += "<ol>";
@@ -245,7 +238,6 @@ function formatAIResponse(text) {
             return;
         }
 
-        // ปิดลิสต์ถ้ามีอยู่
         if (inList) {
             html += "</ul>";
             inList = false;
@@ -255,14 +247,12 @@ function formatAIResponse(text) {
             inNumberList = false;
         }
 
-        // ลบ ** และ * ทั้งหมด
         line = line.replace(/\*\*(.*?)\*\*/g, "$1");
         line = line.replace(/\*(.*?)\*/g, "$1");
 
         html += `<p>${line}</p>`;
     });
 
-    // ปิดแท็กที่ยังไม่ปิด
     if (inList) html += "</ul>";
     if (inNumberList) html += "</ol>";
 
@@ -291,7 +281,6 @@ app.post("/get", uploads.single("file"), async (req, res) => {
         const response = await model.generateContent(prompt);
         const aiResponseText = formatAIResponse(response.response.text());
         
-        // Save to database if user is logged in
         if (userId && mongoose.Types.ObjectId.isValid(userId)) {
             await User.findByIdAndUpdate(userId, {
                 $push: {
@@ -314,8 +303,6 @@ app.post("/get", uploads.single("file"), async (req, res) => {
 });
 
 // ==================== API History Management ====================
-
-// Get user history
 app.get("/api/history/:userId", async (req, res) => {
     const { userId } = req.params;
     if (!mongoose.Types.ObjectId.isValid(userId)) {
@@ -337,7 +324,6 @@ app.get("/api/history/:userId", async (req, res) => {
     }
 });
 
-// Delete all user history
 app.delete("/api/history/:userId", async (req, res) => {
     const { userId } = req.params;
     if (!mongoose.Types.ObjectId.isValid(userId)) {
@@ -362,7 +348,6 @@ app.delete("/api/history/:userId", async (req, res) => {
     }
 });
 
-// Delete single history item
 app.delete("/api/history/:userId/:historyId", async (req, res) => {
     const { userId, historyId } = req.params;
     if (!mongoose.Types.ObjectId.isValid(userId)) {
@@ -398,7 +383,6 @@ app.post("/api/quiz/generate", async (req, res) => {
     try {
         const model = genAI.getGenerativeModel({ model: "gemini-2.0-flash" });
         
-        // Define topic content mapping
         const topicContent = {
             heart: {
                 en: "heart anatomy, cardiovascular system, cardiac cycle, blood circulation, heart valves, ECG, arrhythmias, cardiac disorders",
@@ -470,13 +454,10 @@ Generate ${numQuestions} questions now.`;
         const result = await model.generateContent(prompt);
         const responseText = result.response.text();
         
-        // Extract JSON from response
         let quizData;
         try {
-            // Try to parse directly
             quizData = JSON.parse(responseText);
         } catch (e) {
-            // Try to extract JSON from markdown code blocks
             const jsonMatch = responseText.match(/```json\s*([\s\S]*?)\s*```/) || 
                              responseText.match(/```\s*([\s\S]*?)\s*```/);
             if (jsonMatch) {
@@ -486,12 +467,10 @@ Generate ${numQuestions} questions now.`;
             }
         }
 
-        // Validate quiz data
         if (!quizData.questions || quizData.questions.length === 0) {
             throw new Error("No questions generated");
         }
 
-        // Ensure we have exactly the requested number of questions
         quizData.questions = quizData.questions.slice(0, numQuestions);
 
         console.log(`✅ Generated ${quizData.questions.length} questions successfully`);
@@ -529,13 +508,12 @@ app.post("/api/quiz/save-result", async (req, res) => {
             return res.status(404).json({ success: false, message: "User not found" });
         }
 
-        // Add result to user's quiz results
         user.quizResults.push({
             topic: result.topic,
             score: result.score,
             totalQuestions: result.totalQuestions,
             difficulty: result.difficulty,
-            questions: result.questions || [], // เพิ่ม questions array
+            questions: result.questions || [],
             date: new Date()
         });
 
@@ -573,7 +551,7 @@ app.get("/api/quiz/results/:userId", async (req, res) => {
 
         res.json({
             success: true,
-            results: user.quizResults.reverse(), // Most recent first
+            results: user.quizResults.reverse(),
             username: user.username
         });
 
@@ -599,7 +577,6 @@ app.post("/api/user/update-username", async (req, res) => {
     }
 
     try {
-        // Check if username already exists
         const existingUser = await User.findOne({ username: newUsername });
         if (existingUser && existingUser._id.toString() !== userId) {
             return res.json({ success: false, message: "Username already taken" });
