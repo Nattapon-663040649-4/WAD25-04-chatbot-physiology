@@ -10,6 +10,29 @@ const bcrypt = require("bcryptjs");
 const app = express();
 const uploads = multer({ dest: "uploads/" });
 
+// ==================== CORS Configuration ====================
+const cors = require('cors');
+
+// Allow Frontend to access Backend
+const allowedOrigins = [
+    'https://wad25-04-chatbot-physiology-1.onrender.com',
+    'http://localhost:3000', // สำหรับ local development
+];
+
+app.use(cors({
+    origin: function (origin, callback) {
+        // Allow requests with no origin (like mobile apps or curl)
+        if (!origin) return callback(null, true);
+        
+        if (allowedOrigins.indexOf(origin) === -1) {
+            const msg = 'CORS policy: Origin not allowed';
+            return callback(new Error(msg), false);
+        }
+        return callback(null, true);
+    },
+    credentials: true
+}));
+
 // ตรวจสอบ API KEY
 if (!process.env.GEMINI_API_KEY) {
   console.error("Error: .env file is missing the GEMINI_API_KEY");
@@ -19,13 +42,51 @@ if (!process.env.GEMINI_API_KEY) {
 const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
 
 // ==================== 1. Database Setup ====================
-const MONGODB_URI = process.env.MONGODB_URI || "mongodb://localhost:27017/physsi_db"; 
-mongoose.connect(MONGODB_URI)
-    .then(() => console.log("MongoDB Connected!"))
+const MONGODB_URI = process.env.MONGODB_URI || "mongodb://localhost:27017/physsi_db";
+    console.log('🔍 DEBUG: MONGODB_URI from .env:', process.env.MONGODB_URI ? 'FOUND ✅' : 'NOT FOUND ❌');
+    console.log('🔍 DEBUG: MONGODB_URI value starts with:', MONGODB_URI.substring(0, 20));
+
+// MongoDB connection options (รองรับทั้ง local และ Atlas)
+const mongoOptions = {
+    serverSelectionTimeoutMS: 10000, // Timeout 10 วินาที
+    socketTimeoutMS: 45000, // Socket timeout
+};
+
+mongoose.connect(MONGODB_URI, mongoOptions)
+    .then(() => {
+        console.log("✅ MongoDB Connected!");
+        console.log(`📍 Database: ${mongoose.connection.name}`);
+        
+        // แสดงว่าเชื่อมกับ Atlas หรือ Local
+        if (MONGODB_URI.includes('mongodb+srv://')) {
+            console.log(`🌐 Connection Type: MongoDB Atlas (Cloud)`);
+            // แสดงแค่ส่วนหน้าของ URI เพื่อความปลอดภัย
+            const uriPreview = MONGODB_URI.substring(0, 30) + '...';
+            console.log(`🔗 URI Preview: ${uriPreview}`);
+        } else if (MONGODB_URI.includes('localhost')) {
+            console.log(`🖥️  Connection Type: MongoDB Local`);
+            console.log(`🔗 URI: ${MONGODB_URI}`);
+        } else {
+            console.log(`🔗 Connection Type: Custom`);
+        }
+    })
     .catch(err => {
-        console.error("MongoDB connection error:", err);
+        console.error("❌ MongoDB connection error:", err.message);
+        console.error("💡 Please check:");
+        console.error("   1. MONGODB_URI in environment variables");
+        console.error("   2. MongoDB Atlas Network Access (IP Whitelist)");
+        console.error("   3. Database user credentials");
         process.exit(1);
     });
+
+// เพิ่ม connection event handlers
+mongoose.connection.on('disconnected', () => {
+    console.log('⚠️ MongoDB disconnected');
+});
+
+mongoose.connection.on('error', (err) => {
+    console.error('❌ MongoDB connection error:', err.message);
+});
 
 const UserSchema = new mongoose.Schema({
     username: { type: String, required: true, unique: true },
@@ -73,7 +134,7 @@ console.log(`[Static Files] Serving static files from: ${staticPath}`);
 
 // ==================== HTML Routes ====================
 app.get("/", (req, res) => {
-  res.sendFile(path.join(__dirname, "../client/welcome.html"));
+  res.sendFile(path.join(__dirname, "../client/index.html"));
 });
 
 app.get("/chatbot.html", (req, res) => {
@@ -521,39 +582,6 @@ app.get("/api/quiz/results/:userId", async (req, res) => {
             success: false,
             message: "Failed to fetch quiz results"
         });
-    }
-});
-
-// ==================== API Get Quiz Results with Details ====================
-app.get("/api/quiz/results/:userId", async (req, res) => {
-    const { userId } = req.params;
-    
-    if (!mongoose.Types.ObjectId.isValid(userId)) {
-        return res.status(400).json({ success: false, message: "Invalid User ID" });
-    }
-    
-    try {
-        const user = await User.findById(userId);
-        if (!user) {
-            return res.status(404).json({ success: false, message: "User not found" });
-        }
-        
-        // Get detailed quiz results with questions
-        const quizResults = user.quizResults.map(result => ({
-            topic: result.topic,
-            difficulty: result.difficulty,
-            score: result.score,
-            totalQuestions: result.totalQuestions,
-            timestamp: result.date,
-            questions: result.questions || [] // If questions are stored
-        }));
-        
-        console.log(`📊 Retrieved ${quizResults.length} quiz results for user ${user.username}`);
-        
-        res.json({ success: true, results: quizResults });
-    } catch (error) {
-        console.error("❌ Error retrieving quiz results:", error);
-        res.status(500).json({ success: false, message: "Server error" });
     }
 });
 
