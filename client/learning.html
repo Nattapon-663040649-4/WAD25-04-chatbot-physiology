@@ -1,0 +1,748 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PHYSSi - Learning Center</title>
+    <link rel="icon" href="/static/images/logo-new.ico">
+    <link rel="stylesheet" href="/static/styles/learning.css">
+    <script src="https://kit.fontawesome.com/03b30ccae0.js" crossorigin="anonymous"></script>
+</head>
+
+<body>
+    <!-- Top Navigation Header -->
+    <div class="top-header">
+        <div class="top-nav-container">
+            <div class="left-side">
+                <div class="logo">
+                    <div class="logo-img">
+                        <img src="/static/images/logo.png" alt="PHYSSi Logo">
+                    </div>
+                    <div class="logo-text">PHYSSi</div>
+                </div>
+                
+                <div class="nav-links">
+                    <a href="/">Home</a>
+                    <a href="/chatbot.html">Chatbot</a>
+                    <a href="/quiz-select.html">Quiz</a>
+                    <a href="/learning.html" class="active">Learning</a>
+                    <a href="/profile.html">Profile</a>
+                </div>
+            </div>
+            
+            <div class="right-side">
+                <button class="logout-button" id="authButton" onclick="handleAuth()">
+                    <i class="fa-solid fa-right-from-bracket"></i>
+                    <span id="authText">Logout</span>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="learning-container">
+        <!-- Hero Section -->
+        <div class="hero-section">
+            <h1>Learning Center: Human Physiology</h1>
+            <p class="hero-subtitle">ศูนย์การเรียนรู้สรีรวิทยามนุษย์</p>
+            <p class="hero-description">Interactive anatomical diagrams with comprehensive explanations for high school students (Grade 10-12)</p>
+            <p class="hero-thai">ไดอะแกรมแบบโต้ตอบพร้อมคำอธิบายครบถ้วนสำหรับนักเรียนมัธยมปลาย</p>
+        </div>
+
+        <!-- Topic Tabs -->
+        <div class="topic-tabs">
+            <button class="topic-tab active" data-topic="heart">
+                <i class="fa-solid fa-heart-pulse"></i>
+                <div class="tab-content">
+                    <div class="tab-title">The Heart</div>
+                    <div class="tab-subtitle">Cardiovascular System</div>
+                </div>
+            </button>
+            <button class="topic-tab" data-topic="brain">
+                <i class="fa-solid fa-brain"></i>
+                <div class="tab-content">
+                    <div class="tab-title">The Brain</div>
+                    <div class="tab-subtitle">Central Nervous System</div>
+                </div>
+            </button>
+        </div>
+
+        <!-- Content Area -->
+        <div class="content-wrapper">
+            
+            <!-- ==================== HEART SECTION ==================== -->
+            <div id="heart-content" class="topic-content active">
+                
+                <!-- Introduction -->
+                <div class="intro-section">
+                    <h2>The Human Heart: Structure and Function</h2>
+                    <div class="intro-content">
+                        <p>The human heart is a remarkable muscular organ approximately the size of a closed fist, serving as the central pump of the cardiovascular system. Located in the mediastinum between the lungs, slightly left of the body's midline, the heart beats approximately 100,000 times per day, pumping about 5 liters of blood per minute at rest, and up to 25 liters during intense physical activity.</p>
+                        
+                        <p>The heart's primary function is to maintain continuous blood circulation throughout the body, delivering oxygen and nutrients to tissues while removing carbon dioxide and metabolic waste products. This dual circulatory system consists of pulmonary circulation, which carries deoxygenated blood to the lungs for oxygenation, and systemic circulation, which distributes oxygenated blood to all body tissues.</p>
+                    </div>
+                </div>
+
+                <!-- Main Content Grid -->
+                <div class="content-grid">
+                    <!-- Left: Interactive Diagram -->
+                    <div class="diagram-section">
+                        <h3>Interactive Heart Anatomy</h3>
+                        <p class="diagram-instruction">Click on different parts of the heart diagram to learn about their structure and function</p>
+                        
+                        <div class="diagram-container">
+                            <!-- Heart Image with Clickable Areas -->
+                            <div class="image-map-container">
+                                <img src="https://upload.wikimedia.org/wikipedia/commons/e/e5/Diagram_of_the_human_heart_%28cropped%29.svg" 
+                                     alt="Human Heart Anatomy" 
+                                     class="anatomy-image"
+                                     id="heart-image"
+                                     usemap="#heart-map">
+                                
+                                <!-- Image Map for Clickable Areas -->
+                                <map name="heart-map">
+                                    <area shape="rect" coords="120,50,220,120" class="heart-hotspot" data-part="ra" alt="Right Atrium">
+                                    <area shape="rect" coords="120,140,220,240" class="heart-hotspot" data-part="rv" alt="Right Ventricle">
+                                    <area shape="rect" coords="240,50,340,120" class="heart-hotspot" data-part="la" alt="Left Atrium">
+                                    <area shape="rect" coords="240,140,340,240" class="heart-hotspot" data-part="lv" alt="Left Ventricle">
+                                    <area shape="circle" coords="180,30,25" class="heart-hotspot" data-part="vessels" alt="Blood Vessels">
+                                </map>
+                                
+                                <!-- Clickable Overlays -->
+                                <div class="hotspot-overlays">
+                                    <div class="hotspot" style="top: 15%; left: 35%; width: 25%; height: 15%;" data-part="ra"></div>
+                                    <div class="hotspot" style="top: 35%; left: 30%; width: 25%; height: 25%;" data-part="rv"></div>
+                                    <div class="hotspot" style="top: 15%; left: 55%; width: 25%; height: 15%;" data-part="la"></div>
+                                    <div class="hotspot" style="top: 35%; left: 55%; width: 25%; height: 25%;" data-part="lv"></div>
+                                    <div class="hotspot" style="top: 5%; left: 40%; width: 20%; height: 12%;" data-part="vessels"></div>
+                                    <div class="hotspot" style="top: 30%; left: 48%; width: 4%; height: 30%;" data-part="septum"></div>
+                                    <div class="hotspot" style="top: 28%; left: 38%; width: 12%; height: 5%;" data-part="valves"></div>
+                                </div>
+                            </div>
+                            
+                            <!-- Legend -->
+                            <div class="anatomy-legend">
+                                <h4>Color Legend</h4>
+                                <div class="legend-items">
+                                    <div class="legend-item">
+                                        <span class="legend-marker" style="background: #6B9BD1;"></span>
+                                        <span>Deoxygenated Blood (ออกซิเจนต่ำ)</span>
+                                    </div>
+                                    <div class="legend-item">
+                                        <span class="legend-marker" style="background: #E74C3C;"></span>
+                                        <span>Oxygenated Blood (ออกซิเจนสูง)</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Right: Information Panel -->
+                    <div class="info-section">
+                        <div class="info-card" id="heart-info">
+                            <h3>Cardiac Anatomy Overview</h3>
+                            <div class="info-content">
+                                <p class="intro-text">The heart consists of four chambers working in coordinated sequence to maintain efficient blood circulation. The cardiac cycle, lasting approximately 0.8 seconds at rest, involves systematic contraction and relaxation of these chambers.</p>
+                                
+                                <h4>Four-Chamber Structure</h4>
+                                <div class="detail-section">
+                                    <p><strong>Right Atrium:</strong> Receives deoxygenated blood from the body through the superior and inferior vena cavae. This thin-walled chamber operates at low pressure (0-8 mmHg) and contracts during atrial systole to complete ventricular filling.</p>
+                                    
+                                    <p><strong>Right Ventricle:</strong> Pumps deoxygenated blood to the lungs via the pulmonary artery. Its walls are thicker than the atria but thinner than the left ventricle, as it pumps against lower pulmonary vascular resistance.</p>
+                                    
+                                    <p><strong>Left Atrium:</strong> Receives oxygenated blood from the lungs through four pulmonary veins. It has slightly thicker walls than the right atrium due to higher pressure requirements.</p>
+                                    
+                                    <p><strong>Left Ventricle:</strong> The heart's most muscular chamber, with walls 8-12mm thick. It generates systolic pressures of 120 mmHg to pump oxygenated blood throughout the entire body via the aorta.</p>
+                                </div>
+
+                                <h4>Cardiac Septum</h4>
+                                <div class="detail-section">
+                                    <p>The interventricular septum is a thick muscular wall separating the left and right ventricles, preventing mixing of oxygenated and deoxygenated blood. It contains part of the cardiac conduction system and contributes to ventricular contraction efficiency.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Detailed Information Sections -->
+                <div class="detailed-info">
+                    
+                    <!-- Cardiac Valves Section -->
+                    <div class="info-block">
+                        <h3>Cardiac Valves: Ensuring Unidirectional Blood Flow</h3>
+                        <div class="two-column">
+                            <div class="column">
+                                <h4>Atrioventricular Valves</h4>
+                                <p><strong>Tricuspid Valve:</strong> Located between the right atrium and right ventricle, this valve consists of three cusps (anterior, posterior, and septal) attached to papillary muscles via chordae tendineae. It prevents backflow during right ventricular contraction.</p>
+                                
+                                <p><strong>Mitral (Bicuspid) Valve:</strong> Positioned between the left atrium and left ventricle, it has two cusps (anterior and posterior). The mitral valve apparatus includes the valve leaflets, annulus, chordae tendineae, and papillary muscles, working together to prevent regurgitation.</p>
+                            </div>
+                            <div class="column">
+                                <h4>Semilunar Valves</h4>
+                                <p><strong>Pulmonary Valve:</strong> Guards the opening between the right ventricle and pulmonary artery. Its three semilunar cusps open during ventricular systole and close during diastole, preventing backflow of blood into the right ventricle.</p>
+                                
+                                <p><strong>Aortic Valve:</strong> Located at the junction of the left ventricle and aorta, it consists of three semilunar cusps. This valve withstands the highest pressure in the heart and is critical for maintaining systemic blood pressure.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Blood Vessels Section -->
+                    <div class="info-block">
+                        <h3>Major Blood Vessels</h3>
+                        <div class="vessels-grid">
+                            <div class="vessel-card">
+                                <h4>Venae Cavae</h4>
+                                <p><strong>Superior Vena Cava:</strong> The large vein draining deoxygenated blood from the upper body, head, neck, and upper extremities into the right atrium.</p>
+                                <p><strong>Inferior Vena Cava:</strong> The body's largest vein, returning deoxygenated blood from the lower body, abdomen, pelvis, and lower extremities to the right atrium.</p>
+                            </div>
+                            
+                            <div class="vessel-card">
+                                <h4>Pulmonary Circulation</h4>
+                                <p><strong>Pulmonary Artery:</strong> Divides into left and right branches, carrying deoxygenated blood from the right ventricle to the respective lungs for oxygenation. Uniquely, these are arteries carrying deoxygenated blood.</p>
+                                <p><strong>Pulmonary Veins:</strong> Four veins (two from each lung) returning oxygen-rich blood from the lungs to the left atrium. These are the only veins in the body carrying oxygenated blood.</p>
+                            </div>
+                            
+                            <div class="vessel-card">
+                                <h4>Aorta</h4>
+                                <p>The body's largest artery, arising from the left ventricle and distributing oxygenated blood to all body tissues. It divides into three main sections:</p>
+                                <ul>
+                                    <li><strong>Ascending Aorta:</strong> Gives rise to coronary arteries</li>
+                                    <li><strong>Aortic Arch:</strong> Branches to head, neck, and upper extremities</li>
+                                    <li><strong>Descending Aorta:</strong> Supplies thorax, abdomen, pelvis, and lower extremities</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Cardiac Cycle Section -->
+                    <div class="info-block">
+                        <h3>The Cardiac Cycle</h3>
+                        <p class="intro-text">The cardiac cycle represents all events occurring during one complete heartbeat, lasting approximately 0.8 seconds at a resting heart rate of 75 beats per minute. It consists of alternating periods of contraction (systole) and relaxation (diastole).</p>
+                        
+                        <div class="cycle-phases">
+                            <div class="phase-card">
+                                <h4>Phase 1: Atrial Systole (0.1 seconds)</h4>
+                                <p>Atrial contraction forces remaining blood into ventricles, completing ventricular filling. This contributes approximately 25-30% of total ventricular filling, with the remaining 70-75% occurring passively during diastole. The AV valves remain open while semilunar valves stay closed.</p>
+                            </div>
+                            
+                            <div class="phase-card">
+                                <h4>Phase 2: Ventricular Systole (0.3 seconds)</h4>
+                                <p><strong>Isovolumetric Contraction:</strong> All valves close as ventricular pressure rises rapidly without volume change. The first heart sound (S1, "lub") occurs from AV valve closure.</p>
+                                <p><strong>Ejection Phase:</strong> When ventricular pressure exceeds arterial pressure, semilunar valves open and blood is ejected into the pulmonary artery and aorta. The left ventricle ejects about 70mL (stroke volume) per beat.</p>
+                            </div>
+                            
+                            <div class="phase-card">
+                                <h4>Phase 3: Ventricular Diastole (0.4 seconds)</h4>
+                                <p><strong>Isovolumetric Relaxation:</strong> Ventricles relax with all valves closed. When ventricular pressure drops below arterial pressure, semilunar valves close, producing the second heart sound (S2, "dub").</p>
+                                <p><strong>Ventricular Filling:</strong> When ventricular pressure falls below atrial pressure, AV valves open and blood flows passively into ventricles. This passive filling accounts for most ventricular filling before the next atrial systole.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Electrical System Section -->
+                    <div class="info-block">
+                        <h3>Cardiac Conduction System</h3>
+                        <p class="intro-text">The heart possesses intrinsic electrical conductivity, allowing coordinated contraction without neural input, though autonomic innervation modulates rate and force.</p>
+                        
+                        <div class="conduction-pathway">
+                            <div class="pathway-step">
+                                <div class="step-number">1</div>
+                                <div class="step-content">
+                                    <h4>Sinoatrial (SA) Node</h4>
+                                    <p>Located in the right atrial wall near the superior vena cava opening, the SA node serves as the heart's primary pacemaker, spontaneously depolarizing 60-100 times per minute. Specialized pacemaker cells generate action potentials through slow calcium influx.</p>
+                                </div>
+                            </div>
+                            
+                            <div class="pathway-step">
+                                <div class="step-number">2</div>
+                                <div class="step-content">
+                                    <h4>Internodal Pathways</h4>
+                                    <p>Electrical impulses spread through atrial myocardium via three internodal pathways (anterior, middle, and posterior), causing coordinated atrial contraction. Conduction velocity through atrial tissue is approximately 1 meter per second.</p>
+                                </div>
+                            </div>
+                            
+                            <div class="pathway-step">
+                                <div class="step-number">3</div>
+                                <div class="step-content">
+                                    <h4>Atrioventricular (AV) Node</h4>
+                                    <p>Located in the interatrial septum near the tricuspid valve, the AV node delays impulse transmission by 0.1 seconds, allowing complete atrial contraction and ventricular filling before ventricular systole. This delay is crucial for optimal cardiac output.</p>
+                                </div>
+                            </div>
+                            
+                            <div class="pathway-step">
+                                <div class="step-number">4</div>
+                                <div class="step-content">
+                                    <h4>Bundle of His and Bundle Branches</h4>
+                                    <p>From the AV node, electrical impulses travel through the Bundle of His, which divides into left and right bundle branches running along both sides of the interventricular septum. The left bundle branch further divides into anterior and posterior fascicles.</p>
+                                </div>
+                            </div>
+                            
+                            <div class="pathway-step">
+                                <div class="step-number">5</div>
+                                <div class="step-content">
+                                    <h4>Purkinje Fibers</h4>
+                                    <p>These specialized conducting fibers rapidly distribute electrical impulses throughout ventricular myocardium at velocities up to 4 meters per second, ensuring synchronous ventricular contraction from apex to base, optimizing ejection efficiency.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Coronary Circulation Section -->
+                    <div class="info-block">
+                        <h3>Coronary Circulation</h3>
+                        <p class="intro-text">The heart muscle itself requires continuous oxygen supply, receiving 4-5% of cardiac output through the coronary arteries. Coronary blood flow is unique as it occurs primarily during diastole when the myocardium is relaxed.</p>
+                        
+                        <div class="two-column">
+                            <div class="column">
+                                <h4>Left Coronary Artery</h4>
+                                <p>Originates from the left aortic sinus and quickly divides into:</p>
+                                <ul>
+                                    <li><strong>Left Anterior Descending (LAD):</strong> Supplies anterior left ventricle, anterior septum, and apex. Blockage of this "widow maker" artery is particularly dangerous.</li>
+                                    <li><strong>Left Circumflex (LCx):</strong> Supplies lateral and posterior left ventricle, and often the SA node in 40% of individuals.</li>
+                                </ul>
+                            </div>
+                            <div class="column">
+                                <h4>Right Coronary Artery</h4>
+                                <p>Arises from the right aortic sinus and supplies:</p>
+                                <ul>
+                                    <li>Right atrium and ventricle</li>
+                                    <li>Inferior left ventricle (in 70% of people - "right dominant")</li>
+                                    <li>SA node (in 60% of individuals)</li>
+                                    <li>AV node (in 90% of individuals)</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+            <!-- ==================== BRAIN SECTION ==================== -->
+            <div id="brain-content" class="topic-content">
+                
+                <!-- Introduction -->
+                <div class="intro-section">
+                    <h2>The Human Brain: Structure and Function</h2>
+                    <div class="intro-content">
+                        <p>The human brain, weighing approximately 1.4 kilograms (about 2% of body weight), serves as the command center of the nervous system. This complex organ contains approximately 86 billion neurons and an equal number of glial cells, forming intricate networks responsible for all cognitive functions, sensory processing, motor control, and homeostatic regulation.</p>
+                        
+                        <p>Protected by the skull and three layers of meninges (dura mater, arachnoid mater, and pia mater), the brain floats in cerebrospinal fluid, which provides cushioning and nutrient transport. Despite its small mass, the brain consumes approximately 20% of the body's total oxygen and glucose, reflecting its intense metabolic activity.</p>
+                    </div>
+                </div>
+
+                <!-- Main Content Grid -->
+                <div class="content-grid">
+                    <!-- Left: Interactive Diagram -->
+                    <div class="diagram-section">
+                        <h3>Interactive Brain Anatomy</h3>
+                        <p class="diagram-instruction">Click on different regions of the brain to explore their specific functions and characteristics</p>
+                        
+                        <div class="diagram-container">
+                            <div class="image-map-container">
+                                <img src="https://upload.wikimedia.org/wikipedia/commons/d/d8/Human_brain_NIH.png" 
+                                     alt="Human Brain Anatomy" 
+                                     class="anatomy-image"
+                                     id="brain-image">
+                                
+                                <!-- Clickable Overlays for Brain -->
+                                <div class="hotspot-overlays">
+                                    <div class="hotspot" style="top: 20%; left: 10%; width: 35%; height: 30%;" data-part="frontal"></div>
+                                    <div class="hotspot" style="top: 15%; left: 45%; width: 30%; height: 25%;" data-part="parietal"></div>
+                                    <div class="hotspot" style="top: 45%; left: 8%; width: 30%; height: 25%;" data-part="temporal"></div>
+                                    <div class="hotspot" style="top: 20%; left: 75%; width: 20%; height: 30%;" data-part="occipital"></div>
+                                    <div class="hotspot" style="top: 70%; left: 60%; width: 30%; height: 25%;" data-part="cerebellum"></div>
+                                    <div class="hotspot" style="top: 75%; left: 35%; width: 20%; height: 20%;" data-part="brainstem"></div>
+                                </div>
+                            </div>
+                            
+                            <!-- Brain Regions Key -->
+                            <div class="anatomy-legend">
+                                <h4>Major Brain Regions</h4>
+                                <div class="legend-items">
+                                    <div class="legend-item">
+                                        <span class="legend-marker" style="background: #FF6B9D;"></span>
+                                        <span>Frontal Lobe</span>
+                                    </div>
+                                    <div class="legend-item">
+                                        <span class="legend-marker" style="background: #FFA07A;"></span>
+                                        <span>Parietal Lobe</span>
+                                    </div>
+                                    <div class="legend-item">
+                                        <span class="legend-marker" style="background: #87CEEB;"></span>
+                                        <span>Temporal Lobe</span>
+                                    </div>
+                                    <div class="legend-item">
+                                        <span class="legend-marker" style="background: #98FB98;"></span>
+                                        <span>Occipital Lobe</span>
+                                    </div>
+                                    <div class="legend-item">
+                                        <span class="legend-marker" style="background: #DDA0DD;"></span>
+                                        <span>Cerebellum</span>
+                                    </div>
+                                    <div class="legend-item">
+                                        <span class="legend-marker" style="background: #F0E68C;"></span>
+                                        <span>Brainstem</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Right: Information Panel -->
+                    <div class="info-section">
+                        <div class="info-card" id="brain-info">
+                            <h3>Neuroanatomy Overview</h3>
+                            <div class="info-content">
+                                <p class="intro-text">The brain's structure reflects its functional organization, with distinct regions specialized for specific cognitive, sensory, and motor tasks. Understanding this regional specialization is fundamental to neuroscience and clinical neurology.</p>
+                                
+                                <h4>Cerebral Cortex</h4>
+                                <div class="detail-section">
+                                    <p>The cerebral cortex, the brain's outer layer of grey matter, is approximately 2-4mm thick and highly folded to increase surface area. It contains 14-16 billion neurons organized in six distinct layers (I-VI), each with specific cellular compositions and connection patterns. The cortex is divided into functional areas based on Brodmann's cytoarchitectural mapping system.</p>
+                                </div>
+
+                                <h4>Hemispheric Lateralization</h4>
+                                <div class="detail-section">
+                                    <p>The cerebrum is divided into left and right hemispheres, connected by the corpus callosum containing approximately 200-250 million axons. While both hemispheres process all types of information, certain functions show lateralization:</p>
+                                    <ul>
+                                        <li><strong>Left Hemisphere:</strong> Typically dominant for language, analytical thinking, and sequential processing in most right-handed and majority of left-handed individuals</li>
+                                        <li><strong>Right Hemisphere:</strong> Specialized for spatial awareness, facial recognition, music perception, and emotional processing</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Detailed Information Sections -->
+                <div class="detailed-info">
+                    
+                    <!-- Cerebral Lobes Section -->
+                    <div class="info-block">
+                        <h3>Cerebral Lobes: Regional Specialization</h3>
+                        
+                        <div class="lobe-section">
+                            <h4>Frontal Lobe</h4>
+                            <p class="lobe-intro">The frontal lobe, located anterior to the central sulcus and superior to the lateral sulcus, represents approximately 40% of total cortical volume. It plays crucial roles in higher cognitive functions, motor control, and personality.</p>
+                            
+                            <div class="function-areas">
+                                <div class="area-card">
+                                    <h5>Primary Motor Cortex (M1 - Brodmann Area 4)</h5>
+                                    <p>Located in the precentral gyrus, M1 contains a somatotopic map (motor homunculus) representing body parts, with disproportionately large areas devoted to hands and face reflecting their fine motor control requirements. Upper motor neurons here initiate voluntary movements by sending signals through the corticospinal and corticobulbar tracts.</p>
+                                </div>
+                                
+                                <div class="area-card">
+                                    <h5>Premotor Cortex (Area 6)</h5>
+                                    <p>Involved in motor planning and preparation, the premotor cortex integrates sensory information to guide movements. It contains mirror neurons that activate both during action execution and observation, playing roles in learning and empathy.</p>
+                                </div>
+                                
+                                <div class="area-card">
+                                    <h5>Prefrontal Cortex</h5>
+                                    <p>The most anterior region, comprising multiple functional areas:</p>
+                                    <ul>
+                                        <li><strong>Dorsolateral Prefrontal Cortex:</strong> Executive functions including working memory, cognitive flexibility, planning, and decision-making</li>
+                                        <li><strong>Orbitofrontal Cortex:</strong> Emotional regulation, reward processing, and decision-making involving risk assessment</li>
+                                        <li><strong>Ventromedial Prefrontal Cortex:</strong> Social cognition, moral reasoning, and self-awareness</li>
+                                    </ul>
+                                </div>
+                                
+                                <div class="area-card">
+                                    <h5>Broca's Area (Areas 44, 45)</h5>
+                                    <p>Located in the inferior frontal gyrus of the dominant hemisphere (usually left), Broca's area is critical for speech production and grammatical processing. Damage results in expressive aphasia, characterized by impaired speech production with relatively preserved comprehension.</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="lobe-section">
+                            <h4>Parietal Lobe</h4>
+                            <p class="lobe-intro">Situated between the frontal and occipital lobes, posterior to the central sulcus, the parietal lobe processes sensory information and integrates spatial awareness.</p>
+                            
+                            <div class="function-areas">
+                                <div class="area-card">
+                                    <h5>Primary Somatosensory Cortex (S1 - Areas 1, 2, 3)</h5>
+                                    <p>Located in the postcentral gyrus, S1 receives tactile information from the body via the thalamus. It contains a somatotopic map (sensory homunculus) with overrepresentation of hands, lips, and face. Different subdivisions process specific tactile modalities: area 3a receives proprioception, 3b handles texture discrimination, area 1 processes texture and shape, and area 2 integrates size and shape information.</p>
+                                </div>
+                                
+                                <div class="area-card">
+                                    <h5>Posterior Parietal Cortex</h5>
+                                    <p>This association area integrates sensory information for spatial awareness and coordinate voluntary movements. It includes:</p>
+                                    <ul>
+                                        <li><strong>Superior Parietal Lobule:</strong> Visuospatial processing and reach-to-grasp movements</li>
+                                        <li><strong>Inferior Parietal Lobule:</strong> Tool use, mathematical processing, and body schema awareness. Contains the angular gyrus (Area 39) involved in reading and writing, and supramarginal gyrus (Area 40) important for phonological processing.</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="lobe-section">
+                            <h4>Temporal Lobe</h4>
+                            <p class="lobe-intro">Located ventral to the lateral sulcus, the temporal lobe is essential for auditory processing, memory formation, language comprehension, and emotional processing.</p>
+                            
+                            <div class="function-areas">
+                                <div class="area-card">
+                                    <h5>Primary Auditory Cortex (A1 - Areas 41, 42)</h5>
+                                    <p>Located in Heschl's gyrus within the superior temporal gyrus, A1 receives auditory information from the medial geniculate nucleus of the thalamus. It contains a tonotopic map where different frequencies are systematically represented, with high frequencies processed anterolaterally and low frequencies posteromedially.</p>
+                                </div>
+                                
+                                <div class="area-card">
+                                    <h5>Wernicke's Area (Area 22)</h5>
+                                    <p>Located in the posterior superior temporal gyrus of the dominant hemisphere, Wernicke's area is crucial for language comprehension. Damage results in receptive (Wernicke's) aphasia, characterized by fluent but meaningless speech and impaired comprehension.</p>
+                                </div>
+                                
+                                <div class="area-card">
+                                    <h5>Medial Temporal Lobe Structures</h5>
+                                    <p><strong>Hippocampus:</strong> Essential for declarative memory formation (facts and events). Information flows through the hippocampal formation via the entorhinal cortex, dentate gyrus, CA3, CA1, and subiculum. Long-term potentiation in hippocampal synapses underlies learning and memory consolidation.</p>
+                                    <p><strong>Amygdala:</strong> Processes emotional significance of stimuli, particularly fear and threat detection. It modulates memory consolidation based on emotional arousal and is crucial for emotional learning and conditioned fear responses.</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="lobe-section">
+                            <h4>Occipital Lobe</h4>
+                            <p class="lobe-intro">The smallest and most posterior lobe, the occipital lobe is dedicated primarily to visual processing, transforming retinal signals into conscious visual perception.</p>
+                            
+                            <div class="function-areas">
+                                <div class="area-card">
+                                    <h5>Primary Visual Cortex (V1 - Area 17)</h5>
+                                    <p>Located along the calcarine sulcus, V1 receives visual information from the lateral geniculate nucleus. It contains a retinotopic map where the fovea (central vision) has disproportionately large representation. V1 processes basic visual features including orientation, spatial frequency, color, and binocular disparity. It is organized into ocular dominance columns and orientation columns for efficient feature detection.</p>
+                                </div>
+                                
+                                <div class="area-card">
+                                    <h5>Visual Association Areas (V2-V5)</h5>
+                                    <p>Visual information follows two main processing streams:</p>
+                                    <ul>
+                                        <li><strong>Ventral Stream ("What" Pathway):</strong> Projects to temporal lobe for object recognition, face identification, and color processing</li>
+                                        <li><strong>Dorsal Stream ("Where" Pathway):</strong> Projects to parietal lobe for spatial location, motion detection, and visually guided actions</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Subcortical Structures Section -->
+                    <div class="info-block">
+                        <h3>Subcortical Structures</h3>
+                        
+                        <div class="structure-section">
+                            <h4>Cerebellum (Little Brain)</h4>
+                            <p class="intro-text">The cerebellum, located posterior to the brainstem beneath the occipital lobes, contains approximately 50% of all brain neurons despite occupying only 10% of brain volume. Its highly folded cortex achieves this remarkable neuronal density.</p>
+                            
+                            <div class="detail-content">
+                                <h5>Structure and Organization</h5>
+                                <p>The cerebellum consists of two hemispheres and a central vermis, with three functional divisions:</p>
+                                <ul>
+                                    <li><strong>Vestibulocerebellum:</strong> Receives vestibular input, controlling balance and eye movements</li>
+                                    <li><strong>Spinocerebellum:</strong> Receives proprioceptive input, regulating muscle tone and coordinating trunk and limb movements</li>
+                                    <li><strong>Cerebrocerebellum:</strong> Connected extensively with cerebral cortex, involved in motor planning, timing, and cognitive functions</li>
+                                </ul>
+                                
+                                <h5>Functions</h5>
+                                <p>The cerebellum serves multiple critical functions:</p>
+                                <ul>
+                                    <li><strong>Motor Coordination:</strong> Compares intended movements with actual execution, providing error correction signals through cerebellar-thalamic-cortical loops</li>
+                                    <li><strong>Motor Learning:</strong> Stores motor programs and adapts movements through experience, enabling skill acquisition and refinement</li>
+                                    <li><strong>Balance and Equilibrium:</strong> Integrates vestibular, proprioceptive, and visual inputs to maintain postural stability</li>
+                                    <li><strong>Cognitive Functions:</strong> Recent research demonstrates cerebellar involvement in attention, language processing, and executive functions</li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <div class="structure-section">
+                            <h4>Brainstem</h4>
+                            <p class="intro-text">The brainstem connects the cerebrum with the spinal cord, containing nuclei that control vital autonomic functions and serving as a conduit for ascending and descending neural pathways.</p>
+                            
+                            <div class="brainstem-regions">
+                                <div class="region-card">
+                                    <h5>Midbrain (Mesencephalon)</h5>
+                                    <p><strong>Superior Colliculi:</strong> Control reflexive eye movements and visual attention</p>
+                                    <p><strong>Inferior Colliculi:</strong> Process auditory information and coordinate auditory reflexes</p>
+                                    <p><strong>Substantia Nigra:</strong> Dopaminergic neurons crucial for movement initiation; degeneration causes Parkinson's disease</p>
+                                    <p><strong>Red Nucleus:</strong> Coordinates motor movements via rubrospinal tract</p>
+                                    <p><strong>Periaqueductal Gray:</strong> Modulates pain perception and defensive behaviors</p>
+                                </div>
+                                
+                                <div class="region-card">
+                                    <h5>Pons</h5>
+                                    <p><strong>Pontine Nuclei:</strong> Relay information from cerebral cortex to cerebellum</p>
+                                    <p><strong>Respiratory Centers:</strong> Pneumotaxic and apneustic centers regulate breathing rhythm</p>
+                                    <p><strong>Cranial Nerve Nuclei:</strong> Contains nuclei for CN V (trigeminal), VI (abducens), VII (facial), and VIII (vestibulocochlear)</p>
+                                    <p><strong>Locus Coeruleus:</strong> Principal source of norepinephrine, regulating arousal, attention, and stress response</p>
+                                </div>
+                                
+                                <div class="region-card">
+                                    <h5>Medulla Oblongata</h5>
+                                    <p><strong>Cardiovascular Center:</strong> Regulates heart rate and blood pressure through sympathetic and parasympathetic outflow</p>
+                                    <p><strong>Respiratory Center:</strong> Controls basic breathing rhythm</p>
+                                    <p><strong>Pyramids:</strong> Contains corticospinal tract fibers; decussation of pyramids explains contralateral motor control</p>
+                                    <p><strong>Cranial Nerve Nuclei:</strong> Houses nuclei for CN IX (glossopharyngeal), X (vagus), XI (accessory), and XII (hypoglossal)</p>
+                                    <p><strong>Reticular Formation:</strong> Network regulating consciousness, sleep-wake cycles, and arousal</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="structure-section">
+                            <h4>Basal Ganglia</h4>
+                            <p class="intro-text">The basal ganglia comprise several interconnected subcortical nuclei forming a complex system for motor control, procedural learning, habit formation, and reward processing.</p>
+                            
+                            <div class="detail-content">
+                                <h5>Component Structures</h5>
+                                <ul>
+                                    <li><strong>Striatum (Caudate + Putamen):</strong> Main input structure receiving glutamatergic projections from entire cortex</li>
+                                    <li><strong>Globus Pallidus:</strong> Primary output structure with external (GPe) and internal (GPi) segments</li>
+                                    <li><strong>Subthalamic Nucleus:</strong> Only excitatory structure in basal ganglia circuit</li>
+                                    <li><strong>Substantia Nigra:</strong> Pars compacta (dopaminergic) and pars reticulata (GABAergic) divisions</li>
+                                </ul>
+                                
+                                <h5>Functional Pathways</h5>
+                                <p><strong>Direct Pathway:</strong> Facilitates desired movements by disinhibiting thalamus (Cortex → Striatum → GPi/SNr → Thalamus → Cortex)</p>
+                                <p><strong>Indirect Pathway:</strong> Suppresses unwanted movements (Cortex → Striatum → GPe → STN → GPi/SNr → Thalamus → Cortex)</p>
+                                <p><strong>Hyperdirect Pathway:</strong> Provides rapid inhibition of all motor programs (Cortex → STN → GPi/SNr)</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Neurotransmitters Section -->
+                    <div class="info-block">
+                        <h3>Neurotransmitter Systems</h3>
+                        <p class="intro-text">Chemical neurotransmission enables communication between neurons, with different neurotransmitter systems modulating distinct aspects of brain function and behavior.</p>
+                        
+                        <div class="neurotransmitter-grid">
+                            <div class="nt-card">
+                                <h4>Glutamate</h4>
+                                <p><strong>Type:</strong> Excitatory amino acid</p>
+                                <p><strong>Receptors:</strong> AMPA, NMDA, Kainate (ionotropic); mGluR1-8 (metabotropic)</p>
+                                <p><strong>Functions:</strong> Primary excitatory neurotransmitter; essential for learning and memory through NMDA-dependent long-term potentiation; excessive glutamate causes excitotoxicity in stroke and neurodegenerative diseases</p>
+                            </div>
+                            
+                            <div class="nt-card">
+                                <h4>GABA (Gamma-Aminobutyric Acid)</h4>
+                                <p><strong>Type:</strong> Inhibitory amino acid</p>
+                                <p><strong>Receptors:</strong> GABA-A (ionotropic, chloride channels); GABA-B (metabotropic)</p>
+                                <p><strong>Functions:</strong> Principal inhibitory neurotransmitter; regulates neuronal excitability; GABA-A receptors are targets for anxiolytics (benzodiazepines) and anesthetics; deficient GABAergic inhibition contributes to epilepsy</p>
+                            </div>
+                            
+                            <div class="nt-card">
+                                <h4>Dopamine</h4>
+                                <p><strong>Type:</strong> Monoamine (catecholamine)</p>
+                                <p><strong>Pathways:</strong> Nigrostriatal (motor control); Mesolimbic (reward); Mesocortical (cognition); Tuberoinfundibular (prolactin regulation)</p>
+                                <p><strong>Functions:</strong> Movement initiation, reward prediction, motivation, attention; dysfunction implicated in Parkinson's disease (deficiency), schizophrenia (excess), and addiction (dysregulation)</p>
+                            </div>
+                            
+                            <div class="nt-card">
+                                <h4>Serotonin (5-HT)</h4>
+                                <p><strong>Type:</strong> Monoamine (indoleamine)</p>
+                                <p><strong>Receptors:</strong> 14 subtypes (5-HT1-7), mostly metabotropic except 5-HT3</p>
+                                <p><strong>Functions:</strong> Mood regulation, sleep-wake cycles, appetite control, pain modulation; SSRIs (selective serotonin reuptake inhibitors) treat depression by increasing synaptic serotonin; also regulates gut motility</p>
+                            </div>
+                            
+                            <div class="nt-card">
+                                <h4>Norepinephrine</h4>
+                                <p><strong>Type:</strong> Monoamine (catecholamine)</p>
+                                <p><strong>Source:</strong> Locus coeruleus in pons</p>
+                                <p><strong>Functions:</strong> Arousal, attention, stress response, fight-or-flight reactions; enhances signal-to-noise ratio in sensory processing; involved in attention deficit disorders and anxiety</p>
+                            </div>
+                            
+                            <div class="nt-card">
+                                <h4>Acetylcholine</h4>
+                                <p><strong>Type:</strong> Cholinergic</p>
+                                <p><strong>Receptors:</strong> Nicotinic (ionotropic); Muscarinic (metabotropic, M1-M5)</p>
+                                <p><strong>Functions:</strong> Attention, memory consolidation, muscle contraction; basal forebrain cholinergic neurons degenerate in Alzheimer's disease; cholinesterase inhibitors provide symptomatic treatment</p>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- Mobile Navigation Script -->
+    <script>
+        (function() {
+            const navContainer = document.querySelector('.top-nav-container');
+            const leftSide = document.querySelector('.left-side');
+            if (!navContainer || !leftSide) return;
+            
+            let mobileBtn = document.createElement('button');
+            mobileBtn.className = 'mobile-menu-btn';
+            mobileBtn.innerHTML = '<i class="fa-solid fa-bars"></i>';
+            const logo = leftSide.querySelector('.logo');
+            if (logo) logo.insertAdjacentElement('afterend', mobileBtn);
+            
+            let mobileMenu = document.createElement('div');
+            mobileMenu.className = 'mobile-nav-menu';
+            
+            [
+                { href: '/', icon: 'fa-house', text: 'Home' },
+                { href: '/chatbot.html', icon: 'fa-comments', text: 'Chatbot' },
+                { href: '/quiz-select.html', icon: 'fa-clipboard-question', text: 'Quiz' },
+                { href: '/learning.html', icon: 'fa-book', text: 'Learning' },
+                { href: '/profile.html', icon: 'fa-user', text: 'Profile' }
+            ].forEach(item => {
+                const link = document.createElement('a');
+                link.href = item.href;
+                link.innerHTML = `<i class="fa-solid ${item.icon}"></i> ${item.text}`;
+                if (window.location.pathname.includes('learning') && item.href === '/learning.html') {
+                    link.classList.add('active');
+                }
+                mobileMenu.appendChild(link);
+            });
+            
+            document.body.appendChild(mobileMenu);
+            
+            mobileBtn.addEventListener('click', function(e) {
+                e.stopPropagation();
+                this.classList.toggle('active');
+                mobileMenu.classList.toggle('active');
+                this.querySelector('i').className = mobileMenu.classList.contains('active') ? 'fa-solid fa-xmark' : 'fa-solid fa-bars';
+            });
+            
+            document.addEventListener('click', function(e) {
+                if (!mobileMenu.contains(e.target) && !mobileBtn.contains(e.target)) {
+                    mobileMenu.classList.remove('active');
+                    mobileBtn.classList.remove('active');
+                    const btn = document.querySelector('.mobile-menu-btn');
+                    if (btn) btn.querySelector('i').className = 'fa-solid fa-bars';
+                }
+            });
+        })();
+        
+        function updateAuthButton() {
+            const userData = localStorage.getItem('userData');
+            const authButton = document.getElementById('authButton');
+            const authText = document.getElementById('authText');
+            const authIcon = authButton.querySelector('i');
+            
+            if (userData) {
+                authText.textContent = 'Logout';
+                authIcon.className = 'fa-solid fa-right-from-bracket';
+            } else {
+                authText.textContent = 'Login';
+                authIcon.className = 'fa-solid fa-right-to-bracket';
+            }
+        }
+        
+        function handleAuth() {
+            const userData = localStorage.getItem('userData');
+            if (userData) {
+                logout();
+            } else {
+                window.location.href = '/login.html';
+            }
+        }
+        
+        function logout() {
+            if (confirm('Are you sure you want to logout?')) {
+                localStorage.removeItem('userData');
+                window.location.href = '/';
+            }
+        }
+        
+        updateAuthButton();
+    </script>
+
+    <script src="/static/scripts/learning.js"></script>
+</body>
+
+</html>
