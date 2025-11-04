@@ -169,6 +169,9 @@ app.get("/profile.html", (req, res) => {
     res.sendFile(path.join(__dirname, "../client/profile.html"));
 });
 
+app.get("/learning.html", (req, res) => {
+    res.sendFile(path.join(__dirname, "../client/learning.html"));
+});
 // ==================== API Authentication ====================
 app.post("/api/register", async (req, res) => {
     const { username, password, email } = req.body;
