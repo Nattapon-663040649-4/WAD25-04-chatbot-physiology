@@ -10,6 +10,8 @@ const bcrypt = require("bcryptjs");
 const app = express();
 const uploads = multer({ dest: "uploads/" });
 
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 // ==================== CORS Configuration ====================
 const cors = require('cors');
 
