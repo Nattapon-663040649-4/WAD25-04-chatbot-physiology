@@ -41,7 +41,6 @@
     </div>
 
     <div class="page-wrapper">
-        <!-- Left Sidebar (Icons Only) - เหลือแค่ 2 ปุ่ม -->
         <div class="sidebar">
             <div class="logo-icon"><img src="/static/images/logo.png" alt="logo-image"></div>
             <div class="sidebar-icon" id="newChatBtn" title="New Chat"><i class="fa-solid fa-pen-to-square"></i></div>
@@ -117,106 +116,6 @@
             </div>
         </div>
     </div>
-
-    <!-- Mobile Navigation Styles -->
-    <style>
-        .mobile-menu-btn {
-            display: none;
-            background: #4A9782;
-            color: white;
-            border: none;
-            padding: 8px 12px;
-            border-radius: 6px;
-            cursor: pointer;
-            font-size: 16px;
-            transition: all 0.3s;
-        }
-
-        .mobile-menu-btn:hover,
-        .mobile-menu-btn.active {
-            background: #004030;
-        }
-
-        .mobile-nav-menu {
-            display: none;
-            position: fixed;
-            top: 70px;
-            left: 0;
-            right: 0;
-            background: white;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
-            border-top: 2px solid #e0e6ed;
-            z-index: 999;
-            max-height: 0;
-            overflow: hidden;
-            transition: max-height 0.3s ease;
-        }
-
-        .mobile-nav-menu.active {
-            max-height: 400px;
-        }
-
-        .mobile-nav-menu a {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            padding: 15px 30px;
-            color: #666;
-            text-decoration: none;
-            font-weight: 500;
-            border-bottom: 1px solid #e0e6ed;
-            transition: all 0.3s;
-        }
-
-        .mobile-nav-menu a:hover {
-            background: #f5f7fa;
-            color: #4A9782;
-            padding-left: 40px;
-        }
-
-        .mobile-nav-menu a.active {
-            background: #4A9782;
-            color: white;
-            font-weight: 600;
-        }
-
-        .mobile-nav-menu a i {
-            font-size: 18px;
-            width: 20px;
-            text-align: center;
-        }
-
-        @media (max-width: 768px) {
-            .nav-links {
-                display: none !important;
-            }
-            .mobile-menu-btn {
-                display: block;
-            }
-            .mobile-nav-menu {
-                display: block;
-            }
-            .logout-button {
-                padding: 5px 12px !important;
-                font-size: 12px !important;
-                border-radius: 16px !important;
-                gap: 4px !important;
-            }
-            .logout-button i {
-                font-size: 11px !important;
-            }
-            .logo-img {
-                width: 32px !important;
-                height: 32px !important;
-            }
-            .logo-text {
-                font-size: 20px !important;
-            }
-            .top-nav-container {
-                padding: 0 15px !important;
-            }
-        }
-    </style>
 
     <!-- Scripts -->
     <script>
