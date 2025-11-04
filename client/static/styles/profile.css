@@ -27,13 +27,11 @@ body {
 
 /* ==================== Header ==================== */
 .header {
-    background: white;
-    border-bottom: 2px solid var(--border);
-    padding: 15px 0;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+    background: linear-gradient(135deg, #4A9782 0%, #2C5F4F 100%);
+    box-shadow: 0 4px 20px rgba(0,0,0,0.1);
     position: sticky;
     top: 0;
-    z-index: 100;
+    z-index: 1000;
 }
 
 .nav-container {
@@ -43,6 +41,7 @@ body {
     display: flex;
     justify-content: space-between;
     align-items: center;
+    height: 70px;
 }
 
 .left-side-header {
@@ -54,13 +53,25 @@ body {
 .logo {
     display: flex;
     align-items: center;
-    gap: 10px;
+    gap: 12px;
     cursor: pointer;
+    transition: transform 0.3s ease;
+}
+
+.logo:hover {
+    transform: scale(1.05);
 }
 
 .logo-img {
     width: 40px;
     height: 40px;
+    background: white;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 5px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
 }
 
 .logo-img img {
@@ -71,62 +82,53 @@ body {
 
 .logo-text {
     font-size: 24px;
-    font-weight: bold;
-    background: linear-gradient(to right, var(--primary), var(--secondary));
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
+    font-weight: 700;
+    color: white;
+    letter-spacing: 0.5px;
 }
 
 .nav-links {
     display: flex;
-    gap: 30px;
+    gap: 8px;
 }
 
 .nav-links a {
+    color: white;
     text-decoration: none;
-    color: #666;
+    padding: 8px 20px;
+    border-radius: 8px;
     font-weight: 500;
-    transition: color 0.3s;
-    padding: 8px 0;
-    position: relative;
+    transition: all 0.3s ease;
+    font-size: 15px;
 }
 
 .nav-links a:hover {
-    color: var(--primary);
+    background: rgba(255,255,255,0.15);
+    transform: translateY(-2px);
 }
 
 .nav-links a.active {
-    color: var(--primary);
+    background: rgba(255,255,255,0.25);
     font-weight: 600;
 }
 
-.nav-links a.active::after {
-    content: '';
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    height: 3px;
-    background: var(--primary);
-    border-radius: 3px 3px 0 0;
-}
-
 .logout-button {
+    background: rgba(255,255,255,0.2);
+    border: 1px solid rgba(255,255,255,0.3);
+    color: white;
+    padding: 8px 20px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: 500;
     display: flex;
     align-items: center;
     gap: 8px;
-    padding: 8px 20px;
-    background: var(--primary);
-    color: white;
-    border: none;
-    border-radius: 25px;
-    font-weight: 500;
-    cursor: pointer;
-    transition: all 0.3s;
+    transition: all 0.3s ease;
+    font-size: 14px;
 }
 
 .logout-button:hover {
-    background: #004030;
+    background: rgba(255,255,255,0.3);
     transform: translateY(-2px);
 }
 
@@ -464,5 +466,82 @@ body {
         flex-direction: column;
         gap: 15px;
         text-align: center;
+    }
+}
+
+/* ==================== MOBILE MENU ==================== */
+.mobile-menu-btn {
+    display: none;
+    background: rgba(255,255,255,0.2);
+    color: white;
+    border: none;
+    padding: 8px 12px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 18px;
+    transition: all 0.3s ease;
+}
+
+.mobile-menu-btn:hover,
+.mobile-menu-btn.active {
+    background: rgba(255,255,255,0.3);
+}
+
+.mobile-nav-menu {
+    display: none;
+    position: fixed;
+    top: 70px;
+    left: 0;
+    right: 0;
+    background: white;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+    border-top: 2px solid #e0e6ed;
+    z-index: 999;
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.3s ease;
+}
+
+.mobile-nav-menu.active {
+    max-height: 400px;
+}
+
+.mobile-nav-menu a {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 15px 30px;
+    color: #666;
+    text-decoration: none;
+    font-weight: 500;
+    border-bottom: 1px solid #e0e6ed;
+    transition: all 0.3s ease;
+}
+
+.mobile-nav-menu a:hover {
+    background: #f5f7fa;
+    color: #4A9782;
+    padding-left: 40px;
+}
+
+.mobile-nav-menu a.active {
+    background: #4A9782;
+    color: white;
+    font-weight: 600;
+}
+
+.mobile-nav-menu a i {
+    font-size: 18px;
+    width: 20px;
+    text-align: center;
+}
+
+@media (max-width: 768px) {
+    .mobile-menu-btn {
+        display: block;
+    }
+    
+    .mobile-nav-menu {
+        display: block;
     }
 }
