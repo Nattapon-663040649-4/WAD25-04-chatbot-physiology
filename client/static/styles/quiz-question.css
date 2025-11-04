@@ -28,19 +28,19 @@ body {
 
 /* ==================== Header ==================== */
 .quiz-header {
-    background: white;
-    border-bottom: 2px solid var(--border-color);
-    padding: 20px 0;
+    background: linear-gradient(135deg, #4A9782 0%, #2C5F4F 100%);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
     position: sticky;
     top: 0;
-    z-index: 100;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+    z-index: 1000;
+    padding: 15px 0;
+    border: none;
 }
 
 .header-content {
     max-width: 1200px;
     margin: 0 auto;
-    padding: 0 20px;
+    padding: 0 30px;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -49,21 +49,30 @@ body {
 .logo-section {
     display: flex;
     align-items: center;
-    gap: 12px;
+    gap: 15px;
+    cursor: pointer;
+    transition: transform 0.3s ease;
+}
+
+.logo-section:hover {
+    transform: scale(1.05);
 }
 
 .header-logo {
     width: 45px;
     height: 45px;
+    background: white;
+    border-radius: 50%;
+    padding: 6px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    object-fit: contain;
 }
 
 .header-title {
     font-size: 24px;
     font-weight: 700;
-    background: linear-gradient(to right, var(--primary-color), var(--secondary-color));
-    background-clip: text;
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
+    color: white;
+    letter-spacing: 0.5px;
 }
 
 .quiz-info {
@@ -76,12 +85,20 @@ body {
     align-items: center;
     gap: 8px;
     font-weight: 500;
-    color: var(--text-secondary);
+    color: rgba(255,255,255,0.9);
+    transition: all 0.3s ease;
 }
 
 .info-item i {
-    color: var(--primary-color);
+    color: white;
+    opacity: 0.9;
+    transition: opacity 0.3s ease;
 }
+
+.info-item:hover i {
+    opacity: 1;
+}
+
 
 /* ==================== Progress Bar ==================== */
 .progress-container {
@@ -505,3 +522,4 @@ body {
         margin-left: 0;
     }
 }
+
