@@ -572,11 +572,6 @@ body {
 
 /* Responsive Design */
 @media (max-width: 768px) {
-    .nav-container {
-        flex-direction: column;
-        gap: 20px;
-    }
-
     .hero h1 {
         font-size: 32px;
     }
