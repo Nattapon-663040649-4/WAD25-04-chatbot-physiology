@@ -10,6 +10,7 @@ const bcrypt = require("bcryptjs");
 const app = express();
 const uploads = multer({ dest: "uploads/" });
 
+
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 // ==================== CORS Configuration ====================
@@ -171,6 +172,10 @@ app.get("/profile.html", (req, res) => {
 
 app.get("/learning.html", (req, res) => {
     res.sendFile(path.join(__dirname, "../client/learning.html"));
+});
+
+app.get("/api-doc.html", (req, res) => {
+    res.sendFile(path.join(__dirname, "../client/api-doc.html"));
 });
 // ==================== API Authentication ====================
 app.post("/api/register", async (req, res) => {

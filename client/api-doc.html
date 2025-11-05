@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PHYSSi API Documentation</title>
+    <link rel="icon" href="/static/images/logo-new.ico">
+    <link rel="stylesheet" href="/static/styles/api-doc.css">
+    <script src="https://kit.fontawesome.com/03b30ccae0.js" crossorigin="anonymous"></script>
+</head>
+<body>
+    <!-- Authentication Check -->
+    <script>
+        // Check if user is logged in
+        const userData = localStorage.getItem('userData');
+        if (!userData) {
+            // Redirect to login if not authenticated
+            window.location.href = '/login.html';
+        }
+    </script>
+
+    <div class="header">
+        <div class="nav-container">
+            <a href="/" class="logo">
+                <div class="logo-img">
+                    <img src="/static/images/logo.png" alt="PHYSSi Logo">
+                </div>
+                <div class="logo-text">PHYSSi API</div>
+            </a>
+            <a href="/" class="back-btn">
+                <i class="fa-solid fa-arrow-left"></i>
+                <span>Back to Home</span>
+            </a>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="doc-header">
+            <h1>PHYSSi Public API</h1>
+            <p>Free AI-powered APIs for physiology learning</p>
+        </div>
+
+        <div class="docs-layout">
+            <main class="content">
+                <!-- Getting Started -->
+                <section class="api-section" id="getting-started">
+                    <h2>Getting Started</h2>
+                    
+                    <p>No setup required. Just send HTTP requests to the API endpoints.</p>
+
+                    <div class="endpoint">
+                        <h4>Test the API</h4>
+                        <div class="code-block">
+                            <pre>curl -X POST https://your-domain.com/get \
+  -F "msg=What is the cardiac cycle?"</pre>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Chatbot API -->
+                <section class="api-section" id="chatbot">
+                    <h2>AI Chatbot API</h2>
+                    <p>Ask questions about human physiology and get AI-generated answers with formatted HTML response.</p>
+
+                    <div class="endpoint">
+                        <div class="endpoint-header">
+                            <span class="method post">POST</span>
+                            <span class="endpoint-path">/get</span>
+                        </div>
+                        <p class="endpoint-desc">Send messages to AI chatbot (supports text and image uploads)</p>
+
+                        <div class="params-section">
+                            <h4>Parameters (multipart/form-data)</h4>
+                            <table class="param-table">
+                                <thead>
+                                    <tr>
+                                        <th>Parameter</th>
+                                        <th>Type</th>
+                                        <th>Required</th>
+                                        <th>Description</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td><span class="param-name">msg</span></td>
+                                        <td><span class="param-type">string</span></td>
+                                        <td><span class="required">Yes</span></td>
+                                        <td>Your question about physiology</td>
+                                    </tr>
+                                    <tr>
+                                        <td><span class="param-name">file</span></td>
+                                        <td><span class="param-type">file</span></td>
+                                        <td>No</td>
+                                        <td>Image file for analysis</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <div class="response-example">
+                            <h5>Example Request</h5>
+                            <div class="code-block">
+                                <pre>const formData = new FormData();
+formData.append('msg', 'What is the cardiac cycle?');
+
+fetch('https://your-domain.com/get', {
+  method: 'POST',
+  body: formData
+})
+.then(response => response.text())
+.then(html => {
+  document.getElementById('response').innerHTML = html;
+});</pre>
+                            </div>
+
+                            <h5>Success Response (200)</h5>
+                            <div class="code-block">
+                                <pre>&lt;h3&gt;Cardiac Cycle&lt;/h3&gt;
+&lt;p&gt;The cardiac cycle consists of all events during one heartbeat...&lt;/p&gt;
+&lt;ul&gt;
+  &lt;li&gt;Systole: Contraction phase&lt;/li&gt;
+  &lt;li&gt;Diastole: Relaxation phase&lt;/li&gt;
+&lt;/ul&gt;</pre>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Quiz Generator API -->
+                <section class="api-section" id="quiz">
+                    <h2>Quiz Generator API</h2>
+                    <p>Generate AI-powered multiple-choice quizzes on heart or brain anatomy with customizable difficulty and language.</p>
+
+                    <div class="endpoint">
+                        <div class="endpoint-header">
+                            <span class="method post">POST</span>
+                            <span class="endpoint-path">/api/quiz/generate</span>
+                        </div>
+                        <p class="endpoint-desc">Generate custom quiz questions powered by AI</p>
+
+                        <div class="params-section">
+                            <h4>Request Body (JSON)</h4>
+                            <table class="param-table">
+                                <thead>
+                                    <tr>
+                                        <th>Parameter</th>
+                                        <th>Type</th>
+                                        <th>Required</th>
+                                        <th>Description</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td><span class="param-name">topic</span></td>
+                                        <td><span class="param-type">string</span></td>
+                                        <td><span class="required">Yes</span></td>
+                                        <td>"heart" or "brain"</td>
+                                    </tr>
+                                    <tr>
+                                        <td><span class="param-name">numQuestions</span></td>
+                                        <td><span class="param-type">number</span></td>
+                                        <td><span class="required">Yes</span></td>
+                                        <td>1-20 questions</td>
+                                    </tr>
+                                    <tr>
+                                        <td><span class="param-name">difficulty</span></td>
+                                        <td><span class="param-type">string</span></td>
+                                        <td><span class="required">Yes</span></td>
+                                        <td>"easy", "medium", "hard"</td>
+                                    </tr>
+                                    <tr>
+                                        <td><span class="param-name">language</span></td>
+                                        <td><span class="param-type">string</span></td>
+                                        <td><span class="required">Yes</span></td>
+                                        <td>"en" or "th"</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <div class="response-example">
+                            <h5>Example Request</h5>
+                            <div class="code-block">
+                                <pre>fetch('https://your-domain.com/api/quiz/generate', {
+  method: 'POST',
+  headers: { 'Content-Type': 'application/json' },
+  body: JSON.stringify({
+    topic: 'heart',
+    numQuestions: 5,
+    difficulty: 'medium',
+    language: 'en'
+  })
+})
+.then(response => response.json())
+.then(data => console.log(data.quiz.questions));</pre>
+                            </div>
+
+                            <h5>Success Response (200)</h5>
+                            <div class="code-block">
+                                <pre>{
+  "success": true,
+  "quiz": {
+    "questions": [
+      {
+        "question": "What is the main function of the left ventricle?",
+        "subtopic": "Heart Chambers",
+        "options": [
+          "Pump oxygenated blood to the body",
+          "Receive blood from the lungs",
+          "Pump blood to the lungs",
+          "Store blood"
+        ],
+        "correctAnswer": 0,
+        "explanation": "The left ventricle pumps blood to the body..."
+      }
+    ]
+  }
+}</pre>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Code Examples -->
+                <section class="api-section" id="examples">
+                    <h2>Code Examples</h2>
+
+                    <h3>JavaScript</h3>
+                    <div class="code-block">
+                        <pre>// Ask AI Chatbot
+const formData = new FormData();
+formData.append('msg', 'What is the cardiac cycle?');
+
+const response = await fetch('https://your-domain.com/get', {
+  method: 'POST',
+  body: formData
+});
+const html = await response.text();
+
+// Generate Quiz
+const quiz = await fetch('https://your-domain.com/api/quiz/generate', {
+  method: 'POST',
+  headers: { 'Content-Type': 'application/json' },
+  body: JSON.stringify({
+    topic: 'heart',
+    numQuestions: 5,
+    difficulty: 'medium',
+    language: 'en'
+  })
+}).then(r => r.json());</pre>
+                    </div>
+
+                    <h3>Python</h3>
+                    <div class="code-block">
+                        <pre>import requests
+
+# Ask AI
+response = requests.post(
+    'https://your-domain.com/get',
+    data={'msg': 'What is the cardiac cycle?'}
+)
+print(response.text)
+
+# Generate Quiz
+quiz = requests.post(
+    'https://your-domain.com/api/quiz/generate',
+    json={
+        'topic': 'brain',
+        'numQuestions': 10,
+        'difficulty': 'hard',
+        'language': 'en'
+    }
+).json()</pre>
+                    </div>
+                </section>
+
+                <!-- Quick Reference -->
+                <section class="api-section">
+                    <h2>Quick Reference</h2>
+                    
+                    <div class="summary-box">
+                        <h3>API Endpoints</h3>
+                        
+                        <div class="endpoint-summary">
+                            <h4>Chatbot</h4>
+                            <p><code>POST /get</code></p>
+                            <p>Send questions to AI (supports images)</p>
+                        </div>
+                        
+                        <div class="endpoint-summary">
+                            <h4>Quiz Generator</h4>
+                            <p><code>POST /api/quiz/generate</code></p>
+                            <p>Generate custom quizzes</p>
+                        </div>
+                    </div>
+                </section>
+
+            </main>
+        </div>
+    </div>
+
+    <script src="/static/scripts/api-doc.js"></script>
+</body>
+</html>
