@@ -105,11 +105,8 @@ GET    /api/user/progress # Get user progress
 
 ## 📚 Content Coverage
 
-- Cardiovascular System
-- Respiratory System
-- Nervous System
-- Digestive System
-- And more...
+- ฺBrain System
+- Heart System
 
 ## 🌐 Browser Support
 
@@ -143,3 +140,4 @@ MIT License
 ---
 
 **Made for Web Application Development Course 2025**
+
